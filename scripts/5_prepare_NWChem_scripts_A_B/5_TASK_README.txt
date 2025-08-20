@@ -6,6 +6,7 @@ The simulation script is constructed the same for any given chemical.
 
 A sample redox script template class is given to provide a frame of reference for making the scripts automatically.
 A sample redox simulation script is given to show you what the final outputted .nw script should look like.
+A sample output simulation printout (.out file) is given to show you what a successful simulation looks like.
 
 This simulation script will need to specify:
 	- Charge

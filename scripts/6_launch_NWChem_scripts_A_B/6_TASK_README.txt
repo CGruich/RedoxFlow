@@ -4,6 +4,7 @@ Write a function that:
 Takes a pre-prepared .nw input simulation script and launches an NWChem simulation, saving the simulation output to a '.out' file extension. Returns True if the simulation succeeded, returns False if it failed.
 
 An example of a proper .nw input script and proper .out NWChem simulation output is provided for reference.
+As well as a SLURM job script to submit the simulation (if needed)
 
 Inputs:
 Pre-installed NWChem
