@@ -1,0 +1,47 @@
+title "co2_redox"		# CG: Arbitrary title for simulation
+
+memory 7000 mb			# CG: Memory to allocate (set high on cluster and forget, set low-medium at home PC)
+
+start redox_start		# CG: Arbitrary name for start of calculation
+
+charge 0			# CG: Speciy molecule charge (can find with RDKit)
+
+geometry
+ load mid1.xyz			# CG: Load molecule geometry (as .xyz file)
+end
+
+basis
+ * library 6-311g*		# CG: Define a basis set for DFT, 6-311g* is OK for small organics
+end
+
+driver
+ MAXITER 300			# CG: Maximum number of iterations to optimize geometry with DFT (limits computational cost)
+ XYZ co2_opt			# CG: Name of the DFT optimized geometry per-iteration (e.g., co2_opt_001, co2_opt_002 ... co2_opt_300)
+end
+
+dft
+ xc b3lyp			# CG: Exchange-correlation functional for DFT
+ mult 1				# CG: Define spin multiplicity (usually 1, higher for radicals, can auto-calculate with RDKit)
+ grid fine			# CG: The fidelity of k-point grid for DFT calculation (fine is higher accuracy but more computational cost)
+ disp vdw 4			# CG: Dispersion correction effect for organics (probably just use this untouched, minimal cost to simulation, doesn't hurt)
+end
+
+task dft optimize		# CG: At this step, officially start geometry optimization
+
+title "degradation_freq"	# CG: Arbitrary title for the frequency calculation (adjusts energies to specified temperature temperature). Room temp by default if not specified
+
+freq
+ temp 1 0			# CG: Perform a frequency calculation to adjust the calculation to an arbitrary temperature Kelvin (e.g., room temperature)
+end
+
+task dft freq			# CG: Run temperature adjustment
+
+cosmo				# CG: Run COSMO implicit solvation to correct gas-phase energy of reaction to aqueous phase
+ dielec 78.3			# CG: Dielectric constant of pure water
+ minbem 3			# CG: Leave this untouched for now
+ ificos 1			# CG: Leave this untouched for now
+ do_gasphase False		# CG: Make sure this is on... prevents re-doing the gas-phase geometry optimization which we already do earlier in the script
+end
+
+task dft energy			# CG: Run DFT single-point calculation
+# CG: Calculation Done
