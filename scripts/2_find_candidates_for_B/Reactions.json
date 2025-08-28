@@ -1,0 +1,183 @@
+{
+    "alkene_to_alkane": {
+      "description": "Hydrogenation of C=C double bond to single bond",
+      "smarts": "[C:1]=[C:2]>>[C:1]-[C:2]",
+      "electrons": 2
+    },
+
+    "alkyne_to_alkene": {
+      "description": "Partial hydrogenation of C≡C triple bond to double bond (cis/trans depends on catalyst)",
+      "smarts": "[C:1]#[C:2]>>[C:1]=[C:2]",
+      "electrons": 2
+    },
+
+    "alkyne_to_alkane": {
+      "description": "Full hydrogenation of C≡C triple bond to single bond",
+      "smarts": "[C:1]#[C:2]>>[C:1]-[C:2]",
+      "electrons": 4
+    },
+
+    "aldehyde_to_primary_alcohol": {
+      "description": "Reduction of aldehyde to primary alcohol",
+      "smarts": "[CX3H1:1](=O)[#6:2]>>[C:1]([OH])[#6:2]",
+      "electrons": 2
+    },
+
+    "ketone_to_secondary_alcohol": {
+      "description": "Reduction of ketone to secondary alcohol",
+      "smarts": "[C:1](=[O:2])[C:3]>>[C:1]([OH])[C:3]",
+      "electrons": 2
+    },
+
+    "carboxylic_acid_to_primary_alcohol": {
+      "description": "Reduction of carboxylic acid to primary alcohol",
+      "smarts": "[C:1](=O)[OH:2]>>[C:1][OH]",
+      "electrons": 4
+    },
+
+    "ester_to_alcohols": {
+      "description": "Reduction of ester to primary alcohol and alcohol from alkyl part",
+      "smarts": "[C:1](=O)[O:2][C:3]>>[C:1][OH].[C:3][OH]",
+      "electrons": 4
+    },
+
+    "nitrile_to_primary_amine": {
+      "description": "Reduction of nitrile to primary amine",
+      "smarts": "[C:1]#[N:2]>>[C:1][NH2:2]",
+      "electrons": 4
+    },
+
+    "imine_to_secondary_amine": {
+      "description": "Reduction of imine to secondary amine",
+      "smarts": "[C:1]=[N:2]>>[C:1][NH:2]",
+      "electrons": 2
+    },
+
+    "oxime_to_amine": {
+      "description": "Reduction of oxime to amine (removal of =O)",
+      "smarts": "[C:1]=[N:2][O:3]>>[C:1][NH2:2]",
+      "electrons": 4
+    },
+
+    "enamine_to_amine": {
+      "description": "Reduction of enamine double bond to single bond",
+      "smarts": "[C:1]=[C:2]-[N:3]>>[C:1]-[C:2]-[N:3]",
+      "electrons": 2
+    },
+
+    "iminium_to_amine": {
+      "description": "Reduction of iminium ion to amine",
+      "smarts": "[C:1]=[N+:2]>>[C:1][NH2:2]",
+      "electrons": 2
+    },
+
+    "nitro_to_primary_amine": {
+      "description": "Reduction of nitro group to primary amine",
+      "smarts": "[N+:1](=O)[O-:2]>>[NH2:1]",
+      "electrons": 6
+    },
+
+    "aromatic_ring_to_cyclohexane": {
+      "description": "Hydrogenation of aromatic ring to cyclohexane",
+      "smarts": "c1ccccc1>>C1CCCCC1",
+      "electrons": 6
+    },
+
+      "anthraquinone_to_hydroanthraquinone": {
+      "description": "Reduction of anthraquinone to hydroanthraquinones",
+      "smarts": "c1c2c(ccc1=O)c(=O)c3ccccc23>>c1c2c(ccc1[OH])c([OH])c3ccccc23",
+      "electrons": 4
+    },
+
+    "azobenzene_to_hydrazobenzene": {
+      "description": "Reduction of azobenzene to hydrazobenzene",
+      "smarts": "c1ccccc1N=Nc2ccccc2>>c1ccccc1NNc2ccccc2",
+      "electrons": 2
+    },
+
+    "quinone_to_hydroquinone": {
+      "description": "Reduction of quinone to hydroquinone",
+      "smarts": "O=C1C=CC(=O)C=C1>>OC1C=CC(O)C=C1",
+      "electrons": 2
+    },
+
+    "ketone_to_secondary_alcohol_rfb": {
+      "description": "Reduction of ketone to secondary alcohol",
+      "smarts": "[C:1](=[O:2])[C:3]>>[C:1]([OH])[C:3]",
+      "electrons": 2
+    },
+
+    "viologen_dication_to_radical": {
+      "description": "One-electron reduction of viologen dication to radical cation",
+      "smarts": "[N+](C)c1ccccc1[N+](C)c2ccccc2>>[N](C)c1ccccc1[N](C)c2ccccc2",
+      "electrons": 1
+    },
+
+    "phenazine_to_dihydrophenazine": {
+      "description": "Two-electron reduction of phenazine to dihydrophenazine",
+      "smarts": "c1ccc2c(c1)nc3ccccc3n2>>c1ccc2c(c1)N[C:2]c3ccccc3N2",
+      "electrons": 2
+    },
+
+    "phenothiazine_to_dihydrophenothiazine": {
+      "description": "Two-electron reduction of phenothiazine to dihydrophenothiazine",
+      "smarts": "c1ccc2c(c1)sc3ccccc3n2>>c1ccc2c(c1)S[C:2]c3ccccc3N2",
+      "electrons": 2
+    },
+
+    "quinoxaline_to_dihydroquinoxaline": {
+      "description": "Two-electron reduction of quinoxaline to dihydroquinoxaline",
+      "smarts": "c1cc2nc3ccccc3n2c1>>c1cc2NCc3ccccc3N2c1",
+      "electrons": 2
+    },
+
+    "benzophenone_to_diphenylmethanol": {
+      "description": "Reduction of ketone to secondary alcohol",
+      "smarts": "[C:1](=O)[C:2]c1ccccc1>>[C:1]([OH])[C:2]c1ccccc1",
+      "electrons": 2
+    },
+
+    "nitroxide_to_hydroxylamine": {
+      "description": "Reduction of nitroxide radical to hydroxylamine (TEMPO-H type)",
+      "smarts": "[N:1](=O)[O:2]>>[N:1][OH]",
+      "electrons": 1
+    },
+
+    "imide_to_hydroimide": {
+      "description": "Reduction of imide group to hydroimide",
+      "smarts": "[C:1](=O)N([C:2](=O))>>[C:1]([OH])N([C:2][OH])",
+      "electrons": 2
+    },
+
+    "aromatic_nitroso_to_hydroxylamine": {
+      "description": "Reduction of aromatic nitroso to hydroxylamine",
+      "smarts": "c1ccccc1N=O>>c1ccccc1[NH][OH]",
+      "electrons": 2
+    },
+
+    "cyclohexanedione_to_cyclohexanediol": {
+      "description": "Reduction of cyclohexanedione to cyclohexanediol",
+      "smarts": "O=C1CCCC(=O)C1>>OC1CCCC(O)C1",
+      "electrons": 2
+    },
+    "alloxazine_to_hydroalloxazine": {
+      "description": "Reduction of alloxazine to its reduced form",
+      "smarts": "C1=NC2=C(C(=O)NC(=O)N2)N=C1>>C1NCC2C(C(O)NC(O)N2)N1",
+      "electrons": 2
+    },
+    "benzophenone_derivatives_to_reduced": {
+      "description": "Reduction of various benzophenone derivatives to their corresponding reduced forms",
+      "smarts": "C(=O)c1ccccc1>>C(O)c1ccccc1",
+      "electrons": 2
+    },
+    "naphthalene_derivatives_to_reduced": {
+      "description": "Reduction of naphthalene derivatives to their corresponding reduced forms",
+      "smarts": "c1ccc2ccccc2c1>>[H]c1ccc2ccccc2c1[H]",
+      "electrons": 2
+    },
+    "pyrene_derivatives_to_reduced": {
+      "description": "Reduction of pyrene derivatives to their corresponding reduced forms",
+      "smarts": "c1ccc2c(c1)ccc3c2cccc3>>[H]c1ccc2c(c1)ccc3c2cccc3[H]",
+      "electrons": 2
+    }
+}

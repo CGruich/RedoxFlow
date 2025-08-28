@@ -1,0 +1,11 @@
+{
+    "1,4-Benzoquinone": "O=C1C=CC(=O)C=C1",
+    "1,4-Naphthoquinone": "O=C1C=CC(=O)c2ccccc12",
+    "Anthraquinone": "O=C2c1ccccc1C(=O)c3ccccc23",
+    "2,6-Dimethyl-1,4-benzoquinone": "CC1=CC(=O)C(=O)C=C1C",
+    "1,4-Dimethoxybenzene": "COc1ccc(OC)cc1",
+    "2,5-Di-tert-butyl-1,4-dimethoxybenzene": "COc1cc(C(C)(C)C)cc(OC)c1C(C)(C)C",
+    "4-Cyanopyridine": "N#Cc1ccncc1",
+    "Phenazine": "n1c2ccccn2ccc3cccnc13",
+    "Nitrobenzene": "O=[N+]([O-])c1ccccc1"
+}
