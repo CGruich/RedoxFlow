@@ -16,7 +16,7 @@ Suggestions:
 	- If any molecule fails conformer search, return None to keep track of failed molecules in the pipeline
 
 Members:
-TBD
+Melody
 
 Deliverable:
 Jupyter notebook demonstration of function within same folder
