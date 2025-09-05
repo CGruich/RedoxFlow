@@ -16,7 +16,7 @@ from rdkit.Chem import rdchem
 from rdkit import RDLogger
 RDLogger.DisableLog("rdApp.*")
 
-MIN_ATOMS_FIXED = 4  # fixed minimum heavy atoms per request
+MIN_ATOMS_FIXED = 4  # Token generation dictates the molecule size, keep a generous minimum
 
 
 class ChemPipeline(Component):
