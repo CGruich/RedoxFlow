@@ -1,5 +1,5 @@
 from __future__ import annotations
-import os, sys, json, time, subprocess, textwrap, re
+import os, sys, json, time, subprocess, textwrap, re, csv, shlex
 from pathlib import Path
 from typing import List, Dict, Any, Set, Optional, Tuple
 
@@ -16,8 +16,9 @@ from rdkit.Chem import rdchem
 from rdkit import RDLogger
 RDLogger.DisableLog("rdApp.*")
 
-MIN_ATOMS_FIXED = 4  # Token generation dictates the molecule size, keep a generous minimum
+MIN_ATOMS_FIXED = 4  # fixed minimum heavy atoms per request
 
+from time import sleep
 
 class ChemPipeline(Component):
     display_name = "ChemPipeline"
@@ -56,7 +57,7 @@ class ChemPipeline(Component):
                   "python_script": "hello_world.py",
                   "python_args": "",
                   "bash_cmd": "echo {molecule}",
-                  "memory_path": "chem_memory.jsonl",
+                  "memory_path": "chem_memory.csv",
                   "return_smiles": true
                 }
             """).strip(),
@@ -98,7 +99,7 @@ class ChemPipeline(Component):
         StrInput(name="python_script", display_name="Python script path", value="hello_world.py"),
         StrInput(name="python_args", display_name="Python args", value=""),
         StrInput(name="bash_cmd", display_name="Bash command template", value=""),
-        StrInput(name="memory_path", display_name="Memory file (jsonl)", value="chem_memory.jsonl"),
+        StrInput(name="memory_path", display_name="Memory file (csv)", value="chem_memory.csv"),
         BoolInput(name="return_smiles", display_name="Also return SMILES (echoed)", value=True),
     ]
 
@@ -136,7 +137,7 @@ class ChemPipeline(Component):
             "python_script": self.python_script or "",
             "python_args": self.python_args or "",
             "bash_cmd": self.bash_cmd or "",
-            "memory_path": self.memory_path or "chem_memory.jsonl",
+            "memory_path": self.memory_path or "chem_memory.csv",
             "return_smiles": bool(self.return_smiles),
         }
         try:
@@ -300,7 +301,7 @@ class ChemPipeline(Component):
         texts = tok.batch_decode(outputs, skip_special_tokens=True, clean_up_tokenization_spaces=True)
         return [t for t in texts if t and t.strip()]
 
-    # SMILES utilities
+    # ---------- SMILES utilities ----------
     _smiles_line_re = re.compile(r"^[A-Za-z0-9@+\-\[\]\(\)=#\\/\.%]+$")
 
     def _extract_smiles_candidates(self, text: str) -> List[str]:
@@ -353,7 +354,7 @@ class ChemPipeline(Component):
         except Exception:
             return None
 
-    # Ring-strain heuristic: filter unrealistic rings / highly strained fused small rings
+    # ---- Ring-strain heuristic: filter unrealistic rings / highly strained fused small rings ----
     def _passes_ring_strain(self, mol: rdchem.Mol) -> bool:
         """
         Conservative heuristic:
@@ -416,7 +417,7 @@ class ChemPipeline(Component):
             # If analysis fails, be conservative and reject
             return False
 
-    # Unrealistic-moieties heuristic: ban specific, physically dubious substructures
+    # ---- Unrealistic-moieties heuristic: ban specific, physically dubious substructures ----
     def _fails_unrealistic_motifs(self, mol: rdchem.Mol) -> bool:
         """
         Conservative set of red flags:
@@ -450,9 +451,7 @@ class ChemPipeline(Component):
             # SMARTS screen
             for _, q in patterns:
                 if mol.HasSubstructMatch(q):
-                    return False  # "fails" means reject -> return False here or True? We want True=it fails.
-            # The above line rejects incorrectly (returns False); fix logic:
-            # We'll invert: if a pattern matches => moiety is unrealistic => return True (fails)
+                    return True  # a forbidden motif is present
         except Exception:
             # On any error, be conservative and DON'T fail here; ring/valence checks still apply.
             return False
@@ -558,46 +557,91 @@ class ChemPipeline(Component):
         self._last_filter_stats = stats
         return keep
 
-    # Memory
+    # ---------- Memory ----------
     def _load_memory(self, path: str) -> Set[str]:
-        tried = set()
+        tried: Set[str] = set()
         p = Path(path)
-        if p.exists():
-            with p.open("r", encoding="utf-8") as f:
-                for line in f:
-                    line = line.strip()
-                    if not line:
-                        continue
-                    try:
-                        d = json.loads(line)
-                        # Prefer stored molecule string if present
-                        if isinstance(d.get("molecule"), str) and d.get("molecule"):
-                            tried.add(d["molecule"])
+        if not p.exists():
+            return tried
+
+        if p.suffix.lower() == ".csv":
+            try:
+                with p.open("r", encoding="utf-8", newline="") as f:
+                    reader = csv.DictReader(f)
+                    for row in reader:
+                        s = (row.get("smiles") or "").strip()
+                        if s:
+                            tried.add(s)
+            except Exception:
+                # fallback: read raw lines skipping header if present
+                with p.open("r", encoding="utf-8") as f:
+                    for i, line in enumerate(f):
+                        if i == 0 and "smiles" in line.lower():
+                            continue
+                        parts = [x.strip() for x in line.split(",")]
+                        if len(parts) >= 2 and parts[1]:
+                            tried.add(parts[1])
+            return tried
+
+        # Legacy JSONL support
+        with p.open("r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    d = json.loads(line)
+                    # Prefer stored molecule string if present
+                    if isinstance(d.get("molecule"), str) and d.get("molecule"):
+                        tried.add(d["molecule"])
+                    else:
+                        sv = d.get("smiles")
+                        if isinstance(sv, str) and sv:
+                            tried.add(sv)
                         else:
-                            # Legacy support: 'smiles' may be a string in old files
-                            sv = d.get("smiles")
-                            if isinstance(sv, str) and sv:
-                                tried.add(sv)
-                            else:
-                                # Fallback: treat full line as unique marker
-                                tried.add(line)
-                    except Exception:
-                        tried.add(line)
+                            tried.add(line)
+                except Exception:
+                    tried.add(line)
         return tried
 
     def _ensure_memory_file(self, path: str) -> None:
         p = Path(path)
         p.parent.mkdir(parents=True, exist_ok=True)
-        p.touch(exist_ok=True)
+        if not p.exists() or p.stat().st_size == 0:
+            if p.suffix.lower() == ".csv":
+                with p.open("w", encoding="utf-8", newline="") as f:
+                    writer = csv.writer(f)
+                    writer.writerow(["index", "smiles"])
+            else:
+                p.touch(exist_ok=True)
 
     def _get_next_memory_index(self, path: str) -> int:
         """
-        Scan memory file and return the next integer index for the 'smiles' field.
-        Legacy lines with 'smiles' as a string are ignored for indexing.
+        Scan memory file and return the next integer index.
+        CSV: read 'index' column; JSONL: read integer 'smiles' field if present.
         """
-        max_idx = 0
         p = Path(path)
-        if p.exists():
+        if not p.exists() or p.stat().st_size == 0:
+            return 1
+
+        max_idx = 0
+        if p.suffix.lower() == ".csv":
+            try:
+                with p.open("r", encoding="utf-8", newline="") as f:
+                    reader = csv.DictReader(f)
+                    for row in reader:
+                        try:
+                            idx = int(row.get("index", "0"))
+                            if idx > max_idx:
+                                max_idx = idx
+                        except Exception:
+                            continue
+                return max_idx + 1 if max_idx >= 0 else 1
+            except Exception:
+                return 1
+
+        # Legacy JSONL
+        try:
             with p.open("r", encoding="utf-8") as f:
                 for line in f:
                     try:
@@ -607,40 +651,197 @@ class ChemPipeline(Component):
                             max_idx = sv
                     except Exception:
                         continue
-        return max_idx + 1 if max_idx >= 0 else 1
+            return max_idx + 1 if max_idx >= 0 else 1
+        except Exception:
+            return 1
 
     def _append_memory(self, path: str, smiles_list: List[str]) -> None:
         p = Path(path)
         p.parent.mkdir(parents=True, exist_ok=True)
         next_idx = self._get_next_memory_index(path)
+
+        if p.suffix.lower() == ".csv":
+            # Ensure header exists
+            self._ensure_memory_file(path)
+            with p.open("a", encoding="utf-8", newline="") as f:
+                writer = csv.writer(f)
+                for s in smiles_list:
+                    writer.writerow([next_idx, s])
+                    next_idx += 1
+            return
+
+        # Legacy JSONL fallback
         with p.open("a", encoding="utf-8") as f:
             for s in smiles_list:
-                # Write 'smiles' as unique integer index; store actual SMILES under 'molecule'
                 f.write(json.dumps({"smiles": next_idx, "molecule": s}) + "\n")
                 next_idx += 1
 
+    # ---------- Arg helpers to handle spaces in paths ----------
+    def _split_args_allow_spaces(self, argstr: str) -> List[str]:
+        """
+        Robustly split an unquoted argument string where values (paths) may contain spaces.
+        Heuristic: treat any token following a flag (starts with '-') as part of its value
+        until the next token that starts with '-' (a new flag).
+        """
+        if not argstr:
+            return []
+        raw = argstr.strip().split()
+        out: List[str] = []
+        i = 0
+        while i < len(raw):
+            tok = raw[i]
+            if tok.startswith("-"):
+                out.append(tok)
+                i += 1
+                # gather value(s) until next flag or end
+                start = i
+                while i < len(raw) and not raw[i].startswith("-"):
+                    i += 1
+                if i > start:
+                    out.append(" ".join(raw[start:i]))
+            else:
+                # standalone (unlikely), keep as-is
+                out.append(tok)
+                i += 1
+        return out
+
+    def _normalize_python_args(self, args: Any) -> List[str]:
+        """
+        Accepts:
+          - str: e.g. "--molecules /path with space/file.csv --depth 2"
+          - dict: {"--molecules": "/path with space/file.csv", "--depth": 2, "--out": "/x y/z.csv"}
+          - list: ["--molecules", "/path with space/file.csv", "--depth", "2"]
+        Returns a list suitable for subprocess.run([...]).
+        """
+        if args is None or args == "":
+            return []
+        # dict preserves spaces without extra quoting; each value is its own argv element
+        if isinstance(args, dict):
+            out: List[str] = []
+            for k, v in args.items():
+                out.append(str(k))
+                if isinstance(v, (list, tuple)):
+                    out.extend([str(vi) for vi in v])
+                else:
+                    out.append(str(v))
+            return out
+        # list: pass through, casting to str
+        if isinstance(args, list):
+            return [str(x) for x in args]
+        # str: try shlex first (handles already-quoted inputs); if it doesn't look quoted and
+        # contains spaces, fall back to the heuristic splitter to preserve spaced paths.
+        if isinstance(args, str):
+            # If it contains any quotes, assume user quoted properly and trust shlex.split
+            if any(q in args for q in ['"', "'"]):
+                return shlex.split(args)
+            # No quotes present: use heuristic grouping by flags
+            return self._split_args_allow_spaces(args)
+        # fallback
+        return [str(args)]
+
     # ---------- Hooks ----------
-    def _run_python(self, script: str, args: str, molecule: str) -> Dict[str, Any]:
+    def _run_python(self, script: str, args: Any, molecule: str) -> Dict[str, Any]:
         if not script:
             return {}
         env = os.environ.copy()
         env["MOLECULE"] = molecule
-        cmd = [sys.executable, script] + ([a for a in args.split(" ") if a] if args else [])
+        argv = [sys.executable, script] + self._normalize_python_args(args)
         try:
-            proc = subprocess.run(cmd, capture_output=True, text=True, env=env, timeout=300)
-            return {"rc": proc.returncode, "stdout": proc.stdout, "stderr": proc.stderr, "cmd": " ".join(cmd)}
+            proc = subprocess.run(argv, capture_output=True, text=True, env=env, timeout=300)
+            return {
+                "rc": proc.returncode,
+                "stdout": proc.stdout,
+                "stderr": proc.stderr,
+                "cmd": shlex.join(argv),  # pretty/quoted for spaces
+            }
         except Exception as e:
-            return {"error": str(e), "cmd": " ".join(cmd)}
+            return {"error": str(e), "cmd": shlex.join(argv)}
 
-    def _run_bash(self, template: str, molecule: str) -> Dict[str, Any]:
+    def _run_python_once(self, script: str, args: Any, memory_path: str) -> Dict[str, Any]:
+        """
+        Run an arbitrary Python script ONCE after generation.
+        Exposes MOLECULES_CSV=<memory_path> in the environment for convenience.
+        """
+        if not script:
+            return {}
+        env = os.environ.copy()
+        env["MOLECULES_CSV"] = str(memory_path)
+        argv = [sys.executable, script] + self._normalize_python_args(args)
+        try:
+            proc = subprocess.run(argv, capture_output=True, text=True, env=env, timeout=300)
+            return {
+                "rc": proc.returncode,
+                "stdout": proc.stdout,
+                "stderr": proc.stderr,
+                "cmd": shlex.join(argv),  # pretty/quoted for spaces
+            }
+        except Exception as e:
+            return {"error": str(e), "cmd": shlex.join(argv)}
+
+    def _run_bash(self, template: str, molecule: str, memory_path: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Per-molecule bash hook.
+
+        Supports placeholders:
+          {molecule}    -> raw molecule string (no quoting)
+          {molecule_q}  -> shell-quoted molecule (safe for spaces/specials)
+          {memory_path} -> raw memory path (no quoting)
+          {memory_path_q} -> shell-quoted memory path
+        """
         if not template:
             return {}
-        cmd = template.replace("{molecule}", molecule)
+        # Safe substitutions
+        safe_mol = shlex.quote(molecule if molecule is not None else "")
+        safe_mem = shlex.quote(memory_path if memory_path is not None else "")
+        cmd = (
+            template
+            .replace("{molecule_q}", safe_mol)
+            .replace("{molecule}", molecule)
+            .replace("{memory_path_q}", safe_mem)
+            .replace("{memory_path}", memory_path or "")
+        )
+        
+        sleep(10)
+        
         try:
             proc = subprocess.run(["/bin/bash", "-lc", cmd], capture_output=True, text=True, timeout=300)
             return {"rc": proc.returncode, "stdout": proc.stdout, "stderr": proc.stderr, "cmd": cmd}
         except Exception as e:
             return {"error": str(e), "cmd": cmd}
+
+    def _run_bash_once(self, template: str, memory_path: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Run a bash command ONCE at the very end (after Python script).
+    
+        Placeholders (same as _run_bash):
+          {molecule}       -> raw molecule string (unused here; replaced with "")
+          {molecule_q}     -> shell-quoted molecule (unused here; replaced with "")
+          {memory_path}    -> raw memory path (no quoting)
+          {memory_path_q}  -> shell-quoted memory path (safe for spaces/special chars)
+        """
+        if not template:
+            return {}
+    
+        # Quote-sensitive replacements (just like _run_bash)
+        safe_mol = shlex.quote("")  # no per-molecule context at the end run
+        safe_mem = shlex.quote(memory_path if memory_path is not None else "")
+    
+        cmd = (
+            template
+            .replace("{molecule_q}", safe_mol)
+            .replace("{molecule}", "")
+            .replace("{memory_path_q}", safe_mem)
+            .replace("{memory_path}", memory_path or "")
+        )
+        
+        sleep(10)
+        
+        try:
+            proc = subprocess.run(["/bin/bash", "-lc", cmd], capture_output=True, text=True, timeout=300)
+            return {"rc": proc.returncode, "stdout": proc.stdout, "stderr": proc.stderr, "cmd": cmd}
+        except Exception as e:
+            return {"error": str(e), "cmd": cmd}
+    
 
     # ---------------- Main ----------------
     def run_pipeline(self) -> Message:
@@ -691,14 +892,18 @@ class ChemPipeline(Component):
         fresh = fresh[: p["count"]]
         self._append_memory(p["memory_path"], fresh)
 
-        results = []
-        for s in fresh:
-            rec = {"smiles": s}
-            py = self._run_python(p["python_script"], p["python_args"], s) if p["python_script"] else {}
-            sh = self._run_bash(p["bash_cmd"], s) if p["bash_cmd"] else {}
-            if py: rec["python"] = py
-            if sh: rec["bash"] = sh
-            results.append(rec)
+        # Run arbitrary Python script ONCE after all molecules are generated/saved
+        python_run = {}
+        if p["python_script"]:
+            python_run = self._run_python_once(p["python_script"], p["python_args"], p["memory_path"])
+
+        # Run bash command ONCE at the very end (after Python script)
+        bash_run = {}
+        if p["bash_cmd"]:
+            bash_run = self._run_bash_once(p["bash_cmd"], memory_path=p["memory_path"])
+
+        # Results payload (no per-molecule bash now)
+        results = [{"smiles": s} for s in fresh]
 
         body = {
             "params_used": {
@@ -710,7 +915,10 @@ class ChemPipeline(Component):
             "filter_stats": getattr(self, "_last_filter_stats", {}),
             "raw_samples": len(raw_chunks),
             "raw_model_text_truncated": ("\n".join(raw_chunks))[:800] if raw_chunks else "",
+            "python_run": python_run,  # single post-generation script execution
+            "bash_run": bash_run,      # single post-generation bash execution
             "results": results
         }
         text = json.dumps(body, indent=2, ensure_ascii=False)
         return Message(text=text)
+
