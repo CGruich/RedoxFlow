@@ -1,4 +1,4 @@
-name: /home/cameron/Documents/envs/chemflow
+name: chemflow
 channels:
   - conda-forge
   - defaults
