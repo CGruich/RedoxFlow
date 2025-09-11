@@ -1,8 +1,10 @@
 # RedoxFlow
 
-`mamba env create -p ./redoxflow -f RedoxFlow/envs/redoxflow.yml`
+`cd RedoxFlow`
 
-`conda activate ./redoxflow`
+`mamba env create -p ../redoxflow -f ./envs/redoxflow.yml`
+
+`conda activate ../redoxflow`
 
 Test Run:
 
