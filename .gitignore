@@ -102,3 +102,5 @@ Thumbs.db
 # lightning_logs/
 # .cache/
 
+# Agent memory (default to empty memory on repo init)
+# memory/
