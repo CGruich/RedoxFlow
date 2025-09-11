@@ -583,27 +583,6 @@ class ChemPipeline(Component):
                             tried.add(parts[1])
             return tried
 
-        # Legacy JSONL support
-        with p.open("r", encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    d = json.loads(line)
-                    # Prefer stored molecule string if present
-                    if isinstance(d.get("molecule"), str) and d.get("molecule"):
-                        tried.add(d["molecule"])
-                    else:
-                        sv = d.get("smiles")
-                        if isinstance(sv, str) and sv:
-                            tried.add(sv)
-                        else:
-                            tried.add(line)
-                except Exception:
-                    tried.add(line)
-        return tried
-
     def _ensure_memory_file(self, path: str) -> None:
         p = Path(path)
         p.parent.mkdir(parents=True, exist_ok=True)
@@ -618,7 +597,7 @@ class ChemPipeline(Component):
     def _get_next_memory_index(self, path: str) -> int:
         """
         Scan memory file and return the next integer index.
-        CSV: read 'index' column; JSONL: read integer 'smiles' field if present.
+        CSV: read 'index' column
         """
         p = Path(path)
         if not p.exists() or p.stat().st_size == 0:
@@ -640,21 +619,6 @@ class ChemPipeline(Component):
             except Exception:
                 return 1
 
-        # Legacy JSONL
-        try:
-            with p.open("r", encoding="utf-8") as f:
-                for line in f:
-                    try:
-                        d = json.loads(line)
-                        sv = d.get("smiles")
-                        if isinstance(sv, int) and sv > max_idx:
-                            max_idx = sv
-                    except Exception:
-                        continue
-            return max_idx + 1 if max_idx >= 0 else 1
-        except Exception:
-            return 1
-
     def _append_memory(self, path: str, smiles_list: List[str]) -> None:
         p = Path(path)
         p.parent.mkdir(parents=True, exist_ok=True)
@@ -669,12 +633,6 @@ class ChemPipeline(Component):
                     writer.writerow([next_idx, s])
                     next_idx += 1
             return
-
-        # Legacy JSONL fallback
-        with p.open("a", encoding="utf-8") as f:
-            for s in smiles_list:
-                f.write(json.dumps({"smiles": next_idx, "molecule": s}) + "\n")
-                next_idx += 1
 
     # ---------- Arg helpers to handle spaces in paths ----------
     def _split_args_allow_spaces(self, argstr: str) -> List[str]:
@@ -921,4 +879,3 @@ class ChemPipeline(Component):
         }
         text = json.dumps(body, indent=2, ensure_ascii=False)
         return Message(text=text)
-

@@ -350,11 +350,11 @@ class RedoxPotentialScript(NWChemInputConstructor):
 
             self.scratch_dir = dirs.ScratchDirDirective()
             self.scratch_dir.set_option(
-                "scratch_dir", os.path.join(scratch_dir, inputScriptFolder)
+                "scratch_dir", "/data"
             )
             self.permanent_dir = dirs.PermanentDirDirective()
             self.permanent_dir.set_option(
-                "permanent_dir", os.path.join(permanent_dir, inputScriptFolder)
+                "permanent_dir", "/data"
             )
         else:
             if self.inputScriptFolderTemplate is not None:
@@ -371,11 +371,11 @@ class RedoxPotentialScript(NWChemInputConstructor):
                     inputScriptFolder = "inputScript"
             self.scratch_dir = dirs.ScratchDirDirective()
             self.scratch_dir.set_option(
-                "scratch_dir", os.path.join(scratch_dir, inputScriptFolder)
+                "scratch_dir", "/data"
             )
             self.permanent_dir = dirs.PermanentDirDirective()
             self.permanent_dir.set_option(
-                "permanent_dir", os.path.join(permanent_dir, inputScriptFolder)
+                "permanent_dir", "/data"
             )
 
         self.charge = dirs.ChargeDirective()

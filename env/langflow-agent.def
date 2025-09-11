@@ -1,0 +1,70 @@
+Bootstrap: docker
+From: mambaorg/micromamba:latest
+
+%labels
+    Maintainer "you"
+    Description "Langflow agent with micromamba env baked in (from chemflow.yml)"
+
+%environment
+    # Default env "activated" for run/exec/shell
+    export MAMBA_ROOT_PREFIX=/opt/conda
+    export CONDA_DEFAULT_ENV=langflow
+    export PATH=/opt/conda/envs/langflow/bin:$PATH
+    export LANGFLOW_HOST=0.0.0.0
+    export LANGFLOW_PORT=7860
+    export LANGFLOW_CONFIG_DIR=/srv/langflow_state
+
+%files
+    chemflow.yml /opt/recipe/chemflow.yml
+    . /app
+
+%post
+    set -euo pipefail
+    mkdir -p /srv/langflow_state /opt/recipe
+
+    # Keep the build lean
+    export PIP_NO_CACHE_DIR=1
+    export CONDA_PKGS_DIRS=/opt/conda/pkgs
+
+    # Locate original YAML
+    YAML_SRC="/opt/recipe/chemflow.yml"
+    test -s "$YAML_SRC" || { echo "ERROR: $YAML_SRC not found or empty"; exit 1; }
+
+    # Sanitize YAML: drop 'prefix:' and replace path-like 'name:' with 'langflow'
+    SANITIZED="/opt/recipe/chemflow.sanitized.yml"
+    awk '
+      /^[[:space:]]*prefix:/ { next }                                  # drop prefix
+      /^[[:space:]]*name:[[:space:]]*/ {
+          line=$0; sub(/^[[:space:]]*name:[[:space:]]*/, "", line)
+          if (line ~ /\//) { print "name: langflow"; next }             # replace path-like name
+      }
+      { print }
+    ' "$YAML_SRC" > "$SANITIZED"
+
+    echo "Using environment file: $SANITIZED"
+    head -n 5 "$SANITIZED" || true
+
+    # Create env with a clean name, ignoring original 'name'/'prefix'
+    micromamba create -y -n langflow -f "$SANITIZED"
+
+    # Ensure pip + Langflow present (in case YAML didn’t include it)
+    /opt/conda/envs/langflow/bin/python -m pip install --no-cache-dir --upgrade pip
+    if ! /opt/conda/envs/langflow/bin/python -c "import langflow" 2>/dev/null; then
+        /opt/conda/envs/langflow/bin/python -m pip install --no-cache-dir langflow uvicorn
+    fi
+
+    # Optional: install your repo as a package
+    # cd /app && /opt/conda/envs/langflow/bin/python -m pip install -e .
+
+    # Trim caches to keep the image small
+    micromamba clean -a -y
+    rm -rf /opt/conda/pkgs/* /root/.cache/pip || true
+    ln -s /app /workspace
+
+%runscript
+    # Start Langflow with the baked-in env active
+    mkdir -p "${LANGFLOW_CONFIG_DIR:-/srv/langflow_state}"
+    exec python -m langflow run \
+        --host "${LANGFLOW_HOST:-0.0.0.0}" \
+        --port "${LANGFLOW_PORT:-7860}" \
+        --workers "${LANGFLOW_WORKERS:-1}"

@@ -86,18 +86,30 @@ def write_nwchem_script(xyz_src: Path, smiles: str, is_reactant: bool):
     charge, mult = get_charge_and_multiplicity_from_smiles(smiles)
 
     # choose ONE combo:
-    xc, grid = "svwn", "xcoarse"     # ultra-fast
-    # xc, grid = "pbe",  "coarse"    # fast GGA
-    # xc, grid = "blyp", "coarse"    # alt GGA
-    # xc, grid = "b3lyp","coarse"    # lighter than your default
+
+    '''B3LYP: xc b3lyp
+    PBE0: xc pbe0
+    PBE96: xc xpbe96 cpbe96
+    PW91: xc xperdew91 perdew91
+    BHLYP: xc bhlyp
+    Becke Half and Half: xc beckehandh
+    BP86: xc becke88 perdew86
+    BP91: xc becke88 perdew91
+    BLYP: xc becke88 lyp'''
+
+    '''(xcoarse||coarse||medium||fine||xfine||huge)'''
+    '''6-311g*'''
+
+    xc, grid, basis = "xpbe96 cpbe96","xcoarse", "def2-SV(P)"
+
 
     nw = RedoxPotentialScript(
         titleGeomOptimizer=f"{base}_redox",
-        scratch_dir=str(job_dir),       # <-- now the job folder
-        permanent_dir=str(job_dir),     # <-- now the job folder
+        scratch_dir=str(job_dir),
+        permanent_dir=str(job_dir),
         charge=charge,
         geometry=geom_name,             # geometry lives beside the .nw file
-        basis="6-311g*",
+        basis=basis,
         maxIter=300,
         xyz=f"{base}_opt",
         xc=xc,
