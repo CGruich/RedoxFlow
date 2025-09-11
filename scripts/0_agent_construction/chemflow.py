@@ -54,8 +54,17 @@ class ChemPipeline(Component):
                   "rdkit_filter": true,
                   "remap_disallowed": true,
 
+                  // EITHER: legacy single-script form
                   "python_script": "hello_world.py",
                   "python_args": "",
+
+                  // OR: multi-script form (runs in order, after molecule generation)
+                  "python_jobs": [
+                    {"script": "first.py",  "args": "--in data.csv --out step1.csv"},
+                    {"script": "second.py", "args": ["--in", "step1.csv", "--flag", "1"]},
+                    {"script": "third.py",  "args": {"--in": "step1.csv", "--out": "step3.csv"}}
+                  ],
+
                   "bash_cmd": "echo {molecule}",
                   "memory_path": "chem_memory.csv",
                   "return_smiles": true
@@ -134,8 +143,13 @@ class ChemPipeline(Component):
             "rdkit_filter": bool(getattr(self, "rdkit_filter", True)),
             "remap_disallowed": bool(getattr(self, "remap_disallowed", True)),
 
+            # Legacy single-script fields (kept for backward compatibility)
             "python_script": self.python_script or "",
             "python_args": self.python_args or "",
+
+            # NEW: multi-script list (params_json only)
+            "python_jobs": [],
+
             "bash_cmd": self.bash_cmd or "",
             "memory_path": self.memory_path or "chem_memory.csv",
             "return_smiles": bool(self.return_smiles),
@@ -697,6 +711,36 @@ class ChemPipeline(Component):
         # fallback
         return [str(args)]
 
+    # ---------- NEW: normalize multiple python jobs ----------
+    def _coerce_python_jobs(self, jobs: Any, single_script: str, single_args: Any) -> List[Dict[str, Any]]:
+        """
+        Accepts:
+          - jobs: None or list of jobs; each job may be:
+              * {"script": "...", "args": <str|list|dict|None>}
+              * "path/to/script.py"  (args = None)
+          - single_script/single_args: legacy fields; used if 'jobs' is empty.
+        Returns: [{"script": str, "args": Any}, ...] (order preserved)
+        """
+        out: List[Dict[str, Any]] = []
+        if isinstance(jobs, list) and jobs:
+            for j in jobs:
+                if isinstance(j, str):
+                    s = j.strip()
+                    if s:
+                        out.append({"script": s, "args": None})
+                elif isinstance(j, dict):
+                    s = str(j.get("script", "")).strip()
+                    if not s:
+                        continue
+                    out.append({"script": s, "args": j.get("args", None)})
+            if out:
+                return out
+
+        # Fallback to the legacy single-script fields
+        if single_script:
+            out.append({"script": single_script, "args": single_args})
+        return out
+
     # ---------- Hooks ----------
     def _run_python(self, script: str, args: Any, molecule: str) -> Dict[str, Any]:
         if not script:
@@ -735,6 +779,19 @@ class ChemPipeline(Component):
             }
         except Exception as e:
             return {"error": str(e), "cmd": shlex.join(argv)}
+
+    # ---------- NEW: run multiple python scripts (sequentially) ----------
+    def _run_python_jobs_once(self, jobs: List[Dict[str, Any]], memory_path: str) -> List[Dict[str, Any]]:
+        """
+        Runs each job in order. Each job is {"script": str, "args": Any}.
+        Returns a list of per-job run dicts (rc/stdout/stderr/cmd).
+        """
+        runs: List[Dict[str, Any]] = []
+        for j in jobs:
+            script = j.get("script") or ""
+            args = j.get("args", None)
+            runs.append(self._run_python_once(script, args, memory_path))
+        return runs
 
     def _run_bash(self, template: str, molecule: str, memory_path: Optional[str] = None) -> Dict[str, Any]:
         """
@@ -850,12 +907,19 @@ class ChemPipeline(Component):
         fresh = fresh[: p["count"]]
         self._append_memory(p["memory_path"], fresh)
 
-        # Run arbitrary Python script ONCE after all molecules are generated/saved
-        python_run = {}
-        if p["python_script"]:
-            python_run = self._run_python_once(p["python_script"], p["python_args"], p["memory_path"])
+        # --- NEW: resolve multi-script vs legacy single-script
+        jobs = self._coerce_python_jobs(
+            p.get("python_jobs", []),
+            p.get("python_script", ""),
+            p.get("python_args", ""),
+        )
 
-        # Run bash command ONCE at the very end (after Python script)
+        # Run Python scripts ONCE at the very end (in order)
+        python_runs: List[Dict[str, Any]] = []
+        if jobs:
+            python_runs = self._run_python_jobs_once(jobs, p["memory_path"])
+
+        # Run bash command ONCE at the very end (after Python scripts)
         bash_run = {}
         if p["bash_cmd"]:
             bash_run = self._run_bash_once(p["bash_cmd"], memory_path=p["memory_path"])
@@ -873,10 +937,11 @@ class ChemPipeline(Component):
             "filter_stats": getattr(self, "_last_filter_stats", {}),
             "raw_samples": len(raw_chunks),
             "raw_model_text_truncated": ("\n".join(raw_chunks))[:800] if raw_chunks else "",
-            "python_run": python_run,  # single post-generation script execution
+            # NEW: list of per-script runs; keep first item as 'python_run' for backward compat if length==1
+            "python_runs": python_runs,
+            "python_run": (python_runs[0] if len(python_runs) == 1 else None),
             "bash_run": bash_run,      # single post-generation bash execution
             "results": results
         }
         text = json.dumps(body, indent=2, ensure_ascii=False)
         return Message(text=text)
-
