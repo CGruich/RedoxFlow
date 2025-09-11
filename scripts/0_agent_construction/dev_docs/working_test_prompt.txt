@@ -1,0 +1,65 @@
+{
+  "count": 10,
+  "max_atoms": 16,
+  "min_unique_elements": 1,
+  "elements": "CNOF",
+
+  "model_id": "ibm-research/GP-MoLFormer-Uniq",
+  "tokenizer_id": "ibm-research/MoLFormer-XL-both-10pct",
+
+  "temperature": 0.425,
+  "top_p": 0.9,
+  "top_k": null,
+  "repetition_penalty": 1.10,
+  "num_return_sequences": 96,
+
+  "device": "cuda:0",
+  "rdkit_filter": true,
+  "remap_disallowed": true,
+
+  "python_script": "/media/cameron/T7 Touch/Github/CGruich/RedoxFlow/scripts/0_agent_construction/reduce.py",
+  "python_args": [
+    "--molecules", "/media/cameron/T7 Touch/Github/CGruich/RedoxFlow/scripts/0_agent_construction/reactants_memory.csv",
+    "--reactions", "/media/cameron/T7 Touch/Github/CGruich/RedoxFlow/scripts/0_agent_construction/Reactions.json",
+    "--out", "/media/cameron/T7 Touch/Github/CGruich/RedoxFlow/scripts/0_agent_construction/reaction_products.csv",
+    "--depth", "2"
+  ],
+
+  "memory_path": "/media/cameron/T7 Touch/Github/CGruich/RedoxFlow/scripts/0_agent_construction/reactants_memory.csv",
+  "return_smiles": true
+}
+
+V2
+
+{
+  "count": 5,
+  "max_atoms": 8,
+  "min_unique_elements": 1,
+  "elements": "CNOF",
+
+  "model_id": "ibm-research/GP-MoLFormer-Uniq",
+  "tokenizer_id": "ibm-research/MoLFormer-XL-both-10pct",
+
+  "temperature": 0.425,
+  "top_p": 0.9,
+  "top_k": null,
+  "repetition_penalty": 1.10,
+  "num_return_sequences": 96,
+
+  "device": "cuda:0",
+  "rdkit_filter": true,
+  "remap_disallowed": true,
+
+  "python_script": "/home/cameron/Documents/Github/RedoxFlow/scripts/0_agent_construction/reduce.py",
+  "python_args": [
+    "--molecules", "/home/cameron/Documents/Github/RedoxFlow/scripts/0_agent_construction/reactants_memory.csv",
+    "--reactions", "/home/cameron/Documents/Github/RedoxFlow/scripts/0_agent_construction/reactions.json",
+    "--out", "/home/cameron/Documents/Github/RedoxFlow/scripts/0_agent_construction/reaction_products.csv",
+    "--depth", "2"
+  ],
+
+  "bash_cmd": "bash \"/home/cameron/Documents/Github/RedoxFlow/scripts/0_agent_construction/run_conformer_search_nw_generation.sh\"",
+
+  "memory_path": "/home/cameron/Documents/Github/RedoxFlow/scripts/0_agent_construction/reactants_memory.csv",
+  "return_smiles": true
+}
