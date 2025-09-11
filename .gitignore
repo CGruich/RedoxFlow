@@ -1,0 +1,104 @@
+# ── Python bytecode / cache ─────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ── C extensions ────────────────────────────────────────────────────────────────
+*.so
+*.pyd
+*.dll
+
+# ── Virtual environments ───────────────────────────────────────────────────────
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+.python-version  # pyenv local version file (ignore if per-project)
+
+# ── Packaging / build artifacts ────────────────────────────────────────────────
+.Python
+build/
+dist/
+downloads/
+wheels/
+*.egg-info/
+.eggs/
+*.egg
+sdist/
+share/python-wheels/
+.installed.cfg
+MANIFEST
+
+# ── PyInstaller ────────────────────────────────────────────────────────────────
+*.spec
+
+# ── Logs ───────────────────────────────────────────────────────────────────────
+*.log
+
+# ── Test / coverage ────────────────────────────────────────────────────────────
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.pytest_cache/
+.hypothesis/
+
+# ── Type checkers / linters ───────────────────────────────────────────────────
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pytype/
+.pyre/
+.ruff_cache/
+
+# ── Jupyter / IPython ─────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+profile_default/
+# If you export notebooks with outputs stripped/kept separately, add patterns here.
+
+# ── Documentation (Sphinx / MkDocs) ───────────────────────────────────────────
+docs/_build/
+site/
+
+# ── Django / SQLite (comment out if you want these tracked) ───────────────────
+db.sqlite3
+db.sqlite3-journal
+
+# ── Environment files (keep an example) ───────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Tooling / project managers (tune to taste) ────────────────────────────────
+# Pipenv
+# Pipfile.lock        # (Usually track this; remove the # to ignore if you prefer)
+# Poetry
+# poetry.lock         # (Usually track this; remove the # to ignore if you prefer)
+.poetry/
+# PDM
+__pypackages__/
+# Hatch
+.hatch/
+
+# ── Editors / IDEs ────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.code-workspace
+
+# ── OS cruft ──────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Optional: common ML/DS run artifacts (uncomment if you use them) ──────────
+# wandb/
+# mlruns/
+# ray_results/
+# lightning_logs/
+# .cache/
+
