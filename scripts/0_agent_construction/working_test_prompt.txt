@@ -237,4 +237,59 @@ V6
   "return_smiles": true
 }
 
+V7
+
+{
+  "count": 5,
+  "max_atoms": 8,
+  "min_unique_elements": 1,
+  "elements": "CNOF",
+
+  "model_id": "ibm-research/GP-MoLFormer-Uniq",
+  "tokenizer_id": "ibm-research/MoLFormer-XL-both-10pct",
+
+  "temperature": 0.425,
+  "top_p": 0.9,
+  "top_k": null,
+  "repetition_penalty": 1.10,
+  "num_return_sequences": 96,
+
+  "device": "cuda:0",
+  "rdkit_filter": true,
+  "remap_disallowed": true,
+
+  "python_jobs": [
+    {
+      "script": "/home/cameron/Documents/Github/RedoxFlow/scripts/reduce.py",
+      "args": [
+        "--molecules", "/home/cameron/Documents/Github/RedoxFlow/memory/reactants_memory.csv",
+        "--reactions", "/home/cameron/Documents/Github/RedoxFlow/scripts/reactions.json",
+        "--out", "/home/cameron/Documents/Github/RedoxFlow/memory/reduction_candidates.csv",
+        "--depth", "2"
+      ]
+    },
+    {
+      "script": "/home/cameron/Documents/Github/RedoxFlow/scripts/conformer.py",
+      "args": [
+        "--in", "/home/cameron/Documents/Github/RedoxFlow/memory/reduction_candidates.csv",
+        "--out", "/home/cameron/Documents/Github/RedoxFlow/memory/products_memory.csv",
+        "--max-confs", "200",
+        "--min-steps", "1000",
+        "--seed", "1337",
+        "--batch-size", "1000"
+      ]
+    },
+    {
+      "script": "/home/cameron/Documents/Github/RedoxFlow/scripts/generate_nw.py",
+      "args": [
+        "--reactants_in", "/home/cameron/Documents/Github/RedoxFlow/memory/reactants",
+        "--products_in", "/home/cameron/Documents/Github/RedoxFlow/memory/products",
+        "--scripts_out", "/home/cameron/Documents/Github/RedoxFlow/memory/scripts"
+        ]
+    }
+  ],
+
+  "memory_path": "/home/cameron/Documents/Github/RedoxFlow/memory/reactants_memory.csv",
+  "return_smiles": true
+}
 
