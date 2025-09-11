@@ -2,7 +2,7 @@
 
 `cd RedoxFlow`
 
-`mamba env create -p ../redoxflow -f ./envs/redoxflow.yml`
+`mamba env create -p ../redoxflow -f ./env/redoxflow.yml`
 
 `conda activate ../redoxflow`
 
