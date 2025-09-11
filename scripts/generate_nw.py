@@ -2,29 +2,23 @@
 import re
 import sys
 import shutil
+import argparse
 from pathlib import Path
+from typing import List
 
 from rdkit import Chem
 from redox_script_generator import RedoxPotentialScript
 
-# -------- paths --------
-ROOT = Path(".").resolve()
-SRC_DIRS = [ROOT / "reactants", ROOT / "products"]   # where XYZs live
-SCRIPTS_ROOT = ROOT / "scripts"
-REACT_SCRIPTS_DIR = SCRIPTS_ROOT / "reactants"
-PROD_SCRIPTS_DIR  = SCRIPTS_ROOT / "products"
-
 REACT_PREFIX = "react_"
 PROD_PREFIX  = "prod_"
-# -----------------------
 
-def ensure_dirs():
-    REACT_SCRIPTS_DIR.mkdir(parents=True, exist_ok=True)
-    PROD_SCRIPTS_DIR.mkdir(parents=True, exist_ok=True)
+def ensure_dirs(scripts_root: Path) -> None:
+    (scripts_root / "reactants").mkdir(parents=True, exist_ok=True)
+    (scripts_root / "products").mkdir(parents=True, exist_ok=True)
 
-def find_xyz_files():
-    files = []
-    for d in SRC_DIRS:
+def find_xyz_files(src_dirs: List[Path]) -> List[Path]:
+    files: List[Path] = []
+    for d in src_dirs:
         if not d.exists():
             print(f"[warn] source dir missing: {d}")
             continue
@@ -61,15 +55,20 @@ def get_charge_and_multiplicity_from_smiles(smiles: str):
     multiplicity = unpaired + 1
     return charge, multiplicity
 
-def write_nwchem_script(xyz_src: Path, smiles: str, is_reactant: bool):
+def write_nwchem_script(
+    xyz_src: Path,
+    smiles: str,
+    is_reactant: bool,
+    scripts_root: Path,
+) -> None:
     """
-    Create scripts/<reactants|products>/<basename>/ and place:
+    Create <scripts_root>/<reactants|products>/<basename>/ and place:
       - <basename>.xyz (copied)
       - <basename>.nw  (generated)
     Geometry path in .nw is just the local filename.
     scratch_dir and permanent_dir are set to this job folder.
     """
-    parent_scripts_dir = REACT_SCRIPTS_DIR if is_reactant else PROD_SCRIPTS_DIR
+    parent_scripts_dir = scripts_root / ("reactants" if is_reactant else "products")
     parent_scripts_dir.mkdir(parents=True, exist_ok=True)
 
     base = xyz_src.stem           # e.g., 'react_1' or 'prod_8'
@@ -102,7 +101,6 @@ def write_nwchem_script(xyz_src: Path, smiles: str, is_reactant: bool):
 
     xc, grid, basis = "xpbe96 cpbe96","xcoarse", "def2-SV(P)"
 
-
     nw = RedoxPotentialScript(
         titleGeomOptimizer=f"{base}_redox",
         scratch_dir=str(job_dir),
@@ -134,12 +132,40 @@ def write_nwchem_script(xyz_src: Path, smiles: str, is_reactant: bool):
     print(f"[ok] wrote {out_path}  (geom={geom_name}, charge={charge}, mult={mult})")
 
 def main():
-    ensure_dirs()
+    # CLI to configure input/output directories
+    ap = argparse.ArgumentParser(description="Generate NWChem scripts for reactant/product XYZs.")
+    ap.add_argument(
+        "--reactants_in",
+        type=str,
+        default="/home/cameron/Documents/Github/RedoxFlow/memory/reactants",
+        help="Directory containing reactant XYZ files (default: memory/reactants)",
+    )
+    ap.add_argument(
+        "--products_in",
+        type=str,
+        default="/home/cameron/Documents/Github/RedoxFlow/memory/products",
+        help="Directory containing product XYZ files (default: memory/products)",
+    )
+    ap.add_argument(
+        "--scripts_out",
+        type=str,
+        default="/home/cameron/Documents/Github/RedoxFlow/memory/scripts",
+        help="Root directory to write scripts (default: memory/scripts). "
+             "Scripts go into <scripts_out>/reactants and <scripts_out>/products.",
+    )
+    args = ap.parse_args()
 
-    xyz_files = find_xyz_files()
-    print(f"[info] found {len(xyz_files)} XYZ files in {', '.join(str(d) for d in SRC_DIRS)}")
+    reactants_dir = Path(args.reactants_in)
+    products_dir = Path(args.products_in)
+    scripts_root  = Path(args.scripts_out)
+
+    ensure_dirs(scripts_root)
+
+    src_dirs = [reactants_dir, products_dir]
+    xyz_files = find_xyz_files(src_dirs)
+    print(f"[info] found {len(xyz_files)} XYZ files in {', '.join(str(d) for d in src_dirs)}")
     if not xyz_files:
-        print("[hint] put your 'react_*.xyz' in ./reactants and 'prod_*.xyz' in ./products")
+        print(f"[hint] put your 'react_*.xyz' in {reactants_dir} and 'prod_*.xyz' in {products_dir}")
         return
 
     failures = 0
@@ -151,7 +177,7 @@ def main():
             if Chem.MolFromSmiles(smiles) is None:
                 raise ValueError(f"RDKit cannot parse SMILES='{smiles}'")
             print(f"[do ] {kind:8s}  {p.name:25s}  SMILES={smiles}")
-            write_nwchem_script(p, smiles, is_reactant=is_reactant)
+            write_nwchem_script(p, smiles, is_reactant=is_reactant, scripts_root=scripts_root)
         except Exception as e:
             failures += 1
             print(f"[ERR] {kind:8s}  {p} :: {e}")
