@@ -31,11 +31,13 @@ import tempfile
 from pathlib import Path
 from collections import namedtuple
 from typing import Optional, Tuple, Dict, List
+import pandas as pd
+import numpy as np
 
 Record = namedtuple(
     "Record",
     [
-        "Reactant_name",
+        "index",
         "Reactant_SMILES",
         "Depth",
         "Parent_SMILES",
@@ -45,6 +47,84 @@ Record = namedtuple(
         "row_index",
     ],
 )
+
+def prune_reactants_memory(reactants_csv: str, products_csv: str) -> Tuple[int, int, int, int, int]:
+    """
+    1) Intersect on SMILES: products.Reactant_SMILES ↔ reactants.smiles (trimmed strings).
+    2) Enforce 'products ⊆ reactants' by dropping any product rows with no matching reactant SMILES.
+    3) Within each file, drop duplicate SMILES, keeping the row with the *lowest numeric 'index'*.
+    4) Overwrite both CSVs in place.
+
+    Returns:
+        (reactants_before, reactants_after, products_before, products_after, unique_smiles_kept)
+    """
+    rdf = pd.read_csv(reactants_csv, dtype="string")
+    pdf = pd.read_csv(products_csv, dtype="string")
+
+    # Schema checks
+    for col, df, path in [
+        ("index", rdf, reactants_csv),
+        ("smiles", rdf, reactants_csv),
+        ("index", pdf, products_csv),
+        ("Reactant_SMILES", pdf, products_csv),
+    ]:
+        if col not in df.columns:
+            raise ValueError(f"Required column '{col}' missing in {path}")
+
+    r_before, p_before = len(rdf), len(pdf)
+
+    # Normalized keys
+    rdf["_key"] = rdf["smiles"].astype("string").str.strip()
+    pdf["_key"] = pdf["Reactant_SMILES"].astype("string").str.strip()
+
+    # Drop empty keys
+    rdf = rdf[rdf["_key"].notna() & (rdf["_key"] != "")]
+    pdf = pdf[pdf["_key"].notna() & (pdf["_key"] != "")]
+
+    rset = set(rdf["_key"])
+    pset = set(pdf["_key"])
+
+    # Enforce products ⊆ reactants (drop strays from products)
+    stray_products = pset - rset
+    if stray_products:
+        # Optional: print a small warning to stdout for visibility
+        print(f"[warn] Dropping {len(stray_products)} product reactants not in reactants.csv "
+              f"(e.g., {sorted(list(stray_products))[:5]} ...)")
+        pdf = pdf[~pdf["_key"].isin(stray_products)].copy()
+        pset = set(pdf["_key"])  # refresh
+
+    # Now intersect both sides (this also drops reactant rows unused by products)
+    common = rset & pset
+    rdf = rdf[rdf["_key"].isin(common)].copy()
+    pdf = pdf[pdf["_key"].isin(common)].copy()
+
+    # If nothing in common, write empties
+    if not common:
+        rdf.drop(columns=["_key"], errors="ignore").to_csv(reactants_csv, index=False)
+        pdf.drop(columns=["_key"], errors="ignore").to_csv(products_csv, index=False)
+        return (r_before, 0, p_before, 0, 0)
+
+    # Prepare numeric index for "lowest index wins"
+    for df in (rdf, pdf):
+        df["_index_num"] = pd.to_numeric(df["index"], errors="coerce").fillna(np.inf)
+
+    def keep_lowest_index(df):
+        # Keep the minimal index row per SMILES within THIS dataframe
+        min_ix = df.groupby("_key")["_index_num"].transform("min")
+        out = df[df["_index_num"] == min_ix].copy()
+        # Resolve ties deterministically
+        out = out.sort_values(by=["_index_num", "index"], kind="stable")
+        out = out.drop_duplicates(subset=["_key"], keep="first")
+        return out.drop(columns=["_index_num", "_key"])
+
+    rdf_final = keep_lowest_index(rdf)
+    pdf_final = keep_lowest_index(pdf)
+
+    # Save in place
+    rdf_final.to_csv(reactants_csv, index=False)
+    pdf_final.to_csv(products_csv, index=False)
+
+    return r_before, len(rdf_final), p_before, len(pdf_final), len(common)
 
 def sniff_delimiter(path: str) -> str:
     with open(path, "r", newline="", encoding="utf-8") as f:
@@ -61,7 +141,7 @@ def read_table(path: str):
     with open(path, "r", newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f, delimiter=delim)
         required = {
-            "Reactant_name", "Reactant_SMILES", "Depth", "Parent_SMILES",
+            "index", "Reactant_SMILES", "Depth", "Parent_SMILES",
             "Reaction_name", "Reaction_scheme", "Product_SMILES"
         }
         missing = required - set(reader.fieldnames or [])
@@ -72,7 +152,7 @@ def read_table(path: str):
         for i, row in enumerate(reader):
             rows.append(
                 Record(
-                    row["Reactant_name"],
+                    row["index"],
                     row["Reactant_SMILES"],
                     row["Depth"],
                     row["Parent_SMILES"],
@@ -411,7 +491,7 @@ def main():
         if E is None:
             continue
 
-        key = rec.Reactant_name
+        key = rec.index
         current = winners.get(key)
         if (current is None) or (E < current[0]):
             winners[key] = (E, (rec.Reactant_SMILES or "").strip(), psmi)
@@ -420,7 +500,7 @@ def main():
     try:
         with open(out_path, "w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
-            writer.writerow(["Reactant_name", "Reactant_SMILES", "Product_SMILES"])
+            writer.writerow(["index", "Reactant_SMILES", "Product_SMILES"])
             for reactant_name in sorted(winners.keys(), key=lambda s: (str(s))):
                 best_E, r_smi, p_smi = winners[reactant_name]
                 writer.writerow([reactant_name, r_smi, p_smi])
@@ -463,6 +543,22 @@ def main():
         comment_r = f"REACTANT_ID={reactant_id} SMILES={r_smi} ENERGY={E_r:.6f} kcal/mol"
         xyz_out_r = _rewrite_xyz_comment(xyz_block_r, comment_r)
         (reactants_dir / f"react_{reactant_id}.xyz").write_text(xyz_out_r, encoding="utf-8")
+
+
+    # ------------------------------------------------------------
+    # AFTER products exist: prune reactants using an explicit path
+    # Resolve ../memory/products_memory.csv to an absolute path.
+    # ------------------------------------------------------------
+    products_mem = Path("../../memory/products_memory.csv").resolve()
+    reactants_mem = Path("../../memory/reactants_memory.csv").resolve()
+    if products_mem.exists():
+        r_before, r_after, p_before, p_after, unique_indices_kept = prune_reactants_memory(str(reactants_mem), str(products_mem))
+        r_delta = r_before - r_after
+        p_delta = p_before - p_after
+        print(f"[prune] Removed {r_delta} redundant molecules from reactants and {p_delta} redundant molecules from products")
+    else:
+        print(f"[prune] skipped (no memory): {products_mem} not initialized")
+
 
 if __name__ == "__main__":
     main()

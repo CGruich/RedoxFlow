@@ -31,56 +31,12 @@ from typing import Dict, List, Set, Tuple
 import pandas as pd
 from rdkit import Chem, RDLogger
 from rdkit.Chem import AllChem
+import numpy as np
 
 # ---------------------------------------------------------------------------
 # Silence RDKit warnings
 # ---------------------------------------------------------------------------
 RDLogger.DisableLog("rdApp.warning")
-
-# ---------------------------------------------------------------------------
-# Prune reactants_memory.csv using products_memory.csv (in-place)
-# ---------------------------------------------------------------------------
-def prune_reactants_memory(reactants_csv: str, products_csv: str) -> Tuple[int, int, int]:
-    """
-    Keep ONLY rows in reactants_memory.csv whose 'index' appears in
-    products_memory.csv['Reactant_name'].
-
-    Overwrites reactants_csv in place.
-    Returns (before_count, after_count, removed).
-    """
-    rpath = Path(reactants_csv)
-    ppath = Path(products_csv)
-
-    if not rpath.exists() or not ppath.exists():
-        # Silent no-op if either file missing
-        return (0, 0, 0)
-
-    rdf = pd.read_csv(rpath, dtype="string")
-    pdf = pd.read_csv(ppath, dtype="string")
-
-    if "index" not in rdf.columns or "Reactant_name" not in pdf.columns:
-        return (0, 0, 0)
-
-    rdf["index"] = rdf["index"].astype("string").str.strip()
-    keep_ids = (
-        pdf["Reactant_name"]
-        .dropna()
-        .astype("string")
-        .str.strip()
-        .loc[lambda s: s != ""]
-        .unique()
-        .tolist()
-    )
-    keep_set = set(keep_ids)
-
-    before = len(rdf)
-    pruned = rdf[rdf["index"].isin(keep_set)].copy()
-    after = len(pruned)
-    removed = before - after
-
-    pruned.to_csv(rpath, index=False)
-    print(f"[prune] {reactants_csv}: kept {after}/{before} (removed {removed}) based on {products_csv}")
-    return before, after, removed
 
 # ---------------------------------------------------------------------------
 # Reaction loading
@@ -211,7 +167,7 @@ def run_recursive_for_root(
 
             rows.append(
                 {
-                    "Reactant_name": root_name,
+                    "index": root_name,
                     "Reactant_SMILES": root_smiles,
                     "Depth": depth + 1,
                     "Parent_SMILES": parent_smi,
@@ -269,20 +225,6 @@ def main():
     df = pd.DataFrame(all_rows)
     df.to_csv(args.out, index=False)
     print(f"Wrote {len(df)} rows to {args.out}")
-
-    # ------------------------------------------------------------
-    # AFTER products exist: prune reactants if products_memory.csv is available
-    # Prefer the canonical 'products_memory.csv' name if present; otherwise,
-    # if the user wrote to that exact name via --out, use it directly.
-    # ------------------------------------------------------------
-    products_mem = Path("products_memory.csv")
-    if products_mem.exists():
-        prune_reactants_memory("reactants_memory.csv", str(products_mem))
-    elif Path(args.out).name == "products_memory.csv":
-        prune_reactants_memory("reactants_memory.csv", args.out)
-    else:
-        print("[prune] skipped (no products_memory.csv found). "
-              "Write products to 'products_memory.csv' to enable automatic pruning.")
-
+    
 if __name__ == "__main__":
     main()
