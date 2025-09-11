@@ -361,11 +361,16 @@ def main():
     if not rows:
         sys.stderr.write("WARNING: no rows found in input.\n")
 
-    # Prepare output folders
-    products_dir = Path("products")
-    reactants_dir = Path("reactants")
+    # ---------- CHANGED: derive output directories from --out ----------
+    out_path = Path(args.out_path).resolve()
+    out_dir = out_path.parent
+    out_dir.mkdir(parents=True, exist_ok=True)  # ensure parent directory exists
+
+    products_dir = out_dir / "products"
+    reactants_dir = out_dir / "reactants"
     products_dir.mkdir(parents=True, exist_ok=True)
     reactants_dir.mkdir(parents=True, exist_ok=True)
+    # ---------------------------------------------------------------
 
     # Prepare unique Product_SMILES (preserve first-seen order)
     seen = set()
@@ -413,15 +418,15 @@ def main():
 
     # Write output CSV: Reactant_name, Reactant_SMILES, Product_SMILES
     try:
-        with open(args.out_path, "w", newline="", encoding="utf-8") as f:
+        with open(out_path, "w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
             writer.writerow(["Reactant_name", "Reactant_SMILES", "Product_SMILES"])
             for reactant_name in sorted(winners.keys(), key=lambda s: (str(s))):
                 best_E, r_smi, p_smi = winners[reactant_name]
                 writer.writerow([reactant_name, r_smi, p_smi])
-        sys.stderr.write(f"Wrote {len(winners)} winners to {args.out_path}\n")
+        sys.stderr.write(f"Wrote {len(winners)} winners to {out_path}\n")
     except Exception as e:
-        sys.stderr.write(f"ERROR: failed to write output '{args.out_path}': {e}\n")
+        sys.stderr.write(f"ERROR: failed to write output '{out_path}': {e}\n")
         sys.exit(3)
 
     # ---- Save PRODUCT winners (one per reactant) ----
