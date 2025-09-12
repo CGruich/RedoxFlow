@@ -1,0 +1,19 @@
+index,Reactant_SMILES,Depth,Parent_SMILES,Reaction_name,Reaction_scheme,Product_SMILES
+3,CC(C)CC(N)=O,1,CC(C)CC(N)=O,ketone_to_secondary_alcohol,CC(C)CC(N)=O >> CC(C)CC(N)O,CC(C)CC(N)O
+3,CC(C)CC(N)=O,1,CC(C)CC(N)=O,amide_to_amine,CC(C)CC(N)=O >> CC(C)CCN,CC(C)CCN
+4,CCC(C)NC=O,1,CCC(C)NC=O,amide_to_amine,CCC(C)NC=O >> CCC(C)NC,CCC(C)NC
+5,CNC(=O)C(C)C,1,CNC(=O)C(C)C,ketone_to_secondary_alcohol,CNC(=O)C(C)C >> CNC(O)C(C)C,CNC(O)C(C)C
+5,CNC(=O)C(C)C,1,CNC(=O)C(C)C,amide_to_amine,CNC(=O)C(C)C >> CNCC(C)C,CNCC(C)C
+6,CC(C)CNC=O,1,CC(C)CNC=O,amide_to_amine,CC(C)CNC=O >> CNCC(C)C,CNCC(C)C
+7,CC(=O)NC(C)C,1,CC(=O)NC(C)C,ketone_to_secondary_alcohol,CC(=O)NC(C)C >> CC(C)NC(C)O,CC(C)NC(C)O
+7,CC(=O)NC(C)C,1,CC(=O)NC(C)C,amide_to_amine,CC(=O)NC(C)C >> CCNC(C)C,CCNC(C)C
+8,CCOC(=O)CC,1,CCOC(=O)CC,ketone_to_secondary_alcohol,CCOC(=O)CC >> CCOC(O)CC,CCOC(O)CC
+8,CCOC(=O)CC,1,CCOC(=O)CC,ketone_to_alkane,CCOC(=O)CC >> CCCOCC,CCCOCC
+10,CC(C)CCC=O,1,CC(C)CCC=O,aldehyde_to_primary_alcohol,CC(C)CCC=O >> CC(C)CCCO,CC(C)CCCO
+10,CC(C)CCC=O,1,CC(C)CCC=O,aldehyde_to_alkane,CC(C)CCC=O >> [CH2]CCC(C)C,[CH2]CCC(C)C
+10,CC(C)CCC=O,1,CC(C)CCC=O,ketone_to_alkane,CC(C)CCC=O >> CCCC(C)C,CCCC(C)C
+15,CCCC(C)C=O,1,CCCC(C)C=O,aldehyde_to_primary_alcohol,CCCC(C)C=O >> CCCC(C)CO,CCCC(C)CO
+15,CCCC(C)C=O,1,CCCC(C)C=O,aldehyde_to_alkane,CCCC(C)C=O >> [CH2]C(C)CCC,[CH2]C(C)CCC
+15,CCCC(C)C=O,1,CCCC(C)C=O,ketone_to_alkane,CCCC(C)C=O >> CCCC(C)C,CCCC(C)C
+16,CCC(C)C(N)=O,1,CCC(C)C(N)=O,ketone_to_secondary_alcohol,CCC(C)C(N)=O >> CCC(C)C(N)O,CCC(C)C(N)O
+16,CCC(C)C(N)=O,1,CCC(C)C(N)=O,amide_to_amine,CCC(C)C(N)=O >> CCC(C)CN,CCC(C)CN

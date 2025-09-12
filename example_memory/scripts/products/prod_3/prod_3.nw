@@ -1,0 +1,33 @@
+title "prod_3_redox"
+memory 512 mb
+start EMPTY
+scratch_dir /data
+permanent_dir /data
+charge 0
+geometry
+ load prod_3.xyz
+end
+basis
+ * library def2-SV(P)
+end
+driver
+ MAXITER 300
+ XYZ prod_3_opt
+end
+dft
+ xc xpbe96 cpbe96
+ mult 1
+ grid xcoarse
+ disp vdw 3
+end
+task dft optimize
+title "prod_3_FREQ"
+task dft freq
+title "prod_3_SOLV"
+cosmo
+ dielec 78.4
+ minbem 3
+ ificos 1
+ do_gasphase False
+end
+task dft energy
