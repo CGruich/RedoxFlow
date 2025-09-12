@@ -3,6 +3,7 @@
 RedoxFlow is an agentic proof-of-concept that prepares redox potential simulations of solvated chemicals en-masse for electrochemical discovery.
 
 **Background**
+
 Redox potential quantifies how willing an organic chemical is to being reduced or oxidized. It is useful in many electrochemical applications, such as:
 
 * Batteries & Flow Batteries (e.g., anode/cathode couple selection, screening redox-active electrolytes/mediators)
