@@ -1,6 +1,6 @@
 # RedoxFlow: Agentic workflow for preparing simulations in high-throughput redox-potential screening 
 
-RedoxFlow generates candidate organic molecules, proposes reduced products, and auto-prepares simulation inputs to compute thermodynamic (Nernstian) redox potentials via the **Computational Hydrogen Electrode (CHE)** method \[1].
+RedoxFlow generates candidate organic molecules, proposes reduced products, and auto-prepares simulation inputs to compute thermodynamic (Nernstian) redox potentials in aqueous phase via the **Computational Hydrogen Electrode (CHE)** method \[1].
 <p align="center">
   <img src="media/script_generation.png" alt="Script generation demo" width="720">
 </p>
@@ -27,9 +27,12 @@ CHE computes redox potentials from a thermodynamic cycle. RedoxFlow automates in
 - **Generates reactants** (_de novo_) with a lightweight foundation model (`ibm-research/GP-MoLFormer-Uniq`)
     - Unrealistic moieties/ring strained systems auto-filtered out
     - 
-- **Predicts reduced products** (transparent rule-based POC)
+- **Predicts reduced products** (transparent rules based off functional groups, proof-of-concept)
 - **Does conformer search** and picks lowest-energy structures
 - **Writes simulation scripts** for both states and **computes** \(E = -ΔG/(zF)\) for completed simulations
+
+
+The agent is loaded locally from within the repo and thus is deployable on local machines or HPC for script generation provided that the environment is installed.
 
 ---
 
@@ -131,14 +134,18 @@ For a round-trip demonstration of redox potential calculation with the agent/emb
 
 The agent workflow provided is a minimum proof-of-concept for simulation preparation start-to-finish and redox potential calculation start-to-finish. The automation premise is extendable based on what we see as future steps to the work:
 
+**Automation Improvements**
 * Pair the agent with an en-masse job submission workflow (SLURM, Nextflow, Snakemake, etc.)
-* Expand reaction rules or replace the reaction rule proof-of-concept with a partial charge predictive model to auto-identify likely reduction sites (e.g., Gasteiger partial charge assignment)
-* Allow the user to specify their own blacklisted moieties to restrict chemically unrealistic reactants
-    * We currently set this blacklist minimally inside `chemflow.py` as proof-of-concept but could easily expose this to the interface for the researcher.
-* Expand the script preparation method (RedoxFlow.prepare_scripts()) to include fine-tuned DFT simulation settings (e.g., basis set, functional, temperature)
+* Adapt the .csv-based memory to a proper relational database (e.g., PostgreSQL, SQLite)
+* Expand the script preparation method (RedoxFlow.prepare_scripts()) to include fine-tuned DFT simulation settings (e.g., basis set, functional, dielectric constant, temperature)
     * We currently restrict these settings to tractable, fixed values deliberately for proof-of-concept
 * Pair the script preparation method (RedoxFlow.prepare_scripts()) with a natural language prompt interface
     * e.g., "Generate me 100 reactant candidates using the PBE functional and 6-311g* basis set at 200 Kelvin."
+
+**Chemistry Improvements**
+* Expand reaction rules or replace the reaction rule proof-of-concept with a partial charge predictive model to auto-identify likely reduction sites (e.g., Gasteiger partial charge assignment)
+* Allow the user to specify their own blacklisted moieties to restrict chemically unrealistic reactants
+    * We currently set this blacklist minimally inside `redoxflow.py` as proof-of-concept but could easily expose this to the interface for the researcher.
 * Expand the subset of atoms (e.g., include Cl, P, S)
     * We restrict the chemistry to CNOF molecules for proof-of-concept demonstration.
 
