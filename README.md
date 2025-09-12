@@ -9,7 +9,7 @@ Redox potential quantifies how willing an organic chemical is to being reduced o
 * Environmental Electrochemistry (e.g., quantify the redox potential of contaminants to predict likelihood of harmful byproducts)
 * Redox-swing Separations & CO2 Capture (e.g., select redox potential to quantify the binding/unbinding window for chemical separations)
 
-A common method for computing redox potentials is the computational hydrogen electrode (CHE) method. Using this method often amounts to calculating a thermocycle. The RedoxFlow premise is that an agentic AI can automate simulation preparation for this thermocycle calculation.
+A common method for computing redox potentials is the computational hydrogen electrode (CHE) method. Using this method often amounts to calculating a thermocycle. The project premise is that an agentic AI can prepare the simulation scripts for this method en-masse for large-scale chemical search and discovery.
 
 Such a thermocycle is arduous by-hand and not conducive to high-throughput chemistry workflows. 
 For a model reduction reaction `A + xH^+ + ye^- → B`, a researcher typically must: 
