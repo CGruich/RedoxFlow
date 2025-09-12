@@ -51,7 +51,8 @@ docker images | grep nwchem
 ---
 ```
 # How to run a prepared simulation by the agent (32 MPI ranks were used in this case for a 32-core CPU)
-Example Script Folder: /path/to/RedoxFlow/redox_calculation_test/products/prod_2
+Example Script Folder:
+/path/to/RedoxFlow/redox_calculation_test/products/prod_2
 
 # 1) Set your job folder (ABSOLUTE FILEPATH)
 HOSTDIR="/path/to/RedoxFlow/redox_calculation_test/products/prod_5"
@@ -63,7 +64,20 @@ docker run --rm --shm-size=1g \
   -w "$HOSTDIR" \
   ghcr.io/nwchemgit/nwchem-dev.mpi-pr:latest \
   prod_5.nw > prod_5.out 2>&1
+
+Or, for the equivalent reactant,
+# 1) Set your job folder (note the quotes for the space)
+HOSTDIR="/home/cameron/Documents/Github/RedoxFlow/redox_calculation_test/reactants/react_2"
+
+# 2) Run a single job (32 MPI ranks; 1 OpenMP thread each)
+docker run --rm --shm-size=1g \
+  -e MYNPROC=32 -e OMP_NUM_THREADS=1 \
+  -v "$HOSTDIR":"$HOSTDIR" \
+  -w "$HOSTDIR" \
+  ghcr.io/nwchemgit/nwchem-dev.mpi-pr:latest \
+  react_2.nw > react_2.out 2>&1
 ```
+---
 ## Proof-of-Concept Restrictions
 
 To show that the agentic workflow works start-to-finish, we restrict our agent to generate molecules and prepare simulation scripts for:
@@ -82,5 +96,19 @@ For a round-trip demonstration of redox potential calculation with the agent/emb
     * `/path/to/RedoxFlow/redox_calculation_test`
 * An intentionally incomplete simulation to show error tracking to motivate extended automation pipelines with simulation management (in demonstration notebook)
     * `/path/to/RedoxFlow/redox_calculation_test/react_3`, `/path/to/RedoxFlow/redox_calculation_test/prod_3`
+---
+## Envisioned Improvements on Proof-of-Concept
 
-## Improvement on Proof-of-Concept
+---
+## Contributors
+
+In no particular order,
+* Cameron Gruich
+* Ankit Mathanker
+* Vehaan Handa
+* Oluwatosin Ohiro
+* Melody Zhang
+* Maurycy Krzyanowski
+* Roshini Dantuluri
+* Sayed Ahmad Almohri
+* Thomas Sundberg
