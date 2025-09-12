@@ -1,0 +1,31 @@
+title "degradation"
+memory 7000 mb
+start degradation_start
+charge 0
+geometry
+ load mid1.xyz
+end
+basis
+ * library 6-311g*
+end
+driver
+ MAXITER 300
+ XYZ degradation_opt
+end
+dft
+ xc b3lyp
+ mult 1
+ grid fine
+ disp vdw 4
+end
+task dft optimize
+title "degradation_freq"
+task dft freq
+title "degradation_solv"
+cosmo
+ dielec 78.3
+ minbem 3
+ ificos 1
+ do_gasphase False
+end
+task dft energy

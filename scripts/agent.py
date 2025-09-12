@@ -1,13 +1,16 @@
 from __future__ import annotations
 
 from langflow.load import run_flow_from_json
-from typing import Any, Optional, Dict
+from typing import Any, Optional, Dict, List
 import json
 import os
 from rdkit import RDLogger
 from rdkit import rdBase
 from extract_redox_variables import RedoxPotentialMiner
+from calculate_nw import redox_potential_BornHaber
 from pathlib import Path
+import re
+import pandas as pd
 
 class RedoxFlow:
     """
@@ -31,9 +34,6 @@ class RedoxFlow:
             )
         self.flow_json_path = flow_json_path or os.path.join(self.git_root, "scripts", "redoxflow.json")
 
-    # ----------------------------
-    # Original: load_flow(path)
-    # ----------------------------
     def load_flow(self, path: Optional[str] = None) -> Dict[str, Any]:
         """
         Load and return the LangFlow JSON as a Python dict.
@@ -51,9 +51,6 @@ class RedoxFlow:
         with open(flow_path, "r") as f:
             return json.load(f)
 
-    # ------------------------------------
-    # Original: print_agent_stdouts(result)
-    # ------------------------------------
     def print_agent_stdouts(self, result: Any, show_stderr: bool = True) -> Dict[str, Any]:
         """
         Pretty-print the stdout (and optionally stderr) for each python job
@@ -245,6 +242,119 @@ class RedoxFlow:
         _scan_bucket(react_path, "reactants")
         _scan_bucket(prod_path,  "products")
 
-    def calculate_redox(self, *args, **kwargs) -> None:
-        """Placeholder for future redox-potential calculations (e.g., CHE workflow aggregation)."""
-        pass
+    def calculate_redox(self, n_reduction: int = None, 
+                        reference_state: float = 0.0,
+                        sim_root: str | None = None, 
+                        sim_ext: str = ".csv") -> None:
+        """
+        Pair react_{X}_redox{ext} with prod_{X}_redox{ext} (X must match) and compute:
+            redox_potential_BornHaber(react_df, prod_df, h2_df, nRduction=..., referenceState=...)
+
+        H2 dataframe is loaded (if available) from:  {base}/H2/**/H2_redox{ext}
+        """
+        base = Path(sim_root) if sim_root is not None else Path(self.git_root)
+        react_root = base / "reactants"
+        prod_root  = base / "products"
+        H2_root    = base / "H2"
+
+        ext = sim_ext if sim_ext.startswith(".") else f".{sim_ext}"
+        ext = ext.lower()
+
+        # Containers
+        self.redox_results: dict = {}
+        self.redox_unmatched: dict = {"react_only": [], "prod_only": []}
+        self.redox_errors: list = []
+        self.h2_source: dict = {"path": None, "loaded": False, "error": None}
+
+        # Filenames must be exactly react_{X}_redox{ext} / prod_{X}_redox{ext}
+        react_pat = re.compile(rf"^react_(.+?)_redox{re.escape(ext)}$", re.IGNORECASE)
+        prod_pat  = re.compile(rf"^prod_(.+?)_redox{re.escape(ext)}$",  re.IGNORECASE)
+
+        def _collect(root: Path, kind: str) -> dict[str, list[Path]]:
+            """Collect files keyed by X; values are lists of Paths (handle duplicates)."""
+            mapping: dict[str, list[Path]] = {}
+            if not root.exists():
+                print(f"⚠️ Path not found: {root}")
+                return mapping
+
+            def consider(p: Path):
+                if not (p.is_file() and p.suffix.lower() == ext):
+                    return
+                m = (react_pat if kind == "react" else prod_pat).match(p.name)
+                if not m:
+                    return
+                X = m.group(1)
+                mapping.setdefault(X, []).append(p.resolve())
+
+            # scan root files
+            for p in root.iterdir():
+                consider(p)
+            # scan each immediate subfolder recursively
+            for child in root.iterdir():
+                if child.is_dir():
+                    for f in child.rglob(f"*{ext}"):
+                        consider(f)
+            return mapping
+
+        react_map = _collect(react_root, "react")
+        prod_map  = _collect(prod_root,  "prod")
+
+        react_keys = set(react_map)
+        prod_keys  = set(prod_map)
+        matched    = sorted(react_keys & prod_keys)
+        self.redox_unmatched["react_only"] = sorted(react_keys - prod_keys)
+        self.redox_unmatched["prod_only"]  = sorted(prod_keys - react_keys)
+
+        def _pick_one(paths: list[Path]) -> Path:
+            # newest by mtime; tiebreaker by path string
+            return sorted(paths, key=lambda p: (p.stat().st_mtime, str(p)), reverse=True)[0]
+
+        # Load H2 dataframe: must be named exactly "H2_redox{ext}" somewhere under H2_root
+        h2_df = None
+        h2_path: str | None = None
+        try:
+            candidates = list(H2_root.rglob(f"H2_redox{ext}")) if H2_root.exists() else []
+            if candidates:
+                h2_file = _pick_one(candidates)
+                h2_df = pd.read_csv(h2_file)
+                h2_path = str(h2_file.resolve())
+                self.h2_source.update({"path": h2_path, "loaded": True, "error": None})
+            else:
+                self.h2_source.update({"path": None, "loaded": False, "error": f"No H2_redox{ext} found"})
+        except Exception as e:
+            self.h2_source.update({"path": h2_path, "loaded": False, "error": repr(e)})
+            # proceed with h2_df = None; downstream may error and be recorded per-X
+
+        # Compute redox for matched pairs
+        for X in matched:
+            try:
+                react_path = _pick_one(react_map[X])
+                prod_path  = _pick_one(prod_map[X])
+
+                react_df = pd.read_csv(react_path)
+                prod_df  = pd.read_csv(prod_path)
+
+                # NOTE: per your snippet, the function uses 'nRduction' (missing 'e').
+                value = redox_potential_BornHaber(
+                    react_df,
+                    prod_df,
+                    h2_df,
+                    nReduction=n_reduction,
+                    referenceState=reference_state,
+                )
+
+                self.redox_results[X] = {
+                    "react_path": str(react_path),
+                    "prod_path":  str(prod_path),
+                    "h2_path":    h2_path,
+                    "n_reduction (# electrons)": n_reduction,
+                    "reference_state": reference_state,
+                    "redox potential (J/C or V)": value,
+                }
+            except Exception as e:
+                self.redox_errors.append((
+                    X,
+                    [str(p) for p in react_map.get(X, [])],
+                    [str(p) for p in prod_map.get(X, [])],
+                    repr(e),
+                ))
