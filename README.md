@@ -71,12 +71,16 @@ To show that the agentic workflow works start-to-finish, we restrict our agent t
 * A model reduction reaction `A + xH^+ + ye^- → B`
     * No degradation products considered
     * By nature of the model reaction, we only consider PCET-reactions.
+* PBE Functional
+* def2-SV(P) basis set
+* Pure water (dielectric constant ~ 78.4)
+* Room temperature
+
 
 For a round-trip demonstration of redox potential calculation with the agent/embedded class interface, we:
-* Generate 10 simulations (5 reactants/5 products) and thus auto-extract variables and auto-calculate 5 redox potentials
-    * PBE Functional
-    * def2-SV(P) basis set
-    * Pure water (dielectric constant ~ 78.4)
-    * Room temperature
+* Generate 3 simulations (3 reactants/3 products) and thus auto-extract variables and auto-calculate 3 redox potentials (in demonstration notebook)
+    * `/path/to/RedoxFlow/redox_calculation_test`
+* An intentionally incomplete simulation to show error tracking to motivate extended automation pipelines with simulation management (in demonstration notebook)
+    * `/path/to/RedoxFlow/redox_calculation_test/react_3`, `/path/to/RedoxFlow/redox_calculation_test/prod_3`
 
 ## Improvement on Proof-of-Concept
