@@ -14,13 +14,13 @@ A common method for computing redox potentials is the computational hydrogen ele
 Such a calculation is arduous and not conducive to high-throughput chemistry workflows. 
 For a model reduction reaction `A + xH^+ + ye^- → B`, a researcher typically must: 
 
-*(1) Prepare a simulation script for `A`
-*(2) Prepare a simulation script for `B`
-*(3) Prepare a simulation script for `H~2` as a proxy substitution for `H^+` and `e^-`
-*(4) Provide some flavor of solvation correction
-*(5) Run the simulations
-*(6) Extract the relevant variables from simulations
-*(7) Calculate the redox potential `E = -ΔG/zF`, where `E` is redox potential, `ΔG` is solvated free energy of reaction derived from simulations, `z` is the number of participating electrons, and `F` is Faraday's constant.
+* (1) Prepare a simulation script for `A`
+* (2) Prepare a simulation script for `B`
+* (3) Prepare a simulation script for `H~2` as a proxy substitution for `H^+` and `e^-`
+* (4) Provide some flavor of solvation correction
+* (5) Run the simulations
+* (6) Extract the relevant variables from simulations
+* (7) Calculate the redox potential `E = -ΔG/zF`, where `E` is redox potential, `ΔG` is solvated free energy of reaction derived from simulations, `z` is the number of participating electrons, and `F` is Faraday's constant.
 
  RedoxFlow is a proof-of-concept that automates simulation preparation (i.e., steps (1)-(4)). After running the prepared simulations, the agent is wrapped in an interface that automates calculation steps (6), (7).
 
