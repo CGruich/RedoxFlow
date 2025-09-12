@@ -1,5 +1,5 @@
 # RedoxFlow
-RedoxFlox is an agentic proof-of-concept that prepares redox potential simulations of solvated chemicals en-masse for electrochemical discovery. The premise is that redox potential is often treated as a template thermocycle calculation; thus, an agentic AI can prepare the simulation scripts for this template method en-masse for large-scale chemical search and discovery.
+RedoxFlox is an agentic proof-of-concept that prepares redox potential simulations of solvated chemicals en-masse for electrochemical discovery. The premise is that redox potential is often treated as a template thermocycle calculation reliant on the output of multiple simulations. An agentic AI can automate simulation script preparation for this template method en-masse for large-scale chemical search and discovery.
 
 **Installation & Demonstration**
 ---
@@ -22,13 +22,12 @@ Redox potential quantifies how willing an organic chemical is to being reduced o
 A common method for computing redox potentials is the computational hydrogen electrode (CHE) method. Using this method amounts to calculating a thermocycle. 
 
 Such a thermocycle is arduous by-hand and not conducive to high-throughput chemistry workflows. 
+
 For a model reduction reaction `A + xH^+ + ye^- → B`, a researcher typically must: 
 
-* (1) Prepare a simulation script for `A`
+* (1) Prepare one composite or multiple simulation scripts to gemoetry optimize  `A`
 * (2) Prepare a simulation script for `B`
 * (3) Conformer search `A` and `B` to determine reasonable initial geometries for the molecules
-* (4) Prepare a simulation script for `H~2` as a proxy for `H^+` and `e^-` as allowed by the CHE method
-* (5) Prepare some flavor of solvation correction
 * (6) Run the simulations
 * (7) Extract the relevant variables from simulations
 * (8) Calculate the redox potential `E = -ΔG/zF`, where `E` is redox potential, `ΔG` is solvated free energy of reaction derived from simulations, `z` is the number of participating electrons, and `F` is Faraday's constant.
