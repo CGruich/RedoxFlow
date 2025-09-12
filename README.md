@@ -39,6 +39,7 @@ The researcher has access to several knobs that control the chemical diversity o
 Upon first-use, the agent creates persistent memory to remember generated reactants (`RedoxFlow/memory/reactants_memory.csv`) and products (`RedoxFlow/memory/product_memory.csv`). Reaction rules (`RedoxFlow/scripts/reactions.json`) can be transparently adjusted to tailor predicted products. 
 
 **Proof-of-Concept Restrictions:**
+
 To show that the agentic workflow works start-to-finish, we restrict our agent to only prepare simulation scripts for:
 * CNOF-containing molecules
 * A model reduction reaction `A + xH^+ + ye^- → B`
@@ -50,8 +51,10 @@ For a round-trip demonstration of redox potential calculation with the agent/emb
     * PBE Functional
     * def2-SV(P) basis set
     * Pure water (dielectric constant ~ 78.4)
+    * Room temperature
 
 Installation:
+
 `cd RedoxFlow`
 
 `mamba env create -p ../redoxflow -f ./env/redoxflow.yml`
