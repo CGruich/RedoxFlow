@@ -14,6 +14,7 @@ Redox potentials are especially useful in:
 - **Redox-swing separations / CO₂ capture:** tune E to set binding–unbinding windows and energy efficiency.
 
 CHE computes redox potentials from a thermodynamic cycle. RedoxFlow automates input preparation and post-processing—extracting energies and computing \(E=-\Delta G/(zF)\) from completed runs. It does **not** launch or manage simulations. Pair it with your scheduler or workflow engine (e.g., Slurm, Nextflow, Snakemake) to run jobs at scale; this project’s focus is robust preparation and calculation, enabling high-throughput screening when integrated into a broader execution pipeline.
+
 ---
 
 ## TL;DR
