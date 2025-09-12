@@ -1,6 +1,6 @@
 # RedoxFlow: Agentic workflow for preparing simulations in high-throughput redox-potential screening 
 
-RedoxFlow generates candidate organic molecules, proposes reduced products, and auto-prepares simulation inputs to compute thermodynamic (Nernstian) redox potentials via the **Computational Hydrogen Electrode (CHE)** method [1].
+RedoxFlow generates candidate organic molecules, proposes reduced products, and auto-prepares simulation inputs to compute thermodynamic (Nernstian) redox potentials via the **Computational Hydrogen Electrode (CHE)** method \[1].
 <p align="center">
   <img src="media/script_generation.png" alt="Script generation demo" width="720">
 </p>
@@ -157,5 +157,5 @@ In no particular order,
 ---
 ## References
 
-[1] Singh, Siddhant, et al. "Sulfonated Benzo [c] cinnolines for Alkaline Redox-Flow Batteries." ACS Applied Energy Materials 8.12 (2025): 7904-7911.
+\[1] Singh, Siddhant, et al. "Sulfonated Benzo [c] cinnolines for Alkaline Redox-Flow Batteries." ACS Applied Energy Materials 8.12 (2025): 7904-7911.
 
