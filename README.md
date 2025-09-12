@@ -31,7 +31,7 @@ CHE computes redox potentials from a thermodynamic cycle. RedoxFlow automates in
 - **Does conformer search** and picks lowest-energy structures
 - **Writes simulation scripts** for both states and **computes** \(E = -ΔG/(zF)\) for completed simulations
 
-The agent is loaded locally from within the repo and thus is deployable on local machines or HPC for script generation.
+The agent is loaded locally from within the repo and thus is deployable on local machines or HPC for script generation provided that the environment is installed.
 
 ---
 
