@@ -51,6 +51,7 @@ docker images | grep nwchem
 ---
 ```
 # How to run a prepared simulation by the agent (32 MPI ranks were used in this case for a 32-core CPU)
+
 Example Script Folder:
 /path/to/RedoxFlow/redox_calculation_test/products/prod_2
 
@@ -66,6 +67,9 @@ docker run --rm --shm-size=1g \
   prod_5.nw > prod_5.out 2>&1
 
 Or, for the equivalent reactant,
+Example Script Folder:
+/path/to/RedoxFlow/redox_calculation_test/reactants/react_2
+
 # 1) Set your job folder (note the quotes for the space)
 HOSTDIR="/home/cameron/Documents/Github/RedoxFlow/redox_calculation_test/reactants/react_2"
 
