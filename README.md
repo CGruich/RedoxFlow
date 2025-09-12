@@ -36,7 +36,7 @@ conda activate ../redoxflow
 
 ## Proof-of-Concept Restrictions
 
-To show that the agentic workflow works start-to-finish, we restrict our agent to only prepare simulation scripts for:
+To show that the agentic workflow works start-to-finish, we restrict our agent to generate molecules and prepare simulation scripts for:
 * CNOF-containing molecules
 * A model reduction reaction `A + xH^+ + ye^- → B`
     * No degradation products considered
