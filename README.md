@@ -1,5 +1,5 @@
 # RedoxFlow
-RedoxFlox is an agentic proof-of-concept that generates chemicals en-masse and prepares the needed simulation scripts for calculating thermodynamic redox potential. 
+RedoxFlox is an agentic proof-of-concept that generates chemicals en-masse and prepares the needed simulation scripts for calculating Nernstian redox potential (i.e., redox potentials derived from thermodynamics). 
 
 The project aims to show how a typical methodology for redox potential calculation (CHE method) can be automated for high-throughput electrochemical search and discovery.
 
