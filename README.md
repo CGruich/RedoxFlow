@@ -49,3 +49,5 @@ For a round-trip demonstration of redox potential calculation with the agent/emb
     * def2-SV(P) basis set
     * Pure water (dielectric constant ~ 78.4)
     * Room temperature
+
+## Improvement on Proof-of-Concept
