@@ -9,7 +9,7 @@ def redox_potential_BornHaber(
     # num. e-
     nReduction: int = 2,
     # J/C (i.e., V)
-    referenceState: float = 0.22249,
+    referenceState: float = 0.0,
 ):
     # Ensure PANDAS dataframe inputs
     assert (
