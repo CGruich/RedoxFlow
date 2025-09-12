@@ -5,13 +5,15 @@ RedoxFlow generates candidate organic molecules, proposes reduced products, and 
 ---
 
 ## Why Redox Potentials?
-Redox potential gauges how readily a molecule is oxidized or reduced—a key lever for:
-- **Batteries / Flow batteries** (electrolyte & couple selection)
-- **Bio/Photoelectrochemistry** (avoid O₂/H₂ interference)
-- **Environmental electrochemistry** (transformations & byproducts)
-- **Redox-swing separations / CO₂ capture** (binding–unbinding windows)
+Redox potential quantifies how readily a molecule is oxidized or reduced. Mapping **E** across chemical space is a fast screener of **thermodynamic driving force** (via ΔG = −zFE): it lets you quickly rank candidates, estimate feasible cell voltages, and check compatibility with solvent/electrolyte stability windows and pH before doing any heavy kinetic/mechanistic work. For PCET steps, CHE also exposes the pH-dependence (Nernst slope), enabling screening across operating conditions.
 
-CHE computes potentials from a thermodynamic cycle; RedoxFlow automates the tedious setup and extraction.
+Redox potentials are especially useful in:
+- **Batteries / Flow batteries:** target voltage windows (∆E ≈ E_cath − E_an) while respecting solvent/electrolyte stability.
+- **Bio/Photoelectrochemistry:** choose mediators/analytes whose E minimizes O₂/H₂ interference and matches desired driving force.
+- **Environmental electrochemistry:** assess spontaneity/selectivity along the redox ladder for contaminant transformations.
+- **Redox-swing separations / CO₂ capture:** tune E to set binding–unbinding windows and energy efficiency.
+
+CHE computes potentials from a thermodynamic cycle; RedoxFlow automates the setup, extraction, and calculation.
 
 ---
 
@@ -19,7 +21,7 @@ CHE computes potentials from a thermodynamic cycle; RedoxFlow automates the tedi
 - **Generates reactants** (_de novo_) with a lightweight foundation model (`ibm-research/GP-MoLFormer-Uniq`)
 - **Predicts reduced products** (transparent rule-based POC)
 - **Does conformer search** and picks lowest-energy structures
-- **Writes simulation scripts** for both states and **computes** \(E = -ΔG/(zF)\)
+- **Writes simulation scripts** for both states and **computes** \(E = -ΔG/(zF)\) for completed simulations
 
 ---
 
