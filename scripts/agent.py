@@ -347,7 +347,7 @@ class RedoxFlow:
                     "react_path": str(react_path),
                     "prod_path":  str(prod_path),
                     "h2_path":    h2_path,
-                    "n_reduction (# electrons)": n_reduction,
+                    "n_reduction (# participating electrons)": n_reduction,
                     "reference_state": reference_state,
                     "redox potential (J/C or V)": value,
                 }
