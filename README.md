@@ -51,7 +51,7 @@ docker images | grep nwchem
 ---
 ```
 # How to run a prepared simulation by the agent (32 MPI ranks were used in this case for a 32-core CPU)
-Example Script Folder: RedoxFlow/redox_calculation_test/products/prod_2
+Example Script Folder: /path/to/RedoxFlow/redox_calculation_test/products/prod_2
 
 # 1) Set your job folder (ABSOLUTE FILEPATH)
 HOSTDIR="/path/to/RedoxFlow/redox_calculation_test/products/prod_5"
