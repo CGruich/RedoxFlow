@@ -549,8 +549,8 @@ def main():
     # AFTER products exist: prune reactants using an explicit path
     # Resolve ../memory/products_memory.csv to an absolute path.
     # ------------------------------------------------------------
-    products_mem = Path("../../memory/products_memory.csv").resolve()
-    reactants_mem = Path("../../memory/reactants_memory.csv").resolve()
+    products_mem = Path("../memory/products_memory.csv").resolve()
+    reactants_mem = Path("../memory/reactants_memory.csv").resolve()
     if products_mem.exists():
         r_before, r_after, p_before, p_after, unique_indices_kept = prune_reactants_memory(str(reactants_mem), str(products_mem))
         r_delta = r_before - r_after

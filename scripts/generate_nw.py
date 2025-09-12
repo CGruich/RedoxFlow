@@ -4,6 +4,7 @@ import sys
 import shutil
 import argparse
 from pathlib import Path
+import shutil
 from typing import List
 
 from rdkit import Chem
@@ -13,6 +14,11 @@ REACT_PREFIX = "react_"
 PROD_PREFIX  = "prod_"
 
 def ensure_dirs(scripts_root: Path) -> None:
+    # Ensure a fresh scripts folder such that the growing .csv database has a parallel scripts folder
+    # Remove existing scripts_root (destructive) to start clean
+    if scripts_root.exists():
+        shutil.rmtree(scripts_root)
+
     (scripts_root / "reactants").mkdir(parents=True, exist_ok=True)
     (scripts_root / "products").mkdir(parents=True, exist_ok=True)
 
