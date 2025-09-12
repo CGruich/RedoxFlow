@@ -128,8 +128,13 @@ def redox_potential_BornHaber(
 
     # Gibbs free energy
     # Reduced form - unreduced form - H2
+    # NOTE:
+    # On the PCET reaction assumption that # of electrons equals number of hydrogens,
+    # 2 electrons means we can use 2 protons (or 1 unit of Gibbs free energy from simulated H2)
+    # 1 electron means we can use 1 proton (or 1/2 unit of Gibbs free energy from simulated H2)
+    # So, the general stoichiometric scaling is '# electrons'/2 or nReduction/2
     # kcal/mol
-    gibbsRxn = gibbsSolTuple[1] - gibbsSolTuple[0] - gibbsSolTuple[2]
+    gibbsRxn = gibbsSolTuple[1] - gibbsSolTuple[0] - (nReduction/2)*gibbsSolTuple[2]
 
     # J/mol
     gibbsRxn = gibbsRxn * 4184
