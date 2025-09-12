@@ -27,8 +27,9 @@ CHE computes redox potentials from a thermodynamic cycle. RedoxFlow automates in
 
 ## Install
 
+Tested on HPC (PSC Bridges-2)
+Tested locally (OS: Ubuntu 22.04.5 LTS, GPU: GeForce RTX 3090)
 ```
-bash
 git clone <this-repo> RedoxFlow
 cd RedoxFlow
 mamba env create -p ../redoxflow -f env/redoxflow.yml
