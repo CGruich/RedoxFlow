@@ -44,7 +44,7 @@ To show that the agentic workflow works start-to-finish, we restrict our agent t
     * By nature of the model reaction, we only consider PCET-reactions.
 
 For a round-trip demonstration of redox potential calculation with the agent/embedded class interface, we:
-* Generate 10 simulations (5 reactants/5 products) and thus 5 redox potentials
+* Generate 10 simulations (5 reactants/5 products) and thus auto-extract variables and auto-calculate 5 redox potentials
     * PBE Functional
     * def2-SV(P) basis set
     * Pure water (dielectric constant ~ 78.4)
