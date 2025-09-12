@@ -23,7 +23,7 @@ For a model reduction reaction `A + xH^+ + ye^- → B`, a researcher typically m
 * (7) Extract the relevant variables from simulations
 * (8) Calculate the redox potential `E = -ΔG/zF`, where `E` is redox potential, `ΔG` is solvated free energy of reaction derived from simulations, `z` is the number of participating electrons, and `F` is Faraday's constant.
 
- RedoxFlow automates simulation preparation (i.e., steps (1)-(5)). The agent is wrapped in an interface that automates calculation steps (6), (7).
+ RedoxFlow automates simulation preparation (i.e., steps (1)-(5)). The agent is wrapped in an interface that automates calculation steps (7), (8).
 
 RedoxFlow auto-prepares simulation scripts by:
 * (1) Generating reactants via a foundational model (ibm-research/GP-MoLFormer-Uniq) designed for _de novo_ generation of molecules
