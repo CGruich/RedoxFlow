@@ -1,6 +1,6 @@
 # RedoxFlow
 
-RedoxFlow is an agentic proof-of-concept that prepares redox potential simulations en-masse for electrochemical applications. 
+RedoxFlow is an agentic proof-of-concept that prepares redox potential simulations en-masse for electrochemical discovery.
 
 Redox potential quantifies how willing an organic chemical is to being reduced or oxidized and thus is useful in many electrochemical applications, such as:
 * Batteries & Flow Batteries (e.g., anode/cathode couple selection, screening redox-active electrolytes/mediators)
@@ -10,9 +10,17 @@ Redox potential quantifies how willing an organic chemical is to being reduced o
 
 A common method for computing redox potentials is the computational hydrogen electrode (CHE) method. Using this method often amounts to calculating a thermocycle. The RedoxFlow premise is that an agentic AI can automate simulation preparation for this thermocycle calculation.
 
-For a model reduction reaction `A + xH^+ + ye^- → B`, a researcher typically must (1) prepare a simulation script for `A`, (2) prepare a simulation script for `B`, (3) prepare a simulation script for `H~2` as a proxy substitution for `H^+` and `e^-`, (4) provide some flavor of solvation correction, (5) run the simulations, (6) extract the relevant variables from simulations, and (7) calculate the redox potential `E = -ΔG/zF`, where `E` is redox potential, `ΔG` is solvated free energy of reaction, `z` is the number of participating electrons, and `F` is Faraday's constant.
+Such a calculation is arduous and not conducive to high-throughput chemistry workflows. 
+For a model reduction reaction `A + xH^+ + ye^- → B`, a researcher typically must: 
+(1) Prepare a simulation script for `A`
+(2) Prepare a simulation script for `B`
+(3) Prepare a simulation script for `H~2` as a proxy substitution for `H^+` and `e^-`
+(4) Provide some flavor of solvation correction
+(5) Run the simulations
+(6) Extract the relevant variables from simulations
+(7) Calculate the redox potential `E = -ΔG/zF`, where `E` is redox potential, `ΔG` is solvated free energy of reaction, `z` is the number of participating electrons, and `F` is Faraday's constant.
 
-Such a series of steps is arduous and not conducive to high-throughput chemistry workflows. RedoxFlow is a proof-of-concept that automates simulation preparation (i.e., steps (1)-(4)). After running the prepared simulations, the agent is wrapped in an interface that automates calculation steps (6), (7).
+ RedoxFlow is a proof-of-concept that automates simulation preparation (i.e., steps (1)-(4)). After running the prepared simulations, the agent is wrapped in an interface that automates calculation steps (6), (7).
 
 RedoxFlow auto-prepares simulation scripts by:
 *(1) Generating reactants via a foundational model (ibm-research/GP-MoLFormer-Uniq) designed for _de novo_ generation of molecules
