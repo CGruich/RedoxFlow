@@ -73,6 +73,7 @@ docker images | grep nwchem
 How to run a prepared simulation by the agent (32 MPI ranks were used in this case for a 32-core CPU)
 
 Example Script Folder:
+
 `/path/to/RedoxFlow/redox_calculation_test/reactants/react_2`
 
 ```
@@ -91,6 +92,7 @@ docker run --rm --shm-size=1g \
 Or, for the equivalent product,
 
 Example Script Folder:
+
 `/path/to/RedoxFlow/redox_calculation_test/products/prod_2`
 
 ```
