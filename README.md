@@ -154,7 +154,7 @@ The agent workflow provided is a minimum proof-of-concept for simulation prepara
 ## Contributors
 
 In no particular order,
-* Cameron Gruich (Lead, all scripts, agent composite construction, finalization)
+* Cameron Gruich (Lead, planning, all scripts, agent composite construction, finalization)
 * Vehaan Handa (Reduction candidate search)
 * Maurycy Krzyanowski (Reduction candidate search)
 * Melody Zhang (Conformer searching)
