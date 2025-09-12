@@ -5,10 +5,10 @@ RedoxFlow generates candidate organic molecules, proposes reduced products, and 
 ---
 
 ## Why Redox Potentials?
-Redox potential quantifies how readily a molecule is oxidized or reduced. Mapping **E** across chemical space is a fast screener of **thermodynamic driving force** (via ΔG = −zFE): it lets you quickly rank candidates, estimate feasible cell voltages, and check compatibility with solvent/electrolyte stability windows and pH before doing any heavy kinetic/mechanistic work. For PCET steps, CHE also exposes the pH-dependence (Nernst slope), enabling screening across operating conditions.
+Redox potential quantifies how readily a molecule is oxidized or reduced. Mapping **E** across chemical space is a fast screener of **thermodynamic driving force** (via ΔG = −zFE): it lets you quickly rank candidates, estimate feasible cell voltages, and check compatibility with solvent/electrolyte stability windows and pH before doing any heavy kinetic/mechanistic work. For Proton-coupled electron-transfer (PCET) steps, CHE also exposes the pH-dependence (Nernst slope), enabling screening across operating conditions.
 
 Redox potentials are especially useful in:
-- **Batteries / Flow batteries:** target voltage windows (∆E ≈ E_cath − E_an) while respecting solvent/electrolyte stability.
+- **Batteries / Flow batteries:** target voltage windows (∆E ≈ E_cathode − E_anode) while respecting solvent/electrolyte stability.
 - **Bio/Photoelectrochemistry:** choose mediators/analytes whose E minimizes O₂/H₂ interference and matches desired driving force.
 - **Environmental electrochemistry:** assess spontaneity/selectivity along the redox ladder for contaminant transformations.
 - **Redox-swing separations / CO₂ capture:** tune E to set binding–unbinding windows and energy efficiency.
