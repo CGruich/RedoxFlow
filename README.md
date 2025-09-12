@@ -25,6 +25,8 @@ CHE computes redox potentials from a thermodynamic cycle. RedoxFlow automates in
 
 ## TL;DR
 - **Generates reactants** (_de novo_) with a lightweight foundation model (`ibm-research/GP-MoLFormer-Uniq`)
+    - Unrealistic moieties/ring strained systems auto-filtered out
+    - 
 - **Predicts reduced products** (transparent rule-based POC)
 - **Does conformer search** and picks lowest-energy structures
 - **Writes simulation scripts** for both states and **computes** \(E = -ΔG/(zF)\) for completed simulations
@@ -126,6 +128,8 @@ The agent workflow provided is a minimum proof-of-concept for simulation prepara
 
 * Pair the agent with an en-masse job submission workflow (SLURM, Nextflow, Snakemake, etc.)
 * Expand reaction rules or replace the reaction rule proof-of-concept with a partial charge predictive model to auto-identify likely reduction sites (e.g., Gasteiger partial charge assignment)
+* Allow the user to specify their own blacklisted moieties to restrict chemically unrealistic reactants
+    * We currently set this blacklist minimally inside `chemflow.py` as proof-of-concept but could easily expose this to the interface for the researcher.
 * Expand the script preparation method (RedoxFlow.prepare_scripts()) to include fine-tuned DFT simulation settings (e.g., basis set, functional, temperature)
     * We currently restrict these settings to tractable, fixed values deliberately for proof-of-concept
 * Pair the script preparation method (RedoxFlow.prepare_scripts()) with a natural language prompt interface
