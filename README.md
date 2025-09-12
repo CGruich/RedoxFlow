@@ -34,7 +34,7 @@ mamba env create -p ../redoxflow -f env/redoxflow.yml
 conda activate ../redoxflow
 ```
 
-**Proof-of-Concept Restrictions:**
+## Proof-of-Concept Restrictions
 
 To show that the agentic workflow works start-to-finish, we restrict our agent to only prepare simulation scripts for:
 * CNOF-containing molecules
@@ -48,7 +48,3 @@ For a round-trip demonstration of redox potential calculation with the agent/emb
     * def2-SV(P) basis set
     * Pure water (dielectric constant ~ 78.4)
     * Room temperature
-
-Importance of Redox Potentials
-
-Redox potentials are quantities that represent how easily oxidizable or reducible an organic chemical is. 
