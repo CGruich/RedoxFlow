@@ -1,6 +1,6 @@
-# RedoxFlow
+# RedoxFlow: Agentic workflow for high-throughput redox-potential screening 
 
-**Agentic workflow for high-throughput redox-potential screening.**  
+
 RedoxFlow generates candidate organic molecules, proposes reduced products, and auto-prepares simulation inputs to compute thermodynamic (Nernstian) redox potentials via the **Computational Hydrogen Electrode (CHE)** method.
 
 ---
