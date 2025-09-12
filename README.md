@@ -1,7 +1,7 @@
 # RedoxFlow
-RedoxFlox is an agentic proof-of-concept that prepares simulation scripts of chemicals en-masse for redox-active search and discovery.
+RedoxFlox is an agentic proof-of-concept that generates chemicals and their associated simulation scripts en-masse for redox-active search and discovery.
 
-Calculating redox potential of solvated organics is often treated as a template thermocycle for a model reaction. The model react An agentic AI can automate simulation script preparation for this template method en-masse for large-scale chemical search and discovery.
+Calculating redox potential is often done by . The model react An agentic AI can automate simulation script preparation for this template method en-masse for large-scale chemical search and discovery.
 
 **Installation & Demonstration**
 ---
