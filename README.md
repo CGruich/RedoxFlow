@@ -19,14 +19,15 @@ Redox potentials are especially useful in:
 - **Environmental electrochemistry:** assess spontaneity/selectivity along the redox ladder for contaminant transformations.
 - **Redox-swing separations / CO₂ capture:** tune E to set binding–unbinding windows and energy efficiency.
 
-CHE computes redox potentials from a thermodynamic cycle. RedoxFlow automates input preparation and post-processing—extracting energies and computing \(E=-\Delta G/(zF)\) from completed runs. It does **not** launch or manage simulations. Pair it with your scheduler or workflow engine (e.g., Slurm, Nextflow, Snakemake) to run jobs at scale; this project’s focus is robust preparation and calculation, enabling high-throughput screening when integrated into a broader execution pipeline.
+CHE computes redox potentials from a thermodynamic cycle. RedoxFlow automates input preparation and post-processing—extracting energies and computing \(E=-ΔG/(zF)\) from completed runs. It does **not** launch or manage simulations. Pair it with your scheduler or workflow engine (e.g., Slurm, Nextflow, Snakemake) to run jobs at scale; this project’s focus is robust preparation and calculation, enabling high-throughput screening when integrated into a broader execution pipeline.
 
 ---
 
 ## TL;DR
-- **Generates reactants** (_de novo_) with a lightweight foundation model (`ibm-research/GP-MoLFormer-Uniq`)
+- **Generates reactants** (_de novo_) with a lightweight foundation model (`ibm-research/GP-MoLFormer-Uniq` \[2])
     - Unrealistic moieties/ring strained systems auto-filtered out
-    - 
+    - Generated molecules with non-CNOF atoms are altered within their same periodic group (e.g., S → O) to maximize generative success
+    - Sanitized molecules to ensure proper basic connectivity/valency
 - **Predicts reduced products** (transparent rules based off functional groups, proof-of-concept)
 - **Does conformer search** and picks lowest-energy structures
 - **Writes simulation scripts** for both states and **computes** \(E = -ΔG/(zF)\) for completed simulations
@@ -153,18 +154,19 @@ The agent workflow provided is a minimum proof-of-concept for simulation prepara
 ## Contributors
 
 In no particular order,
-* Cameron Gruich
-* Ankit Mathanker
-* Vehaan Handa
-* Oluwatosin Ohiro
-* Melody Zhang
-* Maurycy Krzyanowski
-* Roshini Dantuluri
-* Sayed Ahmad Almohri
-* Thomas Sundberg
-* Dean Sweeney
+* Cameron Gruich (Lead, planning, all scripts, agent composite construction, finalization)
+* Vehaan Handa (Reduction candidate search)
+* Maurycy Krzyanowski (Reduction candidate search)
+* Melody Zhang (Conformer searching)
+* Roshini Dantuluri (Conformer searching)
+* Oluwatosin Ohiro (Redox script generation)
+* Ankit Mathanker (Downstream redox variable extraction)
+* Sayed Ahmad Almohri (Planning)
+* Thomas Sundberg (Planning)
+* Dean Sweeney (Planning)
 ---
 ## References
 
 \[1] Singh, Siddhant, et al. "Sulfonated Benzo [c] cinnolines for Alkaline Redox-Flow Batteries." ACS Applied Energy Materials 8.12 (2025): 7904-7911.
 
+\[2] Ross, Jerret, et al. "Gp-molformer: a foundation model for molecular generation." Digital Discovery (2025).
