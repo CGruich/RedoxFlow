@@ -168,4 +168,5 @@ In no particular order,
 ## References
 
 \[1] Singh, Siddhant, et al. "Sulfonated Benzo [c] cinnolines for Alkaline Redox-Flow Batteries." ACS Applied Energy Materials 8.12 (2025): 7904-7911.
+
 \[2] Ross, Jerret, et al. "Gp-molformer: a foundation model for molecular generation." Digital Discovery (2025).
