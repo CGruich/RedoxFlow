@@ -119,3 +119,4 @@ In no particular order,
 * Roshini Dantuluri
 * Sayed Ahmad Almohri
 * Thomas Sundberg
+* Dean Sweeney
