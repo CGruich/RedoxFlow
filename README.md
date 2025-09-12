@@ -142,7 +142,7 @@ The agent workflow provided is a minimum proof-of-concept for simulation prepara
 **Chemistry Improvements**
 * Expand reaction rules or replace the reaction rule proof-of-concept with a partial charge predictive model to auto-identify likely reduction sites (e.g., Gasteiger partial charge assignment)
 * Allow the user to specify their own blacklisted moieties to restrict chemically unrealistic reactants
-    * We currently set this blacklist minimally inside `chemflow.py` as proof-of-concept but could easily expose this to the interface for the researcher.
+    * We currently set this blacklist minimally inside `redoxflow.py` as proof-of-concept but could easily expose this to the interface for the researcher.
 * Expand the subset of atoms (e.g., include Cl, P, S)
     * We restrict the chemistry to CNOF molecules for proof-of-concept demonstration.
 
