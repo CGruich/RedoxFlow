@@ -27,7 +27,7 @@ CHE computes redox potentials from a thermodynamic cycle. RedoxFlow automates in
 - **Generates reactants** (_de novo_) with a lightweight foundation model (`ibm-research/GP-MoLFormer-Uniq`)
     - Unrealistic moieties/ring strained systems auto-filtered out
     - 
-- **Predicts reduced products** (transparent rule-based POC)
+- **Predicts reduced products** (transparent rules based off functional groups, proof-of-concept)
 - **Does conformer search** and picks lowest-energy structures
 - **Writes simulation scripts** for both states and **computes** \(E = -ΔG/(zF)\) for completed simulations
 
