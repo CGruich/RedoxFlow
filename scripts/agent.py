@@ -200,9 +200,9 @@ class RedoxFlow:
     def extract_variables(self, sim_root: str | None = None, sim_ext: str = ".out") -> None:
         """Extraction of variables from outputs or files.
 
-        Scans each folder inside '{sim_path}/reactants' and '{sim_path}/products'
-        (plus those roots themselves) for files ending with `sim_ext`, and for each
-        match:
+        Scans each folder inside '{sim_path}/reactants', '{sim_path}/products',
+        and '{sim_path}/H2' (plus those roots themselves) for files ending with
+        `sim_ext`, and for each match:
             miner = RedoxPotentialMiner(stdoutFilepath=ABS_PATH)
             miner.variableDF = {}
             miner.search()
@@ -211,30 +211,37 @@ class RedoxFlow:
             self.miners = {
                 "reactants": [ ... ],
                 "products":  [ ... ],
+                "H2":        [ ... ],
             }
         Records errors (if any) in:
             self.miner_errors = {
                 "reactants": [(filepath, exc), ...],
                 "products":  [(filepath, exc), ...],
+                "H2":        [(filepath, exc), ...],
             }
+        Emits a warning if no H2 files matching `sim_ext` are found.
         """
+        from pathlib import Path
+        import warnings
+
         sim_path = Path(sim_root) if sim_root is not None else Path(self.git_root)
 
         react_path = sim_path / "reactants"
         prod_path  = sim_path / "products"
+        H2_path    = sim_path / "H2"
 
         ext = sim_ext if sim_ext.startswith(".") else f".{sim_ext}"
         ext = ext.lower()
 
         # Prepare containers
-        self.miners = {"reactants": [], "products": []}
-        self.miner_errors = {"reactants": [], "products": []}
+        self.miners = {"reactants": [], "products": [], "H2": []}
+        self.miner_errors = {"reactants": [], "products": [], "H2": []}
 
         def _add_file(path: Path, bucket_key: str) -> None:
             try:
                 miner = RedoxPotentialMiner(stdoutFilepath=str(path.resolve()))
                 miner.variableDF = {}
-                miner.search() 
+                miner.search()
                 self.miners[bucket_key].append(miner)
             except Exception as e:
                 self.miner_errors[bucket_key].append((str(path), e))
@@ -258,6 +265,20 @@ class RedoxFlow:
 
         _scan_bucket(react_path, "reactants")
         _scan_bucket(prod_path,  "products")
+
+        # Scan H2 with try/except since a single H2 simulation needs to be completed to complete the redox potential calculation, warn if none found
+        try:
+            _scan_bucket(H2_path, "H2")
+            if not self.miners["H2"]:
+                warnings.warn(
+                    f"WARNING: No H2 file with extension '{ext}' found under {H2_path.resolve()}",
+                    RuntimeWarning,
+                )
+        except Exception as e:
+            warnings.warn(
+                f"WARNING: No H2 simulation folder found. A single H2 .nw simulation needs to exist to complete the redox potential calculation: {H2_path.resolve()}: {e}",
+                RuntimeWarning,
+            )
 
     def calculate_redox(self, n_reduction: int = None, 
                         reference_state: float = 0.0,

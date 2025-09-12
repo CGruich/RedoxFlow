@@ -1,2 +1,2 @@
 ,System Energy (Hartree),Temperature (K),Zero-Point correction to Energy (kcal/mol),Thermal correction to Energy (kcal/mol),Thermal correction to Enthalpy (kcal/mol),Total Entropy (cal/mol-K),Translational Entropy (cal/mol-K) ,Rotational Entropy (cal/mol-K),Vibrational Entropy (cal/mol-K),Solvated System Energy (Hartree),COSMO energy (Hartree),Nuclear repulsion energy (Hartree),Exchange-Corr. energy (Hartree),Coulomb energy (Hartree),One electron energy (Hartree)
-0,-1.17677266,298.15,6.273,7.753,8.346,31.114,28.068,3.046,0.0,-1.176901144608,0.002318329959,0.713248486253,-0.701429380598,1.304326762793,-2.495224684654
+0,-1.15809191,298.15,6.075,7.556,8.148,31.275,28.068,3.208,0.0,-1.158278649184,0.002919633698,0.684830618866,-0.678007028173,1.288123066039,-2.456144924036

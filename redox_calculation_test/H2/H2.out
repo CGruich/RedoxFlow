@@ -1,9 +1,10 @@
- argument  1 = trial1.nw
+ argument  1 = trial_H2.nw
+  NWChem w/ OpenMP: maximum threads =    1
                                          
                                          
 
 
-             Northwest Computational Chemistry Package (NWChem) 7.0.2
+             Northwest Computational Chemistry Package (NWChem) 7.2.3
              --------------------------------------------------------
 
 
@@ -11,7 +12,7 @@
                        Pacific Northwest National Laboratory
                                 Richland, WA 99352
 
-                              Copyright (c) 1994-2020
+                              Copyright (c) 1994-2022
                        Pacific Northwest National Laboratory
                             Battelle Memorial Institute
 
@@ -36,21 +37,21 @@
            Job information
            ---------------
 
-    hostname        = node-0
-    program         = /usr/local/bin/nwchem-7.0.2/bin/LINUX64/nwchem
-    date            = Tue Mar 12 23:43:23 2024
+    hostname        = d9fdf9f9c27a
+    program         = nwchem
+    date            = Fri Sep 12 23:16:22 2025
 
-    compiled        = Fri_Feb_03_02:12:07_2023
-    source          = /usr/local/bin/nwchem-7.0.2
-    nwchem branch   = 7.0.2
-    nwchem revision = b9985dfa
-    ga revision     = 5.7.2
+    compiled        = Fri_Jul_11_19:03:44_2025
+    source          = /opt/nwchem
+    nwchem branch   = 7.2.3
+    nwchem revision = N/A
+    ga revision     = 5.9.2
     use scalapack   = T
-    input           = trial1.nw
-    prefix          = degradation_start.
-    data base       = ./degradation_start.db
+    input           = trial_H2.nw
+    prefix          = EMPTY.
+    data base       = /data/EMPTY.db
     status          = startup
-    nproc           =       31
+    nproc           =        2
     time left       =     -1s
 
 
@@ -58,10 +59,10 @@
            Memory information
            ------------------
 
-    heap     =  229376000 doubles =   1750.0 Mbytes
-    stack    =  229375997 doubles =   1750.0 Mbytes
-    global   =  458752000 doubles =   3500.0 Mbytes (distinct from heap & stack)
-    total    =  917503997 doubles =   7000.0 Mbytes
+    heap     =     16777216 doubles =      128.0 Mbytes
+    stack    =     16777213 doubles =      128.0 Mbytes
+    global   =     33554432 doubles =      256.0 Mbytes (distinct from heap & stack)
+    total    =     67108861 doubles =      512.0 Mbytes
     verify   = yes
     hardfail = no 
 
@@ -69,8 +70,8 @@
            Directory information
            ---------------------
 
-  0 permanent = .
-  0 scratch   = .
+  0 permanent = /data
+  0 scratch   = /data
 
 
 
@@ -79,8 +80,8 @@
                                 -------------------
 
 
-                                    degradation
-                                    -----------
+                                   prod_2_redox
+                                   ------------
 
  Scaling coordinates for geometry "geometry" by  1.889725989
  (inverse scale =  0.529177249)
@@ -156,9 +157,10 @@
  ------------------------------------------------------------------------------
        Tag                 Description            Shells   Functions and Types
  ---------------- ------------------------------  ------  ---------------------
- *                          6-311g*                   on all atoms 
+ *                         def2-SV(P)                 on all atoms 
 
 
+  pbe96 is a nonlocal functional; adding pw91lda local functional. 
 
 
                            NWChem Geometry Optimization
@@ -167,7 +169,7 @@
 
 
 
-                                    degradation
+                                   prod_2_redox
 
 
   no constraints, skipping    0.0000000000000000     
@@ -250,7 +252,7 @@
                                  -----------------
 
 
-                                    degradation
+                                   prod_2_redox
 
 
                       Basis "ao basis" -> "ao basis" (cartesian)
@@ -259,13 +261,11 @@
   ------------
             Exponent  Coefficients 
        -------------- ---------------------------------------------------------
-  1 S  3.38650000E+01  0.025494
-  1 S  5.09479000E+00  0.190373
-  1 S  1.15879000E+00  0.852161
+  1 S  1.30107010E+01  0.019682
+  1 S  1.96225720E+00  0.137965
+  1 S  4.44537960E-01  0.478319
 
-  2 S  3.25840000E-01  1.000000
-
-  3 S  1.02741000E-01  1.000000
+  2 S  1.21949620E-01  1.000000
 
 
 
@@ -273,7 +273,7 @@
  ------------------------------------------------------------------------------
        Tag                 Description            Shells   Functions and Types
  ---------------- ------------------------------  ------  ---------------------
- H                          6-311g*                  3        3   3s
+ H                         def2-SV(P)                2        2   2s
 
 
 
@@ -282,16 +282,16 @@
  ------------------------------------------------------------------------------
        Tag                 Description            Shells   Functions and Types
  ---------------- ------------------------------  ------  ---------------------
- H                          6-311g*                  3        3   3s
+ H                         def2-SV(P)                2        2   2s
 
 
       Symmetry analysis of basis
       --------------------------
 
-        a1g         3
+        a1g         2
         a1u         0
         a2g         0
-        a2u         3
+        a2u         2
         b1g         0
         b1u         0
         b2g         0
@@ -312,32 +312,29 @@
           Charge           :     0
           Spin multiplicity:     1
           Use of symmetry is: on ; symmetry adaption is: on 
-          Maximum number of iterations:  30
-          AO basis - number of functions:     6
-                     number of shells:     6
+          Maximum number of iterations:  50
+          AO basis - number of functions:     4
+                     number of shells:     4
           Convergence on energy requested:  1.00D-06
           Convergence on density requested:  1.00D-05
           Convergence on gradient requested:  5.00D-04
 
               XC Information
               --------------
-                         B3LYP Method XC Potential
-                     Hartree-Fock (Exact) Exchange  0.200          
-                        Slater Exchange Functional  0.800 local    
-                    Becke 1988 Exchange Functional  0.720 non-local
-              Lee-Yang-Parr Correlation Functional  0.810          
-                  VWN I RPA Correlation Functional  0.190 local    
+          PerdewBurkeErnzerhof Exchange Functional  1.000          
+            Perdew 1991 LDA Correlation Functional  1.000 local    
+           PerdewBurkeErnz. Correlation Functional  1.000 non-local
 
              Grid Information
              ----------------
-          Grid used for XC integration:  fine      
+          Grid used for XC integration:  xcoarse   
           Radial quadrature: Mura-Knowles        
           Angular quadrature: Lebedev. 
           Tag              B.-S. Rad. Rad. Pts. Rad. Cut. Ang. Pts.
           ---              ---------- --------- --------- ---------
-          H                   0.35       60           6.0       590
+          H                   0.35       21           5.0       194
           Grid pruning is: on 
-          Number of quadrature shells:    60
+          Number of quadrature shells:    21
           Spatial weights used:  Erf1
 
           Convergence Information
@@ -352,7 +349,7 @@
                     Damping( 0%)  Levelshifting(0.5)       DIIS
                   --------------- ------------------- ---------------
           dE  on:    start            ASAP                start   
-          dE off:    2 iters         30 iters            30 iters 
+          dE off:    2 iters         50 iters            50 iters 
 
 
       Screening Tolerance Information
@@ -366,27 +363,27 @@
       Dispersion Parameters
       ---------------------
 
-           DFT-D3BJ Model   
+             DFT-D3 Model   
           s6 scale factor  :        1.000000000000
-          s8 scale factor  :        1.988900000000
-          a1 parameter     :        0.398100000000
-          a2 parameter     :        4.421100000000
-              vdW contrib  :       -0.000139186549
+          s8 scale factor  :        0.722000000000
+          sr6 scale factor :        1.217000000000
+          sr8 scale factor :        1.000000000000
+              vdW contrib  :       -0.000000007463
 
 
       Superposition of Atomic Density Guess
       -------------------------------------
 
- Sum of atomic energies:          -0.99961840
+ Sum of atomic energies:          -0.99855801
 
       Non-variational initial energy
       ------------------------------
 
- Total energy =      -0.852401
- 1-e energy   =      -2.253971
- 2-e energy   =       0.654144
- HOMO         =      -0.600303
- LUMO         =       0.131805
+ Total energy =      -0.851440
+ 1-e energy   =      -2.253208
+ 2-e energy   =       0.654342
+ HOMO         =      -0.597702
+ LUMO         =       0.149698
 
 
       Symmetry analysis of molecular orbitals - initial
@@ -399,47 +396,55 @@
 
   Orbital symmetries:
 
-     1 a1g         2 a2u         3 a1g         4 a2u         5 a1g     
-     6 a2u     
+     1 a1g         2 a2u         3 a1g         4 a2u     
 
-   Time after variat. SCF:      0.2
-   Time prior to 1st pass:      0.2
+   Time after variat. SCF:      0.1
+   Time prior to 1st pass:      0.1
+ Local filesystem for scratch_dir
 
- #quartets = 1.560D+02 #integrals = 1.560D+02 #direct =  0.0% #cached =100.0%
+ #quartets = 3.700D+01 #integrals = 3.700D+01 #direct =  0.0% #cached =100.0%
 
 
- Integral file          = ./degradation_start.aoints.00
+ Integral file          = /data/EMPTY.aoints.0
  Record size in doubles =  65536        No. of integs per rec  =  43688
- Max. records in memory =      1        Max. records in file   = 119598
+ Max. records in memory =      3        Max. records in file   =  13635
  No. of bits per label  =      8        No. of bits per value  =     64
 
 
 File balance: exchanges=     0  moved=     0  time=   0.0
 
+ Local filesystem for scratch_dir
+
+ Grid_pts file          = /data/EMPTY.gridpts.0
+ Record size in doubles =  12289        No. of grid_pts per rec  =   3070
+ Max. records in memory =      2        Max. recs in file   =     72721
+
 
            Memory utilization after 1st SCF pass: 
-           Heap Space remaining (MW):      229.31           229309680
-          Stack Space remaining (MW):      229.38           229375820
+           Heap Space remaining (MW):       16.56            16555272
+          Stack Space remaining (MW):       16.78            16777076
 
    convergence    iter        energy       DeltaE   RMS-Dens  Diis-err    time
  ---------------- ----- ----------------- --------- --------- ---------  ------
- d= 0,ls=0.0,diis     1     -1.1738553569 -1.92D+00  9.12D-03  1.56D-02     0.4
- d= 0,ls=0.0,diis     2     -1.1758911204 -2.04D-03  1.97D-03  2.90D-04     0.4
- d= 0,ls=0.0,diis     3     -1.1759568696 -6.57D-05  7.04D-05  1.29D-06     0.5
- d= 0,ls=0.0,diis     4     -1.1759570443 -1.75D-07  1.70D-07  5.31D-12     0.5
+ d= 0,ls=0.0,diis     1     -1.1532960858 -1.90D+00  2.82D-02  6.64D-03     0.1
+ d= 0,ls=0.0,diis     2     -1.1550276231 -1.73D-03  6.17D-03  4.85D-04     0.1
+  Singularity in Pulay matrix. Error and Fock matrices removed. 
+ d= 0,ls=0.0,diis     3     -1.1551667379 -1.39D-04  3.93D-06  2.00D-10     0.1
+  Singularity in Pulay matrix. Error and Fock matrices removed. 
+ d= 0,ls=0.0,diis     4     -1.1551667380 -5.71D-11  9.88D-10  1.26D-17     0.1
 
 
-         Total DFT energy =       -1.175957044334
-      One electron energy =       -2.538638653416
-           Coulomb energy =        1.328344612673
-    Exchange-Corr. energy =       -0.712949309979
+         Total DFT energy =       -1.155166737987
+      One electron energy =       -2.536147658799
+           Coulomb energy =        1.330757518608
+    Exchange-Corr. energy =       -0.697202083272
  Nuclear repulsion energy =        0.747425492937
 
-    Dispersion correction =       -0.000139186549
+    Dispersion correction =       -0.000000007463
 
- Numeric. integr. density =        1.999999983050
+ Numeric. integr. density =        1.999961512646
 
-     Total iterative time =      0.3s
+     Total iterative time =      0.0s
 
 
 
@@ -463,53 +468,33 @@ File balance: exchanges=     0  moved=     0  time=   0.0
                        DFT Final Molecular Orbital Analysis
                        ------------------------------------
 
- Vector    1  Occ=2.000000D+00  E=-4.440229D-01  Symmetry=a1g
-              MO Center=  0.0D+00,  0.0D+00,  1.8D-16, r^2= 7.2D-01
+ Vector    1  Occ=2.000000D+00  E=-3.853426D-01  Symmetry=a1g
+              MO Center=  0.0D+00,  0.0D+00,  4.2D-17, r^2= 6.9D-01
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     2      0.276245  1 H  s                  5      0.276245  2 H  s          
-     1      0.207219  1 H  s                  4      0.207219  2 H  s          
-     3      0.132333  1 H  s                  6      0.132333  2 H  s          
+     1      0.422923  1 H  s                  3      0.422923  2 H  s          
+     2      0.157238  1 H  s                  4      0.157238  2 H  s          
 
- Vector    2  Occ=0.000000D+00  E= 6.565944D-02  Symmetry=a2u
-              MO Center=  0.0D+00,  0.0D+00,  5.0D-16, r^2= 3.0D+00
+ Vector    2  Occ=0.000000D+00  E= 6.500205D-02  Symmetry=a2u
+              MO Center=  0.0D+00,  0.0D+00, -1.7D-16, r^2= 2.5D+00
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     3      2.135019  1 H  s                  6     -2.135019  2 H  s          
-     2      0.132841  1 H  s                  5     -0.132841  2 H  s          
-     1      0.095153  1 H  s                  4     -0.095153  2 H  s          
+     2      1.894622  1 H  s                  4     -1.894622  2 H  s          
+     1      0.248975  1 H  s                  3     -0.248975  2 H  s          
 
- Vector    3  Occ=0.000000D+00  E= 1.941779D-01  Symmetry=a1g
-              MO Center=  0.0D+00,  0.0D+00, -9.2D-17, r^2= 3.2D+00
+ Vector    3  Occ=0.000000D+00  E= 3.015523D-01  Symmetry=a1g
+              MO Center=  0.0D+00,  0.0D+00, -5.7D-16, r^2= 2.3D+00
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     3      0.828657  1 H  s                  6      0.828657  2 H  s          
-     2     -0.666655  1 H  s                  5     -0.666655  2 H  s          
-     1     -0.080775  1 H  s                  4     -0.080775  2 H  s          
+     2     -0.727310  1 H  s                  4     -0.727310  2 H  s          
+     1      0.691983  1 H  s                  3      0.691983  2 H  s          
 
- Vector    4  Occ=0.000000D+00  E= 4.897637D-01  Symmetry=a2u
-              MO Center=  0.0D+00,  0.0D+00, -8.9D-16, r^2= 2.5D+00
+ Vector    4  Occ=0.000000D+00  E= 7.684508D-01  Symmetry=a2u
+              MO Center=  0.0D+00,  0.0D+00,  2.8D-16, r^2= 1.6D+00
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     3      2.465205  1 H  s                  6     -2.465205  2 H  s          
-     2     -1.732342  1 H  s                  5      1.732342  2 H  s          
-     1     -0.122267  1 H  s                  4      0.122267  2 H  s          
-
- Vector    5  Occ=0.000000D+00  E= 2.062757D+00  Symmetry=a1g
-              MO Center=  0.0D+00,  0.0D+00, -6.5D-16, r^2= 1.2D+00
-   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
-  ----- ------------  ---------------      ----- ------------  ---------------
-     2      1.234105  1 H  s                  5      1.234105  2 H  s          
-     1     -1.065097  1 H  s                  4     -1.065097  2 H  s          
-     3     -0.508095  1 H  s                  6     -0.508095  2 H  s          
-
- Vector    6  Occ=0.000000D+00  E= 2.430560D+00  Symmetry=a2u
-              MO Center=  0.0D+00,  0.0D+00,  6.3D-16, r^2= 9.7D-01
-   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
-  ----- ------------  ---------------      ----- ------------  ---------------
-     2      1.895636  1 H  s                  5     -1.895636  2 H  s          
-     3     -1.305685  1 H  s                  6      1.305685  2 H  s          
-     1     -1.139837  1 H  s                  4      1.139837  2 H  s          
+     2      1.795868  1 H  s                  4     -1.795868  2 H  s          
+     1     -1.298158  1 H  s                  3      1.298158  2 H  s          
 
 
  center of mass
@@ -533,15 +518,15 @@ File balance: exchanges=     0  moved=     0  time=   0.0
      1   0 1 0      0.000000      0.000000      0.000000      0.000000
      1   0 0 1      0.000000      0.000000      0.000000      0.000000
 
-     2   2 0 0     -1.501062     -0.750531     -0.750531      0.000000
+     2   2 0 0     -1.437957     -0.718979     -0.718979      0.000000
      2   1 1 0      0.000000      0.000000      0.000000      0.000000
      2   1 0 1      0.000000      0.000000      0.000000      0.000000
-     2   0 2 0     -1.501062     -0.750531     -0.750531      0.000000
+     2   0 2 0     -1.437957     -0.718979     -0.718979      0.000000
      2   0 1 1      0.000000      0.000000      0.000000      0.000000
-     2   0 0 2     -1.215660     -1.055342     -1.055342      0.895023
+     2   0 0 2     -1.140740     -1.017881     -1.017881      0.895023
 
 
- Parallel integral file used      31 records with       0 large values
+ Parallel integral file used       2 records with       0 large values
 
 
             General Information
@@ -555,32 +540,29 @@ File balance: exchanges=     0  moved=     0  time=   0.0
           Charge           :     0
           Spin multiplicity:     1
           Use of symmetry is: on ; symmetry adaption is: on 
-          Maximum number of iterations:  30
-          AO basis - number of functions:     6
-                     number of shells:     6
+          Maximum number of iterations:  50
+          AO basis - number of functions:     4
+                     number of shells:     4
           Convergence on energy requested:  1.00D-06
           Convergence on density requested:  1.00D-05
           Convergence on gradient requested:  5.00D-04
 
               XC Information
               --------------
-                         B3LYP Method XC Potential
-                     Hartree-Fock (Exact) Exchange  0.200          
-                        Slater Exchange Functional  0.800 local    
-                    Becke 1988 Exchange Functional  0.720 non-local
-              Lee-Yang-Parr Correlation Functional  0.810          
-                  VWN I RPA Correlation Functional  0.190 local    
+          PerdewBurkeErnzerhof Exchange Functional  1.000          
+            Perdew 1991 LDA Correlation Functional  1.000 local    
+           PerdewBurkeErnz. Correlation Functional  1.000 non-local
 
              Grid Information
              ----------------
-          Grid used for XC integration:  fine      
+          Grid used for XC integration:  xcoarse   
           Radial quadrature: Mura-Knowles        
           Angular quadrature: Lebedev. 
           Tag              B.-S. Rad. Rad. Pts. Rad. Cut. Ang. Pts.
           ---              ---------- --------- --------- ---------
-          H                   0.35       60           6.0       590
+          H                   0.35       21           5.0       194
           Grid pruning is: on 
-          Number of quadrature shells:    60
+          Number of quadrature shells:    21
           Spatial weights used:  Erf1
 
           Convergence Information
@@ -595,7 +577,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
                     Damping( 0%)  Levelshifting(0.5)       DIIS
                   --------------- ------------------- ---------------
           dE  on:    start            ASAP                start   
-          dE off:    2 iters         30 iters            30 iters 
+          dE off:    2 iters         50 iters            50 iters 
 
 
       Screening Tolerance Information
@@ -612,7 +594,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
                             --------------------------
 
 
-                                    degradation
+                                   prod_2_redox
 
 
 
@@ -626,8 +608,8 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
     atom               coordinates                        gradient
                  x          y          z           x          y          z
-   1 H       0.000000   0.000000  -0.668963    0.000000   0.000000   0.026399
-   2 H       0.000000   0.000000   0.668963    0.000000   0.000000  -0.026399
+   1 H       0.000000   0.000000  -0.668963    0.000000   0.000000   0.051057
+   2 H       0.000000   0.000000   0.668963    0.000000   0.000000  -0.051057
 
                  ----------------------------------------
                  |  Time  |  1-e(secs)   |  2-e(secs)   |
@@ -640,7 +622,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
 @ Step       Energy      Delta E   Gmax     Grms     Xrms     Xmax   Walltime
 @ ---- ---------------- -------- -------- -------- -------- -------- --------
-@    0      -1.17595704  0.0D+00  0.02640  0.02640  0.00000  0.00000      0.6
+@    0      -1.15516674  0.0D+00  0.05106  0.05106  0.00000  0.00000      0.1
                                                                     
 
 
@@ -652,7 +634,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
       Type          Name      I     J     K     L     M      Value     Gradient
       ----------- --------  ----- ----- ----- ----- ----- ---------- ----------
-    1 Stretch                  1     2                       0.70800   -0.02640
+    1 Stretch                  1     2                       0.70800   -0.05106
 
   no constraints, skipping    0.0000000000000000     
   no constraints, skipping    0.0000000000000000     
@@ -662,7 +644,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
                                  -----------------
 
 
-                                    degradation
+                                   prod_2_redox
 
 
 
@@ -671,16 +653,16 @@ File balance: exchanges=     0  moved=     0  time=   0.0
  ------------------------------------------------------------------------------
        Tag                 Description            Shells   Functions and Types
  ---------------- ------------------------------  ------  ---------------------
- H                          6-311g*                  3        3   3s
+ H                         def2-SV(P)                2        2   2s
 
 
       Symmetry analysis of basis
       --------------------------
 
-        a1g         3
+        a1g         2
         a1u         0
         a2g         0
-        a2u         3
+        a2u         2
         b1g         0
         b1u         0
         b2g         0
@@ -701,32 +683,29 @@ File balance: exchanges=     0  moved=     0  time=   0.0
           Charge           :     0
           Spin multiplicity:     1
           Use of symmetry is: on ; symmetry adaption is: on 
-          Maximum number of iterations:  30
-          AO basis - number of functions:     6
-                     number of shells:     6
+          Maximum number of iterations:  50
+          AO basis - number of functions:     4
+                     number of shells:     4
           Convergence on energy requested:  1.00D-06
           Convergence on density requested:  1.00D-05
           Convergence on gradient requested:  5.00D-04
 
               XC Information
               --------------
-                         B3LYP Method XC Potential
-                     Hartree-Fock (Exact) Exchange  0.200          
-                        Slater Exchange Functional  0.800 local    
-                    Becke 1988 Exchange Functional  0.720 non-local
-              Lee-Yang-Parr Correlation Functional  0.810          
-                  VWN I RPA Correlation Functional  0.190 local    
+          PerdewBurkeErnzerhof Exchange Functional  1.000          
+            Perdew 1991 LDA Correlation Functional  1.000 local    
+           PerdewBurkeErnz. Correlation Functional  1.000 non-local
 
              Grid Information
              ----------------
-          Grid used for XC integration:  fine      
+          Grid used for XC integration:  xcoarse   
           Radial quadrature: Mura-Knowles        
           Angular quadrature: Lebedev. 
           Tag              B.-S. Rad. Rad. Pts. Rad. Cut. Ang. Pts.
           ---              ---------- --------- --------- ---------
-          H                   0.35       60           6.0       590
+          H                   0.35       21           5.0       194
           Grid pruning is: on 
-          Number of quadrature shells:    60
+          Number of quadrature shells:    21
           Spatial weights used:  Erf1
 
           Convergence Information
@@ -741,7 +720,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
                     Damping( 0%)  Levelshifting(0.5)       DIIS
                   --------------- ------------------- ---------------
           dE  on:    start            ASAP                start   
-          dE off:    2 iters         30 iters            30 iters 
+          dE off:    2 iters         50 iters            50 iters 
 
 
       Screening Tolerance Information
@@ -755,17 +734,17 @@ File balance: exchanges=     0  moved=     0  time=   0.0
       Dispersion Parameters
       ---------------------
 
-           DFT-D3BJ Model   
+             DFT-D3 Model   
           s6 scale factor  :        1.000000000000
-          s8 scale factor  :        1.988900000000
-          a1 parameter     :        0.398100000000
-          a2 parameter     :        4.421100000000
-              vdW contrib  :       -0.000141875935
+          s8 scale factor  :        0.722000000000
+          sr6 scale factor :        1.217000000000
+          sr8 scale factor :        1.000000000000
+              vdW contrib  :       -0.000000021928
 
 
  Loading old vectors from job with title :
 
-degradation
+prod_2_redox
 
 
       Symmetry analysis of molecular orbitals - initial
@@ -778,52 +757,55 @@ degradation
 
   Orbital symmetries:
 
-     1 a1g         2 a2u         3 a1g         4 a2u         5 a1g     
-     6 a2u     
+     1 a1g         2 a2u         3 a1g         4 a2u     
 
-   Time after variat. SCF:      0.7
-   Time prior to 1st pass:      0.7
+   Time after variat. SCF:      0.1
+   Time prior to 1st pass:      0.1
+ Local filesystem for scratch_dir
 
- #quartets = 1.560D+02 #integrals = 1.560D+02 #direct =  0.0% #cached =100.0%
+ #quartets = 3.700D+01 #integrals = 3.700D+01 #direct =  0.0% #cached =100.0%
 
 
- Integral file          = ./degradation_start.aoints.00
+ Integral file          = /data/EMPTY.aoints.0
  Record size in doubles =  65536        No. of integs per rec  =  43688
- Max. records in memory =      1        Max. records in file   = 119598
+ Max. records in memory =      3        Max. records in file   =  13635
  No. of bits per label  =      8        No. of bits per value  =     64
 
 
 File balance: exchanges=     0  moved=     0  time=   0.0
 
+ Local filesystem for scratch_dir
 
- Grid_pts file          = ./degradation_start.gridpts.00
+ Grid_pts file          = /data/EMPTY.gridpts.0
  Record size in doubles =  12289        No. of grid_pts per rec  =   3070
- Max. records in memory =      2        Max. recs in file   =    637811
+ Max. records in memory =      2        Max. recs in file   =     72721
 
 
            Memory utilization after 1st SCF pass: 
-           Heap Space remaining (MW):      229.29           229285064
-          Stack Space remaining (MW):      229.38           229375820
+           Heap Space remaining (MW):       16.56            16555272
+          Stack Space remaining (MW):       16.78            16777076
 
    convergence    iter        energy       DeltaE   RMS-Dens  Diis-err    time
  ---------------- ----- ----------------- --------- --------- ---------  ------
- d= 0,ls=0.0,diis     1     -1.1762512429 -1.88D+00  3.90D-03  3.21D-03     0.8
- d= 0,ls=0.0,diis     2     -1.1766388808 -3.88D-04  8.87D-04  4.32D-05     0.9
- d= 0,ls=0.0,diis     3     -1.1766495050 -1.06D-05  4.20D-05  3.63D-07     0.9
- d= 0,ls=0.0,diis     4     -1.1766495589 -5.39D-08  2.79D-08  2.27D-13     1.0
+ d= 0,ls=0.0,diis     1     -1.1566982854 -1.82D+00  2.09D-02  3.26D-03     0.1
+ d= 0,ls=0.0,diis     2     -1.1575799287 -8.82D-04  4.27D-03  2.26D-04     0.1
+  Singularity in Pulay matrix. Error and Fock matrices removed. 
+ d= 0,ls=0.0,diis     3     -1.1576446729 -6.47D-05  5.26D-07  3.39D-12     0.1
+  Singularity in Pulay matrix. Error and Fock matrices removed. 
+ d= 0,ls=0.0,diis     4     -1.1576446729 -9.75D-13  1.20D-12  1.76D-23     0.1
 
 
-         Total DFT energy =       -1.176649558934
-      One electron energy =       -2.474315623961
-           Coulomb energy =        1.294403483918
-    Exchange-Corr. energy =       -0.696696996104
- Nuclear repulsion energy =        0.700101453148
+         Total DFT energy =       -1.157644672853
+      One electron energy =       -2.418920318155
+           Coulomb energy =        1.270282437027
+    Exchange-Corr. energy =       -0.670017661204
+ Nuclear repulsion energy =        0.661010891407
 
-    Dispersion correction =       -0.000141875935
+    Dispersion correction =       -0.000000021928
 
- Numeric. integr. density =        2.000000000778
+ Numeric. integr. density =        2.000035011022
 
-     Total iterative time =      0.3s
+     Total iterative time =      0.0s
 
 
 
@@ -847,53 +829,33 @@ File balance: exchanges=     0  moved=     0  time=   0.0
                        DFT Final Molecular Orbital Analysis
                        ------------------------------------
 
- Vector    1  Occ=2.000000D+00  E=-4.341405D-01  Symmetry=a1g
-              MO Center=  0.0D+00,  0.0D+00, -6.3D-17, r^2= 7.5D-01
+ Vector    1  Occ=2.000000D+00  E=-3.696477D-01  Symmetry=a1g
+              MO Center=  0.0D+00,  0.0D+00, -1.2D-17, r^2= 7.5D-01
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     2      0.280624  1 H  s                  5      0.280624  2 H  s          
-     1      0.200960  1 H  s                  4      0.200960  2 H  s          
-     3      0.138111  1 H  s                  6      0.138111  2 H  s          
+     1      0.413608  1 H  s                  3      0.413608  2 H  s          
+     2      0.177329  1 H  s                  4      0.177329  2 H  s          
 
- Vector    2  Occ=0.000000D+00  E= 5.608874D-02  Symmetry=a2u
-              MO Center=  0.0D+00,  0.0D+00,  4.7D-16, r^2= 3.0D+00
+ Vector    2  Occ=0.000000D+00  E= 4.178512D-02  Symmetry=a2u
+              MO Center=  0.0D+00,  0.0D+00, -4.7D-16, r^2= 2.4D+00
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     3      1.956652  1 H  s                  6     -1.956652  2 H  s          
-     2      0.153496  1 H  s                  5     -0.153496  2 H  s          
-     1      0.101034  1 H  s                  4     -0.101034  2 H  s          
+     2      1.614208  1 H  s                  4     -1.614208  2 H  s          
+     1      0.278525  1 H  s                  3     -0.278525  2 H  s          
 
- Vector    3  Occ=0.000000D+00  E= 1.970879D-01  Symmetry=a1g
-              MO Center=  0.0D+00,  0.0D+00,  1.7D-15, r^2= 3.2D+00
+ Vector    3  Occ=0.000000D+00  E= 3.202922D-01  Symmetry=a1g
+              MO Center=  0.0D+00,  0.0D+00,  6.4D-16, r^2= 2.3D+00
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     3      0.836788  1 H  s                  6      0.836788  2 H  s          
-     2     -0.687896  1 H  s                  5     -0.687896  2 H  s          
-     1     -0.078444  1 H  s                  4     -0.078444  2 H  s          
+     2     -0.735938  1 H  s                  4     -0.735938  2 H  s          
+     1      0.729849  1 H  s                  3      0.729849  2 H  s          
 
- Vector    4  Occ=0.000000D+00  E= 4.692538D-01  Symmetry=a2u
-              MO Center=  0.0D+00,  0.0D+00, -1.5D-15, r^2= 2.6D+00
+ Vector    4  Occ=0.000000D+00  E= 6.849557D-01  Symmetry=a2u
+              MO Center=  0.0D+00,  0.0D+00, -2.3D-17, r^2= 1.7D+00
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     3      2.365292  1 H  s                  6     -2.365292  2 H  s          
-     2     -1.624055  1 H  s                  5      1.624055  2 H  s          
-     1     -0.124935  1 H  s                  4      0.124935  2 H  s          
-
- Vector    5  Occ=0.000000D+00  E= 2.125234D+00  Symmetry=a1g
-              MO Center=  0.0D+00,  0.0D+00, -2.2D-15, r^2= 1.2D+00
-   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
-  ----- ------------  ---------------      ----- ------------  ---------------
-     2      1.241960  1 H  s                  5      1.241960  2 H  s          
-     1     -1.086729  1 H  s                  4     -1.086729  2 H  s          
-     3     -0.506878  1 H  s                  6     -0.506878  2 H  s          
-
- Vector    6  Occ=0.000000D+00  E= 2.369278D+00  Symmetry=a2u
-              MO Center=  0.0D+00,  0.0D+00,  2.2D-15, r^2= 1.0D+00
-   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
-  ----- ------------  ---------------      ----- ------------  ---------------
-     2      1.849314  1 H  s                  5     -1.849314  2 H  s          
-     3     -1.265168  1 H  s                  6      1.265168  2 H  s          
-     1     -1.118425  1 H  s                  4      1.118425  2 H  s          
+     2      1.704913  1 H  s                  4     -1.704913  2 H  s          
+     1     -1.194184  1 H  s                  3      1.194184  2 H  s          
 
 
  center of mass
@@ -902,8 +864,8 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
  moments of inertia (a.u.)
  ------------------
-           1.028094825670           0.000000000000           0.000000000000
-           0.000000000000           1.028094825670           0.000000000000
+           1.153288338875           0.000000000000           0.000000000000
+           0.000000000000           1.153288338875           0.000000000000
            0.000000000000           0.000000000000           0.000000000000
 
      Multipole analysis of the density
@@ -917,19 +879,19 @@ File balance: exchanges=     0  moved=     0  time=   0.0
      1   0 1 0      0.000000      0.000000      0.000000      0.000000
      1   0 0 1      0.000000      0.000000      0.000000      0.000000
 
-     2   2 0 0     -1.549301     -0.774650     -0.774650      0.000000
+     2   2 0 0     -1.534797     -0.767398     -0.767398      0.000000
      2   1 1 0      0.000000      0.000000      0.000000      0.000000
      2   1 0 1      0.000000      0.000000      0.000000      0.000000
-     2   0 2 0     -1.549301     -0.774650     -0.774650      0.000000
+     2   0 2 0     -1.534797     -0.767398     -0.767398      0.000000
      2   0 1 1      0.000000      0.000000      0.000000      0.000000
-     2   0 0 2     -1.229661     -1.124887     -1.124887      1.020112
+     2   0 0 2     -1.172052     -1.158193     -1.158193      1.144334
 
 
- Parallel integral file used      31 records with       0 large values
+ Parallel integral file used       2 records with       0 large values
 
  Line search: 
-     step= 1.00 grad=-2.4D-03 hess= 1.7D-03 energy=     -1.176650 mode=downhill
- new step= 0.70                   predicted energy=     -1.176798
+     step= 1.00 grad=-8.9D-03 hess= 6.5D-03 energy=     -1.157645 mode=downhill
+ new step= 0.69                   predicted energy=     -1.158257
   no constraints, skipping    0.0000000000000000     
   no constraints, skipping    0.0000000000000000     
   no constraints, skipping    0.0000000000000000     
@@ -946,8 +908,8 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
   No.       Tag          Charge          X              Y              Z
  ---- ---------------- ---------- -------------- -------------- --------------
-    1 H                    1.0000     0.00000000     0.00000000    -0.37085271
-    2 H                    1.0000     0.00000000     0.00000000     0.37085271
+    1 H                    1.0000     0.00000000     0.00000000    -0.38602580
+    2 H                    1.0000     0.00000000     0.00000000     0.38602580
 
       Atomic Mass 
       ----------- 
@@ -955,7 +917,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
       H                  1.007825
 
 
- Effective nuclear repulsion energy (a.u.)       0.7134601430
+ Effective nuclear repulsion energy (a.u.)       0.6854169520
 
             Nuclear Dipole moment (a.u.) 
             ----------------------------
@@ -980,7 +942,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
                                  -----------------
 
 
-                                    degradation
+                                   prod_2_redox
 
 
 
@@ -989,16 +951,16 @@ File balance: exchanges=     0  moved=     0  time=   0.0
  ------------------------------------------------------------------------------
        Tag                 Description            Shells   Functions and Types
  ---------------- ------------------------------  ------  ---------------------
- H                          6-311g*                  3        3   3s
+ H                         def2-SV(P)                2        2   2s
 
 
       Symmetry analysis of basis
       --------------------------
 
-        a1g         3
+        a1g         2
         a1u         0
         a2g         0
-        a2u         3
+        a2u         2
         b1g         0
         b1u         0
         b2g         0
@@ -1019,32 +981,29 @@ File balance: exchanges=     0  moved=     0  time=   0.0
           Charge           :     0
           Spin multiplicity:     1
           Use of symmetry is: on ; symmetry adaption is: on 
-          Maximum number of iterations:  30
-          AO basis - number of functions:     6
-                     number of shells:     6
+          Maximum number of iterations:  50
+          AO basis - number of functions:     4
+                     number of shells:     4
           Convergence on energy requested:  1.00D-06
           Convergence on density requested:  1.00D-05
           Convergence on gradient requested:  5.00D-04
 
               XC Information
               --------------
-                         B3LYP Method XC Potential
-                     Hartree-Fock (Exact) Exchange  0.200          
-                        Slater Exchange Functional  0.800 local    
-                    Becke 1988 Exchange Functional  0.720 non-local
-              Lee-Yang-Parr Correlation Functional  0.810          
-                  VWN I RPA Correlation Functional  0.190 local    
+          PerdewBurkeErnzerhof Exchange Functional  1.000          
+            Perdew 1991 LDA Correlation Functional  1.000 local    
+           PerdewBurkeErnz. Correlation Functional  1.000 non-local
 
              Grid Information
              ----------------
-          Grid used for XC integration:  fine      
+          Grid used for XC integration:  xcoarse   
           Radial quadrature: Mura-Knowles        
           Angular quadrature: Lebedev. 
           Tag              B.-S. Rad. Rad. Pts. Rad. Cut. Ang. Pts.
           ---              ---------- --------- --------- ---------
-          H                   0.35       60           6.0       590
+          H                   0.35       21           5.0       194
           Grid pruning is: on 
-          Number of quadrature shells:    60
+          Number of quadrature shells:    21
           Spatial weights used:  Erf1
 
           Convergence Information
@@ -1059,7 +1018,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
                     Damping( 0%)  Levelshifting(0.5)       DIIS
                   --------------- ------------------- ---------------
           dE  on:    start            ASAP                start   
-          dE off:    2 iters         30 iters            30 iters 
+          dE off:    2 iters         50 iters            50 iters 
 
 
       Screening Tolerance Information
@@ -1073,17 +1032,17 @@ File balance: exchanges=     0  moved=     0  time=   0.0
       Dispersion Parameters
       ---------------------
 
-           DFT-D3BJ Model   
+             DFT-D3 Model   
           s6 scale factor  :        1.000000000000
-          s8 scale factor  :        1.988900000000
-          a1 parameter     :        0.398100000000
-          a2 parameter     :        4.421100000000
-              vdW contrib  :       -0.000140643101
+          s8 scale factor  :        0.722000000000
+          sr6 scale factor :        1.217000000000
+          sr8 scale factor :        1.000000000000
+              vdW contrib  :       -0.000000015459
 
 
  Loading old vectors from job with title :
 
-degradation
+prod_2_redox
 
 
       Symmetry analysis of molecular orbitals - initial
@@ -1096,52 +1055,55 @@ degradation
 
   Orbital symmetries:
 
-     1 a1g         2 a2u         3 a1g         4 a2u         5 a1g     
-     6 a2u     
+     1 a1g         2 a2u         3 a1g         4 a2u     
 
-   Time after variat. SCF:      1.1
-   Time prior to 1st pass:      1.1
+   Time after variat. SCF:      0.2
+   Time prior to 1st pass:      0.2
+ Local filesystem for scratch_dir
 
- #quartets = 1.560D+02 #integrals = 1.560D+02 #direct =  0.0% #cached =100.0%
+ #quartets = 3.700D+01 #integrals = 3.700D+01 #direct =  0.0% #cached =100.0%
 
 
- Integral file          = ./degradation_start.aoints.00
+ Integral file          = /data/EMPTY.aoints.0
  Record size in doubles =  65536        No. of integs per rec  =  43688
- Max. records in memory =      1        Max. records in file   = 119598
+ Max. records in memory =      3        Max. records in file   =  13635
  No. of bits per label  =      8        No. of bits per value  =     64
 
 
 File balance: exchanges=     0  moved=     0  time=   0.0
 
+ Local filesystem for scratch_dir
 
- Grid_pts file          = ./degradation_start.gridpts.00
+ Grid_pts file          = /data/EMPTY.gridpts.0
  Record size in doubles =  12289        No. of grid_pts per rec  =   3070
- Max. records in memory =      2        Max. recs in file   =    637811
+ Max. records in memory =      2        Max. recs in file   =     72721
 
 
            Memory utilization after 1st SCF pass: 
-           Heap Space remaining (MW):      229.29           229285064
-          Stack Space remaining (MW):      229.38           229375820
+           Heap Space remaining (MW):       16.56            16555272
+          Stack Space remaining (MW):       16.78            16777076
 
    convergence    iter        energy       DeltaE   RMS-Dens  Diis-err    time
  ---------------- ----- ----------------- --------- --------- ---------  ------
- d= 0,ls=0.0,diis     1     -1.1767391482 -1.89D+00  1.13D-03  2.66D-04     1.2
- d= 0,ls=0.0,diis     2     -1.1767716947 -3.25D-05  2.54D-04  3.82D-06     1.3
- d= 0,ls=0.0,diis     3     -1.1767726119 -9.17D-07  1.15D-05  2.90D-08     1.3
- d= 0,ls=0.0,diis     4     -1.1767726161 -4.22D-09  2.33D-09  1.56D-15     1.4
+ d= 0,ls=0.0,diis     1     -1.1580075684 -1.84D+00  6.11D-03  2.94D-04     0.2
+ d= 0,ls=0.0,diis     2     -1.1580856069 -7.80D-05  1.29D-03  2.06D-05     0.2
+  Singularity in Pulay matrix. Error and Fock matrices removed. 
+ d= 0,ls=0.0,diis     3     -1.1580915228 -5.92D-06  6.05D-08  4.57D-14     0.2
+  Singularity in Pulay matrix. Error and Fock matrices removed. 
+ d= 0,ls=0.0,diis     4     -1.1580915228 -1.33D-14  9.39D-13  1.10D-23     0.2
 
 
-         Total DFT energy =       -1.176772616108
-      One electron energy =       -2.492922949429
-           Coulomb energy =        1.304214978155
-    Exchange-Corr. energy =       -0.701384144776
- Nuclear repulsion energy =        0.713460143042
+         Total DFT energy =       -1.158091522764
+      One electron energy =       -2.453745392481
+           Coulomb energy =        1.288299710418
+    Exchange-Corr. energy =       -0.678062777246
+ Nuclear repulsion energy =        0.685416952003
 
-    Dispersion correction =       -0.000140643101
+    Dispersion correction =       -0.000000015459
 
- Numeric. integr. density =        2.000000013711
+ Numeric. integr. density =        1.999986747676
 
-     Total iterative time =      0.3s
+     Total iterative time =      0.0s
 
 
 
@@ -1165,53 +1127,33 @@ File balance: exchanges=     0  moved=     0  time=   0.0
                        DFT Final Molecular Orbital Analysis
                        ------------------------------------
 
- Vector    1  Occ=2.000000D+00  E=-4.369972D-01  Symmetry=a1g
-              MO Center=  0.0D+00,  0.0D+00, -1.4D-17, r^2= 7.4D-01
+ Vector    1  Occ=2.000000D+00  E=-3.742396D-01  Symmetry=a1g
+              MO Center=  0.0D+00,  0.0D+00,  8.9D-17, r^2= 7.3D-01
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     2      0.279390  1 H  s                  5      0.279390  2 H  s          
-     1      0.202769  1 H  s                  4      0.202769  2 H  s          
-     3      0.136387  1 H  s                  6      0.136387  2 H  s          
+     1      0.416384  1 H  s                  3      0.416384  2 H  s          
+     2      0.171299  1 H  s                  4      0.171299  2 H  s          
 
- Vector    2  Occ=0.000000D+00  E= 5.896556D-02  Symmetry=a2u
-              MO Center=  0.0D+00,  0.0D+00, -1.9D-16, r^2= 3.0D+00
+ Vector    2  Occ=0.000000D+00  E= 4.903763D-02  Symmetry=a2u
+              MO Center=  0.0D+00,  0.0D+00, -6.6D-17, r^2= 2.4D+00
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     3      2.007266  1 H  s                  6     -2.007266  2 H  s          
-     2      0.147551  1 H  s                  5     -0.147551  2 H  s          
-     1      0.099282  1 H  s                  4     -0.099282  2 H  s          
+     2      1.694038  1 H  s                  4     -1.694038  2 H  s          
+     1      0.269597  1 H  s                  3     -0.269597  2 H  s          
 
- Vector    3  Occ=0.000000D+00  E= 1.962204D-01  Symmetry=a1g
-              MO Center=  0.0D+00,  0.0D+00,  2.4D-16, r^2= 3.2D+00
+ Vector    3  Occ=0.000000D+00  E= 3.144026D-01  Symmetry=a1g
+              MO Center=  0.0D+00,  0.0D+00, -2.5D-16, r^2= 2.3D+00
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     3      0.834386  1 H  s                  6      0.834386  2 H  s          
-     2     -0.681639  1 H  s                  5     -0.681639  2 H  s          
-     1     -0.079094  1 H  s                  4     -0.079094  2 H  s          
+     2     -0.733263  1 H  s                  4     -0.733263  2 H  s          
+     1      0.718275  1 H  s                  3      0.718275  2 H  s          
 
- Vector    4  Occ=0.000000D+00  E= 4.751896D-01  Symmetry=a2u
-              MO Center=  0.0D+00,  0.0D+00,  1.8D-16, r^2= 2.6D+00
+ Vector    4  Occ=0.000000D+00  E= 7.084529D-01  Symmetry=a2u
+              MO Center=  0.0D+00,  0.0D+00, -2.5D-17, r^2= 1.7D+00
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     3      2.393270  1 H  s                  6     -2.393270  2 H  s          
-     2     -1.654456  1 H  s                  5      1.654456  2 H  s          
-     1     -0.124235  1 H  s                  4      0.124235  2 H  s          
-
- Vector    5  Occ=0.000000D+00  E= 2.107174D+00  Symmetry=a1g
-              MO Center=  0.0D+00,  0.0D+00, -3.1D-16, r^2= 1.2D+00
-   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
-  ----- ------------  ---------------      ----- ------------  ---------------
-     2      1.239941  1 H  s                  5      1.239941  2 H  s          
-     1     -1.080774  1 H  s                  4     -1.080774  2 H  s          
-     3     -0.507336  1 H  s                  6     -0.507336  2 H  s          
-
- Vector    6  Occ=0.000000D+00  E= 2.386159D+00  Symmetry=a2u
-              MO Center=  0.0D+00,  0.0D+00,  1.7D-16, r^2= 1.0D+00
-   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
-  ----- ------------  ---------------      ----- ------------  ---------------
-     2      1.862206  1 H  s                  5     -1.862206  2 H  s          
-     3     -1.276615  1 H  s                  6      1.276615  2 H  s          
-     1     -1.124107  1 H  s                  4      1.124107  2 H  s          
+     2      1.730402  1 H  s                  4     -1.730402  2 H  s          
+     1     -1.223251  1 H  s                  3      1.223251  2 H  s          
 
 
  center of mass
@@ -1220,8 +1162,8 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
  moments of inertia (a.u.)
  ------------------
-           0.989955558302           0.000000000000           0.000000000000
-           0.000000000000           0.989955558302           0.000000000000
+           1.072618909054           0.000000000000           0.000000000000
+           0.000000000000           1.072618909054           0.000000000000
            0.000000000000           0.000000000000           0.000000000000
 
      Multipole analysis of the density
@@ -1235,15 +1177,15 @@ File balance: exchanges=     0  moved=     0  time=   0.0
      1   0 1 0      0.000000      0.000000      0.000000      0.000000
      1   0 0 1      0.000000      0.000000      0.000000      0.000000
 
-     2   2 0 0     -1.535115     -0.767557     -0.767557      0.000000
+     2   2 0 0     -1.505435     -0.752717     -0.752717      0.000000
      2   1 1 0      0.000000      0.000000      0.000000      0.000000
      2   1 0 1      0.000000      0.000000      0.000000      0.000000
-     2   0 2 0     -1.535115     -0.767557     -0.767557      0.000000
+     2   0 2 0     -1.505435     -0.752717     -0.752717      0.000000
      2   0 1 1      0.000000      0.000000      0.000000      0.000000
-     2   0 0 2     -1.225719     -1.103994     -1.103994      0.982269
+     2   0 0 2     -1.163200     -1.113745     -1.113745      1.064291
 
 
- Parallel integral file used      31 records with       0 large values
+ Parallel integral file used       2 records with       0 large values
 
 
             General Information
@@ -1257,32 +1199,29 @@ File balance: exchanges=     0  moved=     0  time=   0.0
           Charge           :     0
           Spin multiplicity:     1
           Use of symmetry is: on ; symmetry adaption is: on 
-          Maximum number of iterations:  30
-          AO basis - number of functions:     6
-                     number of shells:     6
+          Maximum number of iterations:  50
+          AO basis - number of functions:     4
+                     number of shells:     4
           Convergence on energy requested:  1.00D-06
           Convergence on density requested:  1.00D-05
           Convergence on gradient requested:  5.00D-04
 
               XC Information
               --------------
-                         B3LYP Method XC Potential
-                     Hartree-Fock (Exact) Exchange  0.200          
-                        Slater Exchange Functional  0.800 local    
-                    Becke 1988 Exchange Functional  0.720 non-local
-              Lee-Yang-Parr Correlation Functional  0.810          
-                  VWN I RPA Correlation Functional  0.190 local    
+          PerdewBurkeErnzerhof Exchange Functional  1.000          
+            Perdew 1991 LDA Correlation Functional  1.000 local    
+           PerdewBurkeErnz. Correlation Functional  1.000 non-local
 
              Grid Information
              ----------------
-          Grid used for XC integration:  fine      
+          Grid used for XC integration:  xcoarse   
           Radial quadrature: Mura-Knowles        
           Angular quadrature: Lebedev. 
           Tag              B.-S. Rad. Rad. Pts. Rad. Cut. Ang. Pts.
           ---              ---------- --------- --------- ---------
-          H                   0.35       60           6.0       590
+          H                   0.35       21           5.0       194
           Grid pruning is: on 
-          Number of quadrature shells:    60
+          Number of quadrature shells:    21
           Spatial weights used:  Erf1
 
           Convergence Information
@@ -1297,7 +1236,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
                     Damping( 0%)  Levelshifting(0.5)       DIIS
                   --------------- ------------------- ---------------
           dE  on:    start            ASAP                start   
-          dE off:    2 iters         30 iters            30 iters 
+          dE off:    2 iters         50 iters            50 iters 
 
 
       Screening Tolerance Information
@@ -1314,7 +1253,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
                             --------------------------
 
 
-                                    degradation
+                                   prod_2_redox
 
 
 
@@ -1328,8 +1267,8 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
     atom               coordinates                        gradient
                  x          y          z           x          y          z
-   1 H       0.000000   0.000000  -0.700810    0.000000   0.000000   0.000171
-   2 H       0.000000   0.000000   0.700810    0.000000   0.000000  -0.000171
+   1 H       0.000000   0.000000  -0.729483    0.000000   0.000000   0.000522
+   2 H       0.000000   0.000000   0.729483    0.000000   0.000000  -0.000522
 
                  ----------------------------------------
                  |  Time  |  1-e(secs)   |  2-e(secs)   |
@@ -1342,8 +1281,8 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
   Step       Energy      Delta E   Gmax     Grms     Xrms     Xmax   Walltime
   ---- ---------------- -------- -------- -------- -------- -------- --------
-@    1      -1.17677262 -8.2D-04  0.00017  0.00017  0.01839  0.03185      1.4
-                                     ok       ok                    
+@    1      -1.15809152 -2.9D-03  0.00052  0.00052  0.03494  0.06052      0.2
+                                                                    
 
 
 
@@ -1354,7 +1293,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
       Type          Name      I     J     K     L     M      Value     Gradient
       ----------- --------  ----- ----- ----- ----- ----- ---------- ----------
-    1 Stretch                  1     2                       0.74171   -0.00017
+    1 Stretch                  1     2                       0.77205   -0.00052
 
   no constraints, skipping    0.0000000000000000     
   no constraints, skipping    0.0000000000000000     
@@ -1364,7 +1303,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
                                  -----------------
 
 
-                                    degradation
+                                   prod_2_redox
 
 
 
@@ -1373,16 +1312,16 @@ File balance: exchanges=     0  moved=     0  time=   0.0
  ------------------------------------------------------------------------------
        Tag                 Description            Shells   Functions and Types
  ---------------- ------------------------------  ------  ---------------------
- H                          6-311g*                  3        3   3s
+ H                         def2-SV(P)                2        2   2s
 
 
       Symmetry analysis of basis
       --------------------------
 
-        a1g         3
+        a1g         2
         a1u         0
         a2g         0
-        a2u         3
+        a2u         2
         b1g         0
         b1u         0
         b2g         0
@@ -1403,32 +1342,29 @@ File balance: exchanges=     0  moved=     0  time=   0.0
           Charge           :     0
           Spin multiplicity:     1
           Use of symmetry is: on ; symmetry adaption is: on 
-          Maximum number of iterations:  30
-          AO basis - number of functions:     6
-                     number of shells:     6
+          Maximum number of iterations:  50
+          AO basis - number of functions:     4
+                     number of shells:     4
           Convergence on energy requested:  1.00D-06
           Convergence on density requested:  1.00D-05
           Convergence on gradient requested:  5.00D-04
 
               XC Information
               --------------
-                         B3LYP Method XC Potential
-                     Hartree-Fock (Exact) Exchange  0.200          
-                        Slater Exchange Functional  0.800 local    
-                    Becke 1988 Exchange Functional  0.720 non-local
-              Lee-Yang-Parr Correlation Functional  0.810          
-                  VWN I RPA Correlation Functional  0.190 local    
+          PerdewBurkeErnzerhof Exchange Functional  1.000          
+            Perdew 1991 LDA Correlation Functional  1.000 local    
+           PerdewBurkeErnz. Correlation Functional  1.000 non-local
 
              Grid Information
              ----------------
-          Grid used for XC integration:  fine      
+          Grid used for XC integration:  xcoarse   
           Radial quadrature: Mura-Knowles        
           Angular quadrature: Lebedev. 
           Tag              B.-S. Rad. Rad. Pts. Rad. Cut. Ang. Pts.
           ---              ---------- --------- --------- ---------
-          H                   0.35       60           6.0       590
+          H                   0.35       21           5.0       194
           Grid pruning is: on 
-          Number of quadrature shells:    60
+          Number of quadrature shells:    21
           Spatial weights used:  Erf1
 
           Convergence Information
@@ -1443,7 +1379,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
                     Damping( 0%)  Levelshifting(0.5)       DIIS
                   --------------- ------------------- ---------------
           dE  on:    start            ASAP                start   
-          dE off:    2 iters         30 iters            30 iters 
+          dE off:    2 iters         50 iters            50 iters 
 
 
       Screening Tolerance Information
@@ -1457,17 +1393,17 @@ File balance: exchanges=     0  moved=     0  time=   0.0
       Dispersion Parameters
       ---------------------
 
-           DFT-D3BJ Model   
+             DFT-D3 Model   
           s6 scale factor  :        1.000000000000
-          s8 scale factor  :        1.988900000000
-          a1 parameter     :        0.398100000000
-          a2 parameter     :        4.421100000000
-              vdW contrib  :       -0.000140658361
+          s8 scale factor  :        0.722000000000
+          sr6 scale factor :        1.217000000000
+          sr8 scale factor :        1.000000000000
+              vdW contrib  :       -0.000000015578
 
 
  Loading old vectors from job with title :
 
-degradation
+prod_2_redox
 
 
       Symmetry analysis of molecular orbitals - initial
@@ -1480,50 +1416,53 @@ degradation
 
   Orbital symmetries:
 
-     1 a1g         2 a2u         3 a1g         4 a2u         5 a1g     
-     6 a2u     
+     1 a1g         2 a2u         3 a1g         4 a2u     
 
-   Time after variat. SCF:      1.5
-   Time prior to 1st pass:      1.5
+   Time after variat. SCF:      0.2
+   Time prior to 1st pass:      0.2
+ Local filesystem for scratch_dir
 
- #quartets = 1.560D+02 #integrals = 1.560D+02 #direct =  0.0% #cached =100.0%
+ #quartets = 3.700D+01 #integrals = 3.700D+01 #direct =  0.0% #cached =100.0%
 
 
- Integral file          = ./degradation_start.aoints.00
+ Integral file          = /data/EMPTY.aoints.0
  Record size in doubles =  65536        No. of integs per rec  =  43688
- Max. records in memory =      1        Max. records in file   = 119598
+ Max. records in memory =      3        Max. records in file   =  13635
  No. of bits per label  =      8        No. of bits per value  =     64
 
 
 File balance: exchanges=     0  moved=     0  time=   0.0
 
+ Local filesystem for scratch_dir
 
- Grid_pts file          = ./degradation_start.gridpts.00
+ Grid_pts file          = /data/EMPTY.gridpts.0
  Record size in doubles =  12289        No. of grid_pts per rec  =   3070
- Max. records in memory =      2        Max. recs in file   =    637811
+ Max. records in memory =      2        Max. recs in file   =     72721
 
 
            Memory utilization after 1st SCF pass: 
-           Heap Space remaining (MW):      229.29           229285064
-          Stack Space remaining (MW):      229.38           229375820
+           Heap Space remaining (MW):       16.56            16555272
+          Stack Space remaining (MW):       16.78            16777076
 
    convergence    iter        energy       DeltaE   RMS-Dens  Diis-err    time
  ---------------- ----- ----------------- --------- --------- ---------  ------
- d= 0,ls=0.0,diis     1     -1.1767726473 -1.89D+00  1.77D-05  6.57D-08     1.7
- d= 0,ls=0.0,diis     2     -1.1767726553 -8.01D-09  4.00D-06  9.40D-10     1.7
+ d= 0,ls=0.0,diis     1     -1.1580918592 -1.84D+00  1.44D-04  1.62D-07     0.2
+ d= 0,ls=0.0,diis     2     -1.1580919025 -4.33D-08  3.03D-05  1.14D-08     0.2
+  Singularity in Pulay matrix. Error and Fock matrices removed. 
+ d= 0,ls=0.0,diis     3     -1.1580919057 -3.28D-09  3.88D-11  1.88D-20     0.2
 
 
-         Total DFT energy =       -1.176772655301
-      One electron energy =       -2.492623743971
-           Coulomb energy =        1.304046308485
-    Exchange-Corr. energy =       -0.701303047706
- Nuclear repulsion energy =        0.713248486253
+         Total DFT energy =       -1.158091905742
+      One electron energy =       -2.452925286756
+           Coulomb energy =        1.287875951703
+    Exchange-Corr. energy =       -0.677873173977
+ Nuclear repulsion energy =        0.684830618866
 
-    Dispersion correction =       -0.000140658361
+    Dispersion correction =       -0.000000015578
 
- Numeric. integr. density =        2.000000013610
+ Numeric. integr. density =        1.999987903371
 
-     Total iterative time =      0.2s
+     Total iterative time =      0.0s
 
 
 
@@ -1547,53 +1486,33 @@ File balance: exchanges=     0  moved=     0  time=   0.0
                        DFT Final Molecular Orbital Analysis
                        ------------------------------------
 
- Vector    1  Occ=2.000000D+00  E=-4.369548D-01  Symmetry=a1g
-              MO Center=  0.0D+00,  0.0D+00, -2.3D-17, r^2= 7.4D-01
+ Vector    1  Occ=2.000000D+00  E=-3.741308D-01  Symmetry=a1g
+              MO Center=  0.0D+00,  0.0D+00, -3.3D-16, r^2= 7.3D-01
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     2      0.279409  1 H  s                  5      0.279409  2 H  s          
-     1      0.202741  1 H  s                  4      0.202741  2 H  s          
-     3      0.136413  1 H  s                  6      0.136413  2 H  s          
+     1      0.416318  1 H  s                  3      0.416318  2 H  s          
+     2      0.171440  1 H  s                  4      0.171440  2 H  s          
 
- Vector    2  Occ=0.000000D+00  E= 5.891995D-02  Symmetry=a2u
-              MO Center=  0.0D+00,  0.0D+00,  5.7D-16, r^2= 3.0D+00
+ Vector    2  Occ=0.000000D+00  E= 4.887036D-02  Symmetry=a2u
+              MO Center=  0.0D+00,  0.0D+00,  9.0D-17, r^2= 2.4D+00
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     3      2.006462  1 H  s                  6     -2.006462  2 H  s          
-     2      0.147647  1 H  s                  5     -0.147647  2 H  s          
-     1      0.099310  1 H  s                  4     -0.099310  2 H  s          
+     2      1.692125  1 H  s                  4     -1.692125  2 H  s          
+     1      0.269806  1 H  s                  3     -0.269806  2 H  s          
 
- Vector    3  Occ=0.000000D+00  E= 1.962327D-01  Symmetry=a1g
-              MO Center=  0.0D+00,  0.0D+00, -4.0D-16, r^2= 3.2D+00
+ Vector    3  Occ=0.000000D+00  E= 3.145381D-01  Symmetry=a1g
+              MO Center=  0.0D+00,  0.0D+00,  2.0D-16, r^2= 2.3D+00
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     3      0.834423  1 H  s                  6      0.834423  2 H  s          
-     2     -0.681736  1 H  s                  5     -0.681736  2 H  s          
-     1     -0.079084  1 H  s                  4     -0.079084  2 H  s          
+     2     -0.733325  1 H  s                  4     -0.733325  2 H  s          
+     1      0.718545  1 H  s                  3      0.718545  2 H  s          
 
- Vector    4  Occ=0.000000D+00  E= 4.750947D-01  Symmetry=a2u
-              MO Center=  0.0D+00,  0.0D+00, -5.6D-16, r^2= 2.6D+00
+ Vector    4  Occ=0.000000D+00  E= 7.078867D-01  Symmetry=a2u
+              MO Center=  0.0D+00,  0.0D+00, -3.1D-17, r^2= 1.7D+00
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     3      2.392827  1 H  s                  6     -2.392827  2 H  s          
-     2     -1.653972  1 H  s                  5      1.653972  2 H  s          
-     1     -0.124247  1 H  s                  4      0.124247  2 H  s          
-
- Vector    5  Occ=0.000000D+00  E= 2.107456D+00  Symmetry=a1g
-              MO Center=  0.0D+00,  0.0D+00, -5.1D-17, r^2= 1.2D+00
-   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
-  ----- ------------  ---------------      ----- ------------  ---------------
-     2      1.239974  1 H  s                  5      1.239974  2 H  s          
-     1     -1.080869  1 H  s                  4     -1.080869  2 H  s          
-     3     -0.507330  1 H  s                  6     -0.507330  2 H  s          
-
- Vector    6  Occ=0.000000D+00  E= 2.385885D+00  Symmetry=a2u
-              MO Center=  0.0D+00,  0.0D+00,  1.8D-16, r^2= 1.0D+00
-   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
-  ----- ------------  ---------------      ----- ------------  ---------------
-     2      1.862002  1 H  s                  5     -1.862002  2 H  s          
-     3     -1.276434  1 H  s                  6      1.276434  2 H  s          
-     1     -1.124015  1 H  s                  4      1.124015  2 H  s          
+     2      1.729789  1 H  s                  4     -1.729789  2 H  s          
+     1     -1.222549  1 H  s                  3      1.222549  2 H  s          
 
 
  center of mass
@@ -1602,8 +1521,8 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
  moments of inertia (a.u.)
  ------------------
-           0.990543184936           0.000000000000           0.000000000000
-           0.000000000000           0.990543184936           0.000000000000
+           1.074456388924           0.000000000000           0.000000000000
+           0.000000000000           1.074456388924           0.000000000000
            0.000000000000           0.000000000000           0.000000000000
 
      Multipole analysis of the density
@@ -1615,21 +1534,21 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
      1   1 0 0      0.000000      0.000000      0.000000      0.000000
      1   0 1 0      0.000000      0.000000      0.000000      0.000000
-     1   0 0 1     -0.000000     -0.000000     -0.000000      0.000000
+     1   0 0 1      0.000000      0.000000      0.000000      0.000000
 
-     2   2 0 0     -1.535333     -0.767667     -0.767667      0.000000
+     2   2 0 0     -1.506120     -0.753060     -0.753060      0.000000
      2   1 1 0      0.000000      0.000000      0.000000      0.000000
      2   1 0 1      0.000000      0.000000      0.000000      0.000000
-     2   0 2 0     -1.535333     -0.767667     -0.767667      0.000000
+     2   0 2 0     -1.506120     -0.753060     -0.753060      0.000000
      2   0 1 1      0.000000      0.000000      0.000000      0.000000
-     2   0 0 2     -1.225779     -1.104316     -1.104316      0.982852
+     2   0 0 2     -1.163413     -1.114763     -1.114763      1.066114
 
 
- Parallel integral file used      31 records with       0 large values
+ Parallel integral file used       2 records with       0 large values
 
  Line search: 
-     step= 1.00 grad=-7.1D-08 hess= 3.2D-08 energy=     -1.176773 mode=accept  
- new step= 1.00                   predicted energy=     -1.176773
+     step= 1.00 grad=-6.5D-07 hess= 2.7D-07 energy=     -1.158092 mode=accept  
+ new step= 1.00                   predicted energy=     -1.158092
   no constraints, skipping    0.0000000000000000     
   no constraints, skipping    0.0000000000000000     
   no constraints, skipping    0.0000000000000000     
@@ -1646,8 +1565,8 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
   No.       Tag          Charge          X              Y              Z
  ---- ---------------- ---------- -------------- -------------- --------------
-    1 H                    1.0000     0.00000000     0.00000000    -0.37096276
-    2 H                    1.0000     0.00000000     0.00000000     0.37096276
+    1 H                    1.0000     0.00000000     0.00000000    -0.38635630
+    2 H                    1.0000     0.00000000     0.00000000     0.38635630
 
       Atomic Mass 
       ----------- 
@@ -1655,7 +1574,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
       H                  1.007825
 
 
- Effective nuclear repulsion energy (a.u.)       0.7132484863
+ Effective nuclear repulsion energy (a.u.)       0.6848306189
 
             Nuclear Dipole moment (a.u.) 
             ----------------------------
@@ -1680,7 +1599,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
                                  -----------------
 
 
-                                    degradation
+                                   prod_2_redox
 
 
 
@@ -1689,16 +1608,16 @@ File balance: exchanges=     0  moved=     0  time=   0.0
  ------------------------------------------------------------------------------
        Tag                 Description            Shells   Functions and Types
  ---------------- ------------------------------  ------  ---------------------
- H                          6-311g*                  3        3   3s
+ H                         def2-SV(P)                2        2   2s
 
 
       Symmetry analysis of basis
       --------------------------
 
-        a1g         3
+        a1g         2
         a1u         0
         a2g         0
-        a2u         3
+        a2u         2
         b1g         0
         b1u         0
         b2g         0
@@ -1709,7 +1628,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
   The DFT is already converged 
 
-         Total DFT energy =     -1.176772655301
+         Total DFT energy =     -1.158091905742
 
 
             General Information
@@ -1723,32 +1642,29 @@ File balance: exchanges=     0  moved=     0  time=   0.0
           Charge           :     0
           Spin multiplicity:     1
           Use of symmetry is: on ; symmetry adaption is: on 
-          Maximum number of iterations:  30
-          AO basis - number of functions:     6
-                     number of shells:     6
+          Maximum number of iterations:  50
+          AO basis - number of functions:     4
+                     number of shells:     4
           Convergence on energy requested:  1.00D-06
           Convergence on density requested:  1.00D-05
           Convergence on gradient requested:  5.00D-04
 
               XC Information
               --------------
-                         B3LYP Method XC Potential
-                     Hartree-Fock (Exact) Exchange  0.200          
-                        Slater Exchange Functional  0.800 local    
-                    Becke 1988 Exchange Functional  0.720 non-local
-              Lee-Yang-Parr Correlation Functional  0.810          
-                  VWN I RPA Correlation Functional  0.190 local    
+          PerdewBurkeErnzerhof Exchange Functional  1.000          
+            Perdew 1991 LDA Correlation Functional  1.000 local    
+           PerdewBurkeErnz. Correlation Functional  1.000 non-local
 
              Grid Information
              ----------------
-          Grid used for XC integration:  fine      
+          Grid used for XC integration:  xcoarse   
           Radial quadrature: Mura-Knowles        
           Angular quadrature: Lebedev. 
           Tag              B.-S. Rad. Rad. Pts. Rad. Cut. Ang. Pts.
           ---              ---------- --------- --------- ---------
-          H                   0.35       60           6.0       590
+          H                   0.35       21           5.0       194
           Grid pruning is: on 
-          Number of quadrature shells:    60
+          Number of quadrature shells:    21
           Spatial weights used:  Erf1
 
           Convergence Information
@@ -1763,7 +1679,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
                     Damping( 0%)  Levelshifting(0.5)       DIIS
                   --------------- ------------------- ---------------
           dE  on:    start            ASAP                start   
-          dE off:    2 iters         30 iters            30 iters 
+          dE off:    2 iters         50 iters            50 iters 
 
 
       Screening Tolerance Information
@@ -1780,7 +1696,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
                             --------------------------
 
 
-                                    degradation
+                                   prod_2_redox
 
 
 
@@ -1794,8 +1710,8 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
     atom               coordinates                        gradient
                  x          y          z           x          y          z
-   1 H       0.000000   0.000000  -0.701018    0.000000   0.000000   0.000019
-   2 H       0.000000   0.000000   0.701018    0.000000   0.000000  -0.000019
+   1 H       0.000000   0.000000  -0.730108    0.000000   0.000000   0.000092
+   2 H       0.000000   0.000000   0.730108    0.000000   0.000000  -0.000092
 
                  ----------------------------------------
                  |  Time  |  1-e(secs)   |  2-e(secs)   |
@@ -1808,7 +1724,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
   Step       Energy      Delta E   Gmax     Grms     Xrms     Xmax   Walltime
   ---- ---------------- -------- -------- -------- -------- -------- --------
-@    2      -1.17677266 -3.9D-08  0.00002  0.00002  0.00012  0.00021      1.8
+@    2      -1.15809191 -3.8D-07  0.00009  0.00009  0.00036  0.00062      0.2
                                      ok       ok       ok       ok  
 
 
@@ -1820,7 +1736,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
       Type          Name      I     J     K     L     M      Value     Gradient
       ----------- --------  ----- ----- ----- ----- ----- ---------- ----------
-    1 Stretch                  1     2                       0.74193   -0.00002
+    1 Stretch                  1     2                       0.77271   -0.00009
 
 
       ----------------------
@@ -1830,7 +1746,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
   Step       Energy      Delta E   Gmax     Grms     Xrms     Xmax   Walltime
   ---- ---------------- -------- -------- -------- -------- -------- --------
-@    2      -1.17677266 -3.9D-08  0.00002  0.00002  0.00012  0.00021      1.8
+@    2      -1.15809191 -3.8D-07  0.00009  0.00009  0.00036  0.00062      0.2
                                      ok       ok       ok       ok  
 
 
@@ -1842,7 +1758,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
       Type          Name      I     J     K     L     M      Value     Gradient
       ----------- --------  ----- ----- ----- ----- ----- ---------- ----------
-    1 Stretch                  1     2                       0.74193   -0.00002
+    1 Stretch                  1     2                       0.77271   -0.00009
 
 
 
@@ -1853,8 +1769,8 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
   No.       Tag          Charge          X              Y              Z
  ---- ---------------- ---------- -------------- -------------- --------------
-    1 H                    1.0000     0.00000000     0.00000000    -0.37096276
-    2 H                    1.0000     0.00000000     0.00000000     0.37096276
+    1 H                    1.0000     0.00000000     0.00000000    -0.38635630
+    2 H                    1.0000     0.00000000     0.00000000     0.38635630
 
       Atomic Mass 
       ----------- 
@@ -1862,7 +1778,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
       H                  1.007825
 
 
- Effective nuclear repulsion energy (a.u.)       0.7132484863
+ Effective nuclear repulsion energy (a.u.)       0.6848306189
 
             Nuclear Dipole moment (a.u.) 
             ----------------------------
@@ -1895,18 +1811,18 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
       Type          Name      I     J     K     L     M      Value       Change
       ----------- --------  ----- ----- ----- ----- ----- ---------- ----------
-    1 Stretch                  1     2                       0.74193    0.03393
+    1 Stretch                  1     2                       0.77271    0.06471
 
 
- Task  times  cpu:        0.6s     wall:        1.7s
+ Task  times  cpu:        0.2s     wall:        0.2s
 
 
                                 NWChem Input Module
                                 -------------------
 
 
-                                 degradation_freq
-                                 ----------------
+                                    prod_2_FREQ
+                                    -----------
 
 
                    NWChem Nuclear Hessian and Frequency Analysis
@@ -1917,12 +1833,18 @@ File balance: exchanges=     0  moved=     0  time=   0.0
                               NWChem Analytic Hessian
                               -----------------------
 
+  ncent_ecp
+  ncent_ecp
+  NO ECPs here                  566
+  HESS GRID fine           
+  NO ECPs here                  566
+  HESS GRID fine           
 
                                  NWChem DFT Module
                                  -----------------
 
 
-                                 degradation_freq
+                                    prod_2_FREQ
 
 
 
@@ -1931,7 +1853,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
  ------------------------------------------------------------------------------
        Tag                 Description            Shells   Functions and Types
  ---------------- ------------------------------  ------  ---------------------
- H                          6-311g*                  3        3   3s
+ H                         def2-SV(P)                2        2   2s
 
 
   Caching 1-el integrals 
@@ -1947,21 +1869,18 @@ File balance: exchanges=     0  moved=     0  time=   0.0
           Charge           :     0
           Spin multiplicity:     1
           Use of symmetry is: off; symmetry adaption is: off
-          Maximum number of iterations:  30
-          AO basis - number of functions:     6
-                     number of shells:     6
+          Maximum number of iterations:  50
+          AO basis - number of functions:     4
+                     number of shells:     4
           Convergence on energy requested:  1.00D-07
           Convergence on density requested:  1.00D-05
           Convergence on gradient requested:  1.00D-06
 
               XC Information
               --------------
-                         B3LYP Method XC Potential
-                     Hartree-Fock (Exact) Exchange  0.200          
-                        Slater Exchange Functional  0.800 local    
-                    Becke 1988 Exchange Functional  0.720 non-local
-              Lee-Yang-Parr Correlation Functional  0.810          
-                  VWN I RPA Correlation Functional  0.190 local    
+          PerdewBurkeErnzerhof Exchange Functional  1.000          
+            Perdew 1991 LDA Correlation Functional  1.000 local    
+           PerdewBurkeErnz. Correlation Functional  1.000 non-local
 
              Grid Information
              ----------------
@@ -1987,7 +1906,7 @@ File balance: exchanges=     0  moved=     0  time=   0.0
                     Damping( 0%)  Levelshifting(0.5)       DIIS
                   --------------- ------------------- ---------------
           dE  on:    start            ASAP                start   
-          dE off:    2 iters         30 iters            30 iters 
+          dE off:    2 iters         50 iters            50 iters 
 
 
       Screening Tolerance Information
@@ -2001,116 +1920,98 @@ File balance: exchanges=     0  moved=     0  time=   0.0
       Dispersion Parameters
       ---------------------
 
-           DFT-D3BJ Model   
+             DFT-D3 Model   
           s6 scale factor  :        1.000000000000
-          s8 scale factor  :        1.988900000000
-          a1 parameter     :        0.398100000000
-          a2 parameter     :        4.421100000000
-              vdW contrib  :       -0.000140658361
+          s8 scale factor  :        0.722000000000
+          sr6 scale factor :        1.217000000000
+          sr8 scale factor :        1.000000000000
+              vdW contrib  :       -0.000000015578
 
 
  Loading old vectors from job with title :
 
-degradation
+prod_2_redox
 
-   Time after variat. SCF:      1.8
-   Time prior to 1st pass:      1.8
+   Time after variat. SCF:      0.2
+   Time prior to 1st pass:      0.2
+ Local filesystem for scratch_dir
 
- #quartets = 2.310D+02 #integrals = 2.310D+02 #direct =  0.0% #cached =100.0%
+ #quartets = 5.500D+01 #integrals = 5.500D+01 #direct =  0.0% #cached =100.0%
 
 
- Integral file          = ./degradation_start.aoints.00
+ Integral file          = /data/EMPTY.aoints.0
  Record size in doubles =  65536        No. of integs per rec  =  43688
- Max. records in memory =      2        Max. records in file   = 119598
+ Max. records in memory =      3        Max. records in file   =  13635
  No. of bits per label  =      8        No. of bits per value  =     64
 
 
 File balance: exchanges=     0  moved=     0  time=   0.0
 
+ Local filesystem for scratch_dir
 
- Grid_pts file          = ./degradation_start.gridpts.00
+ Grid_pts file          = /data/EMPTY.gridpts.0
  Record size in doubles =  12289        No. of grid_pts per rec  =   3070
- Max. records in memory =      2        Max. recs in file   =    637811
+ Max. records in memory =     14        Max. recs in file   =     72721
 
- Grid integrated density:       2.000000024390
+ Grid integrated density:       2.000000030327
  Requested integration accuracy:   0.10E-13
 
            Memory utilization after 1st SCF pass: 
-           Heap Space remaining (MW):      229.22           229219528
-          Stack Space remaining (MW):      229.38           229375820
+           Heap Space remaining (MW):       16.41            16407800
+          Stack Space remaining (MW):       16.78            16777076
 
    convergence    iter        energy       DeltaE   RMS-Dens  Diis-err    time
  ---------------- ----- ----------------- --------- --------- ---------  ------
- d= 0,ls=0.0,diis     1     -1.1767726633 -1.89D+00  2.24D-07  7.15D-12     2.0
- Grid integrated density:       2.000000024390
+ d= 0,ls=0.0,diis     1     -1.1580989822 -1.84D+00  4.63D-06  1.67D-10     0.3
+ Grid integrated density:       2.000000030327
  Requested integration accuracy:   0.10E-13
- d= 0,ls=0.0,diis     2     -1.1767726633 -1.03D-12  4.48D-08  1.45D-13     2.0
+ d= 0,ls=0.0,diis     2     -1.1580989822 -4.44D-11  9.71D-07  1.18D-11     0.3
 
 
-         Total DFT energy =       -1.176772663302
-      One electron energy =       -2.492630856307
-           Coulomb energy =        1.304060773926
-    Exchange-Corr. energy =       -0.701310408813
- Nuclear repulsion energy =        0.713248486253
+         Total DFT energy =       -1.158098982221
+      One electron energy =       -2.452929175913
+           Coulomb energy =        1.287883938126
+    Exchange-Corr. energy =       -0.677884347722
+ Nuclear repulsion energy =        0.684830618866
 
-    Dispersion correction =       -0.000140658361
+    Dispersion correction =       -0.000000015578
 
- Numeric. integr. density =        2.000000024390
+ Numeric. integr. density =        2.000000030327
 
-     Total iterative time =      0.2s
+     Total iterative time =      0.0s
 
 
 
                        DFT Final Molecular Orbital Analysis
                        ------------------------------------
 
- Vector    1  Occ=2.000000D+00  E=-4.369524D-01
-              MO Center=  0.0D+00,  0.0D+00, -6.2D-16, r^2= 7.4D-01
+ Vector    1  Occ=2.000000D+00  E=-3.741328D-01
+              MO Center=  0.0D+00,  0.0D+00, -1.7D-13, r^2= 7.3D-01
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     2      0.279409  1 H  s                  5      0.279409  2 H  s          
-     1      0.202740  1 H  s                  4      0.202740  2 H  s          
-     3      0.136414  1 H  s                  6      0.136414  2 H  s          
+     1      0.416322  1 H  s                  3      0.416322  2 H  s          
+     2      0.171436  1 H  s                  4      0.171436  2 H  s          
 
- Vector    2  Occ=0.000000D+00  E= 5.892103D-02
-              MO Center=  0.0D+00,  0.0D+00, -9.6D-16, r^2= 3.0D+00
+ Vector    2  Occ=0.000000D+00  E= 4.887587D-02
+              MO Center=  0.0D+00,  0.0D+00, -4.3D-13, r^2= 2.4D+00
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     3      2.006466  1 H  s                  6     -2.006466  2 H  s          
-     2      0.147644  1 H  s                  5     -0.147644  2 H  s          
-     1      0.099310  1 H  s                  4     -0.099310  2 H  s          
+     2      1.692138  1 H  s                  4     -1.692138  2 H  s          
+     1      0.269797  1 H  s                  3     -0.269797  2 H  s          
 
- Vector    3  Occ=0.000000D+00  E= 1.962338D-01
-              MO Center=  0.0D+00,  0.0D+00,  8.6D-16, r^2= 3.2D+00
+ Vector    3  Occ=0.000000D+00  E= 3.145383D-01
+              MO Center=  0.0D+00,  0.0D+00,  9.4D-13, r^2= 2.3D+00
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     3      0.834423  1 H  s                  6      0.834423  2 H  s          
-     2     -0.681736  1 H  s                  5     -0.681736  2 H  s          
-     1     -0.079084  1 H  s                  4     -0.079084  2 H  s          
+     2     -0.733326  1 H  s                  4     -0.733326  2 H  s          
+     1      0.718543  1 H  s                  3      0.718543  2 H  s          
 
- Vector    4  Occ=0.000000D+00  E= 4.750963D-01
-              MO Center=  0.0D+00,  0.0D+00,  1.3D-16, r^2= 2.6D+00
+ Vector    4  Occ=0.000000D+00  E= 7.079096D-01
+              MO Center=  0.0D+00,  0.0D+00, -3.4D-13, r^2= 1.7D+00
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     3      2.392825  1 H  s                  6     -2.392825  2 H  s          
-     2     -1.653973  1 H  s                  5      1.653973  2 H  s          
-     1     -0.124246  1 H  s                  4      0.124246  2 H  s          
-
- Vector    5  Occ=0.000000D+00  E= 2.107458D+00
-              MO Center=  0.0D+00,  0.0D+00,  6.1D-16, r^2= 1.2D+00
-   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
-  ----- ------------  ---------------      ----- ------------  ---------------
-     2      1.239974  1 H  s                  5      1.239974  2 H  s          
-     1     -1.080869  1 H  s                  4     -1.080869  2 H  s          
-     3     -0.507330  1 H  s                  6     -0.507330  2 H  s          
-
- Vector    6  Occ=0.000000D+00  E= 2.385888D+00
-              MO Center=  0.0D+00,  0.0D+00, -7.2D-16, r^2= 1.0D+00
-   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
-  ----- ------------  ---------------      ----- ------------  ---------------
-     2      1.862001  1 H  s                  5     -1.862001  2 H  s          
-     3     -1.276433  1 H  s                  6      1.276433  2 H  s          
-     1     -1.124015  1 H  s                  4      1.124015  2 H  s          
+     2      1.729776  1 H  s                  4     -1.729776  2 H  s          
+     1     -1.222551  1 H  s                  3      1.222551  2 H  s          
 
 
  center of mass
@@ -2119,8 +2020,8 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
  moments of inertia (a.u.)
  ------------------
-           0.990543184936           0.000000000000           0.000000000000
-           0.000000000000           0.990543184936           0.000000000000
+           1.074456388924           0.000000000000           0.000000000000
+           0.000000000000           1.074456388924           0.000000000000
            0.000000000000           0.000000000000           0.000000000000
 
      Multipole analysis of the density
@@ -2134,15 +2035,15 @@ File balance: exchanges=     0  moved=     0  time=   0.0
      1   0 1 0      0.000000      0.000000      0.000000      0.000000
      1   0 0 1      0.000000      0.000000      0.000000      0.000000
 
-     2   2 0 0     -1.535336     -0.767668     -0.767668      0.000000
+     2   2 0 0     -1.506101     -0.753050     -0.753050      0.000000
      2   1 1 0      0.000000      0.000000      0.000000      0.000000
      2   1 0 1      0.000000      0.000000      0.000000      0.000000
-     2   0 2 0     -1.535336     -0.767668     -0.767668      0.000000
+     2   0 2 0     -1.506101     -0.753050     -0.753050      0.000000
      2   0 1 1      0.000000      0.000000      0.000000      0.000000
-     2   0 0 2     -1.225781     -1.104317     -1.104317      0.982852
+     2   0 0 2     -1.163394     -1.114754     -1.114754      1.066114
 
 
- Parallel integral file used      31 records with       0 large values
+ Parallel integral file used       2 records with       0 large values
 
 
  HESSIAN: the one electron contributions are done in       0.0s
@@ -2153,8 +2054,8 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
  HESSIAN: 2-el 2nd deriv. term done in                     0.0s
 
-  stpr_wrt_fd_from_sq: overwrite of existing file:./degradation_start.hess
- stpr_wrt_fd_dipole: overwrite of existing file./degradation_start.fd_ddipole
+  stpr_wrt_fd_from_sq: overwrite of existing file:/data/EMPTY.hess
+ stpr_wrt_fd_dipole: overwrite of existing file/data/EMPTY.fd_ddipole
 
  HESSIAN: the two electron contributions are done in       0.0s
 
@@ -2165,50 +2066,50 @@ File balance: exchanges=     0  moved=     0  time=   0.0
   scftype          =     RHF 
   nclosed          =        1
   nopen            =        0
-  variables        =        5
+  variables        =        3
   # of vectors     =        6
   tolerance        = 0.10D-03
   level shift      = 0.00D+00
   max iterations   =       50
   max subspace     =       60
 
+ Local filesystem for scratch_dir
 
- #quartets = 2.310D+02 #integrals = 2.310D+02 #direct =  0.0% #cached =100.0%
+ #quartets = 5.500D+01 #integrals = 5.500D+01 #direct =  0.0% #cached =100.0%
 
 
- Integral file          = ./degradation_start.aoints.00
+ Integral file          = /data/EMPTY.aoints.0
  Record size in doubles =  65536        No. of integs per rec  =  43688
- Max. records in memory =      2        Max. records in file   = 119598
+ Max. records in memory =      3        Max. records in file   =  13635
  No. of bits per label  =      8        No. of bits per value  =     64
 
 
 File balance: exchanges=     0  moved=     0  time=   0.0
 
- Grid integrated density:       2.000000024390
+ Grid integrated density:       2.000000030327
  Requested integration accuracy:   0.10E-13
- SCF residual:    2.7457226088738148E-008
+ SCF residual:    1.9746013083435903E-013
 
 
 Iterative solution of linear equations
-  No. of variables        5
+  No. of variables        3
   No. of equations        6
   Maximum subspace       60
         Iterations       50
        Convergence  1.0D-04
-        Start time      2.3
+        Start time      0.3
 
 
    iter   nsub   residual    time
    ----  ------  --------  ---------
-     1      6    8.25D-02       2.4
-     2     12    2.38D-03       2.5
-     3     18    1.39D-09       2.5
+     1      6    1.21D-01       0.4
+     2     12    8.61D-09       0.4
 
- Parallel integral file used      31 records with       0 large values
+ Parallel integral file used       2 records with       0 large values
 
  HESSIAN: the CPHF contributions are done
-  stpr_wrt_fd_from_sq: overwrite of existing file:./degradation_start.hess
- stpr_wrt_fd_dipole: overwrite of existing file./degradation_start.fd_ddipole
+  stpr_wrt_fd_from_sq: overwrite of existing file:/data/EMPTY.hess
+ stpr_wrt_fd_dipole: overwrite of existing file/data/EMPTY.fd_ddipole
 
  Derivative Dipole
 
@@ -2218,7 +2119,7 @@ Iterative solution of linear equations
  d_dipole_x/<atom=   1,x> =    -0.0000     [   -0.0000]
  d_dipole_x/<atom=   1,y> =     0.0000     [    0.0000]
  d_dipole_x/<atom=   1,z> =     0.0000     [    0.0000]
- d_dipole_x/<atom=   2,x> =    -0.0000     [   -0.0000]
+ d_dipole_x/<atom=   2,x> =     0.0000     [    0.0000]
  d_dipole_x/<atom=   2,y> =     0.0000     [    0.0000]
  d_dipole_x/<atom=   2,z> =     0.0000     [    0.0000]
   
@@ -2227,47 +2128,47 @@ Iterative solution of linear equations
  d_dipole_y/<atom=   1,y> =    -0.0000     [   -0.0000]
  d_dipole_y/<atom=   1,z> =     0.0000     [    0.0000]
  d_dipole_y/<atom=   2,x> =     0.0000     [    0.0000]
- d_dipole_y/<atom=   2,y> =    -0.0000     [   -0.0000]
+ d_dipole_y/<atom=   2,y> =     0.0000     [    0.0000]
  d_dipole_y/<atom=   2,z> =     0.0000     [    0.0000]
   
  Z vector of derivative dipole (au) [debye/angstrom]
  d_dipole_z/<atom=   1,x> =     0.0000     [    0.0000]
  d_dipole_z/<atom=   1,y> =    -0.0000     [   -0.0000]
- d_dipole_z/<atom=   1,z> =     0.0000     [    0.0000]
+ d_dipole_z/<atom=   1,z> =    -0.0000     [   -0.0000]
  d_dipole_z/<atom=   2,x> =    -0.0000     [   -0.0000]
  d_dipole_z/<atom=   2,y> =     0.0000     [    0.0000]
- d_dipole_z/<atom=   2,z> =     0.0000     [    0.0000]
+ d_dipole_z/<atom=   2,z> =    -0.0000     [   -0.0000]
   
   
  HESSIAN: the Hessian is done
- Read old hessian file : ./degradation_start.hess                                                                                                                                                                                                                                       
+ Read old hessian file : /data/EMPTY.hess                                                                                                                                                                                                                                                
  vdW contribution to hessian 
 
               1        2        3        4        5        6      
-    1    0.0000  -0.0000   0.0000  -0.0000  -0.0000  -0.0000
-    2   -0.0000   0.0000  -0.0000  -0.0000  -0.0000  -0.0000
-    3    0.0000  -0.0000   0.3681   0.0000  -0.0000  -0.3681
-    4   -0.0000  -0.0000   0.0000   0.0000   0.0000  -0.0000
-    5   -0.0000  -0.0000  -0.0000   0.0000   0.0000  -0.0000
-    6   -0.0000  -0.0000  -0.3681  -0.0000  -0.0000   0.3681
+    1    0.0003  -0.0000  -0.0000  -0.0003  -0.0000  -0.0000
+    2   -0.0000   0.0003   0.0000  -0.0000  -0.0003   0.0000
+    3   -0.0000   0.0000   0.3447   0.0000  -0.0000  -0.3447
+    4   -0.0003  -0.0000   0.0000   0.0003  -0.0000  -0.0000
+    5   -0.0000  -0.0003  -0.0000  -0.0000   0.0003   0.0000
+    6   -0.0000   0.0000  -0.3447  -0.0000   0.0000   0.3447
 
               1        2        3        4        5        6      
     1   -0.0000   0.0000   0.0000   0.0000   0.0000   0.0000
     2    0.0000  -0.0000   0.0000   0.0000   0.0000   0.0000
-    3    0.0000   0.0000  -0.0006   0.0000   0.0000   0.0006
+    3    0.0000   0.0000  -0.0000   0.0000   0.0000   0.0000
     4    0.0000   0.0000   0.0000  -0.0000   0.0000   0.0000
     5    0.0000   0.0000   0.0000   0.0000  -0.0000   0.0000
-    6    0.0000   0.0000   0.0006   0.0000   0.0000  -0.0006
+    6    0.0000   0.0000   0.0000   0.0000   0.0000  -0.0000
 
               1        2        3        4        5        6      
-    1   -0.0000  -0.0000   0.0000   0.0000  -0.0000  -0.0000
-    2   -0.0000  -0.0000  -0.0000  -0.0000   0.0000  -0.0000
-    3    0.0000  -0.0000   0.3675   0.0000  -0.0000  -0.3675
-    4    0.0000  -0.0000   0.0000  -0.0000   0.0000  -0.0000
-    5   -0.0000   0.0000  -0.0000   0.0000  -0.0000  -0.0000
-    6   -0.0000  -0.0000  -0.3675  -0.0000  -0.0000   0.3675
-  stpr_wrt_fd_from_sq: overwrite of existing file:./degradation_start.hess
- New hessian file vdw corrected has been                                written:./degradation_start.hess                                                                                                                                                                                                                                       
+    1    0.0003  -0.0000  -0.0000  -0.0003  -0.0000  -0.0000
+    2   -0.0000   0.0003   0.0000  -0.0000  -0.0003   0.0000
+    3   -0.0000   0.0000   0.3447   0.0000  -0.0000  -0.3447
+    4   -0.0003  -0.0000   0.0000   0.0003  -0.0000  -0.0000
+    5   -0.0000  -0.0003  -0.0000  -0.0000   0.0003   0.0000
+    6   -0.0000   0.0000  -0.3447  -0.0000   0.0000   0.3447
+  stpr_wrt_fd_from_sq: overwrite of existing file:/data/EMPTY.hess
+ New hessian file vdw corrected has been                                written:/data/EMPTY.hess                                                                                                                                                                                                                                                
   s6 =    1.0000000000000000     
   vdw to hessian contribution is done
 
@@ -2285,8 +2186,8 @@ Iterative solution of linear equations
  ---------------------------- Atom information ----------------------------
      atom    #        X              Y              Z            mass
  --------------------------------------------------------------------------
-    H        1  0.0000000D+00  0.0000000D+00 -7.0101796D-01  1.0078250D+00
-    H        2  0.0000000D+00  0.0000000D+00  7.0101796D-01  1.0078250D+00
+    H        1  0.0000000D+00  0.0000000D+00 -7.3010754D-01  1.0078250D+00
+    H        2  0.0000000D+00  0.0000000D+00  7.3010754D-01  1.0078250D+00
  --------------------------------------------------------------------------
 
 
@@ -2299,12 +2200,12 @@ Iterative solution of linear equations
 
                1            2            3            4            5            6
    ----- ----- ----- ----- -----
-    1   -1.30518D-02
-    2   -3.01220D-15 -1.30518D-02
-    3    4.72791D-14 -3.84015D-14  3.64658D+02
-    4    1.30819D-02 -1.03275D-14  2.68326D-14 -1.30518D-02
-    5   -1.07578D-14  1.30819D-02 -5.28093D-16  1.37700D-14 -1.30518D-02
-    6   -1.28540D-14 -1.45271D-14 -3.64658D+02 -2.82979D-14 -1.10489D-14  3.64658D+02
+    1    2.63823D-01
+    2   -2.33368D-11  2.63823D-01
+    3   -8.74480D-12  5.70393D-12  3.42043D+02
+    4   -2.63807D-01 -5.09973D-11  1.02003D-10  2.63823D-01
+    5   -5.09973D-11 -2.63807D-01 -1.16258D-10 -8.48124D-10  2.63823D-01
+    6   -5.48917D-11  6.21404D-11 -3.42043D+02 -1.00736D-09  1.16472D-09  3.42043D+02
 
 
 
@@ -2315,14 +2216,14 @@ Iterative solution of linear equations
 
                     1           2           3           4           5           6
  
- Frequency        -26.28      -26.28        0.44        0.89        0.89     4389.97
+ Frequency         -1.25        0.65        0.65      118.08      118.08     4251.67
  
-           1     0.70436     0.00000     0.00000     0.70436     0.00000     0.00000
-           2     0.00000     0.70436     0.00000     0.00000     0.70436     0.00000
-           3     0.00000     0.00000     0.70436     0.00000    -0.00000    -0.70436
-           4    -0.70436     0.00000     0.00000     0.70436     0.00000     0.00000
-           5     0.00000    -0.70436     0.00000     0.00000     0.70436     0.00000
-           6     0.00000     0.00000     0.70436     0.00000    -0.00000     0.70436
+           1     0.00000     0.51911     0.47607    -0.51844    -0.47680    -0.00000
+           2    -0.00001     0.47607    -0.51911    -0.47680     0.51844     0.00000
+           3     0.70436     0.00000    -0.00001     0.00000    -0.00000    -0.70436
+           4     0.00000     0.51911     0.47607     0.51844     0.47680    -0.00000
+           5    -0.00001     0.47607    -0.51911     0.47680    -0.51844     0.00000
+           6     0.70436     0.00000    -0.00001     0.00000    -0.00000     0.70436
 
 
 
@@ -2330,12 +2231,12 @@ Iterative solution of linear equations
  Normal Eigenvalue ||         Derivative Dipole Moments (debye/angs)
   Mode   [cm**-1]  ||      [d/dqX]             [d/dqY]           [d/dqZ]
  ------ ---------- || ------------------ ------------------ -----------------
-    1      -26.279 ||      -0.000               0.000             0.000
-    2      -26.279 ||       0.000              -0.000            -0.000
-    3        0.440 ||       0.000              -0.000             0.000
-    4        0.891 ||      -0.000               0.000             0.000
-    5        0.891 ||       0.000              -0.000            -0.000
-    6     4389.974 ||       0.000               0.000            -0.000
+    1       -1.251 ||      -0.000               0.000            -0.000
+    2        0.646 ||      -0.000              -0.000             0.000
+    3        0.646 ||       0.000              -0.000             0.000
+    4      118.078 ||       0.000               0.000             0.000
+    5      118.078 ||      -0.000               0.000             0.000
+    6     4251.668 ||      -0.000               0.000             0.000
  ----------------------------------------------------------------------------
 
 
@@ -2346,12 +2247,12 @@ Iterative solution of linear equations
  Normal Eigenvalue ||                 Infra Red Intensities
   Mode   [cm**-1]  || [atomic units] [(debye/angs)**2] [(KM/mol)] [arbitrary]
  ------ ---------- || -------------- ----------------- ---------- -----------
-    1      -26.279 ||    0.000000           0.000         0.000       0.000
-    2      -26.279 ||    0.000000           0.000         0.000       0.000
-    3        0.440 ||    0.000000           0.000         0.000      60.000
-    4        0.891 ||    0.000000           0.000         0.000       0.000
-    5        0.891 ||    0.000000           0.000         0.000       0.000
-    6     4389.974 ||    0.000000           0.000         0.000       0.000
+    1       -1.251 ||    0.000000           0.000         0.000      59.998
+    2        0.646 ||    0.000000           0.000         0.000       0.000
+    3        0.646 ||    0.000000           0.000         0.000       0.000
+    4      118.078 ||    0.000000           0.000         0.000       0.000
+    5      118.078 ||    0.000000           0.000         0.000       0.000
+    6     4251.668 ||    0.000000           0.000         0.000       0.002
  ----------------------------------------------------------------------------
 
 
@@ -2363,7 +2264,7 @@ Iterative solution of linear equations
   --- via the Eckart algorithm                      ---
  Dependent rotation vector no.                    3
   found in ECKART; assuming linear geometry
- Projected Nuclear Hessian trans-rot subspace norm:6.9333D-33
+ Projected Nuclear Hessian trans-rot subspace norm:3.0815D-33
                          (should be close to zero!) 
 
           --------------------------------------------------------
@@ -2374,11 +2275,11 @@ Iterative solution of linear equations
                1            2            3            4            5            6
    ----- ----- ----- ----- -----
     1    0.00000D+00
-    2    3.82195D-31  0.00000D+00
-    3    6.11512D-30  0.00000D+00  3.64658D+02
-    4    0.00000D+00  0.00000D+00  4.68189D-30  0.00000D+00
-    5    0.00000D+00  0.00000D+00  2.29317D-30  0.00000D+00  0.00000D+00
-    6   -6.11512D-30  0.00000D+00 -3.64658D+02 -6.11512D-30 -1.52878D-30  3.64658D+02
+    2    3.13094D-27  0.00000D+00
+    3    1.87857D-26  1.33065D-25  3.42043D+02
+    4    0.00000D+00 -6.26189D-27  1.00190D-25  0.00000D+00
+    5    0.00000D+00  0.00000D+00  0.00000D+00  0.00000D+00  0.00000D+00
+    6   -2.50476D-26 -1.25238D-25 -3.42043D+02  0.00000D+00  0.00000D+00  3.42043D+02
 
  center of mass
  --------------
@@ -2386,15 +2287,15 @@ Iterative solution of linear equations
 
  moments of inertia (a.u.)
  ------------------
-           0.990543184936           0.000000000000           0.000000000000
-           0.000000000000           0.990543184936           0.000000000000
+           1.074456388924           0.000000000000           0.000000000000
+           0.000000000000           1.074456388924           0.000000000000
            0.000000000000           0.000000000000           0.000000000000
 
  Rotational Constants
  --------------------
  A=   0.000000 cm-1  (  0.000000 K)
- B=  60.774913 cm-1  ( 87.439589 K)
- C=  60.774913 cm-1  ( 87.439589 K)
+ B=  56.028496 cm-1  ( 80.610707 K)
+ C=  56.028496 cm-1  ( 80.610707 K)
 
 
  Temperature                      =   298.15K
@@ -2403,13 +2304,13 @@ Iterative solution of linear equations
 
  Linear Molecule                   
 
- Zero-Point correction to Energy  =    6.273 kcal/mol  (  0.009996 au)
- Thermal correction to Energy     =    7.753 kcal/mol  (  0.012356 au)
- Thermal correction to Enthalpy   =    8.346 kcal/mol  (  0.013299 au)
+ Zero-Point correction to Energy  =    6.075 kcal/mol  (  0.009681 au)
+ Thermal correction to Energy     =    7.556 kcal/mol  (  0.012041 au)
+ Thermal correction to Enthalpy   =    8.148 kcal/mol  (  0.012985 au)
 
- Total Entropy                    =   31.114 cal/mol-K
+ Total Entropy                    =   31.275 cal/mol-K
    - Translational                =   28.068 cal/mol-K (mol. weight =   2.0156)
-   - Rotational                   =    3.046 cal/mol-K (symmetry #  =        2)
+   - Rotational                   =    3.208 cal/mol-K (symmetry #  =        2)
    - Vibrational                  =    0.000 cal/mol-K
 
  Cv (constant volume heat capacity) =    4.966 cal/mol-K
@@ -2426,14 +2327,14 @@ Iterative solution of linear equations
 
                     1           2           3           4           5           6
  
- P.Frequency        0.00        0.00        0.00        0.00        0.00     4389.97
+ P.Frequency       -0.00        0.00        0.00        0.00        0.00     4251.67
  
-           1     0.99611     0.00000     0.00000     0.00000     0.00000     0.00000
-           2     0.00000     0.99611     0.00000     0.00000     0.00000     0.00000
-           3     0.00000     0.00000     0.00000     0.00000     0.70436    -0.70436
-           4     0.00000     0.00000     0.99611     0.00000     0.00000     0.00000
-           5     0.00000     0.00000     0.00000     0.99611     0.00000     0.00000
-           6     0.00000     0.00000     0.00000     0.00000     0.70436     0.70436
+           1     0.00000     0.99611     0.00000     0.00000     0.00000     0.00000
+           2     0.00000     0.00000     0.99611     0.00000     0.00000     0.00000
+           3     0.70436     0.00000     0.00000     0.00000     0.00000    -0.70436
+           4     0.00000     0.00000     0.00000     0.99611     0.00000     0.00000
+           5     0.00000     0.00000     0.00000     0.00000     0.99611     0.00000
+           6     0.70436     0.00000     0.00000     0.00000     0.00000     0.70436
 
 
 
@@ -2441,12 +2342,12 @@ Iterative solution of linear equations
  Normal Eigenvalue ||    Projected Derivative Dipole Moments (debye/angs)
   Mode   [cm**-1]  ||      [d/dqX]             [d/dqY]           [d/dqZ]
  ------ ---------- || ------------------ ------------------ -----------------
-    1        0.000 ||      -0.000               0.000             0.000
-    2        0.000 ||       0.000              -0.000            -0.000
-    3        0.000 ||      -0.000               0.000            -0.000
-    4        0.000 ||       0.000              -0.000             0.000
+    1       -0.000 ||       0.000               0.000            -0.000
+    2        0.000 ||      -0.000               0.000             0.000
+    3        0.000 ||       0.000              -0.000            -0.000
+    4        0.000 ||       0.000               0.000            -0.000
     5        0.000 ||       0.000               0.000             0.000
-    6     4389.974 ||       0.000               0.000            -0.000
+    6     4251.668 ||       0.000               0.000             0.000
  ----------------------------------------------------------------------------
 
 
@@ -2457,33 +2358,33 @@ Iterative solution of linear equations
  Normal Eigenvalue ||           Projected Infra Red Intensities
   Mode   [cm**-1]  || [atomic units] [(debye/angs)**2] [(KM/mol)] [arbitrary]
  ------ ---------- || -------------- ----------------- ---------- -----------
-    1        0.000 ||    0.000000           0.000         0.000       0.000
+    1       -0.000 ||    0.000000           0.000         0.000      59.998
     2        0.000 ||    0.000000           0.000         0.000       0.000
     3        0.000 ||    0.000000           0.000         0.000       0.000
     4        0.000 ||    0.000000           0.000         0.000       0.000
-    5        0.000 ||    0.000000           0.000         0.000      60.000
-    6     4389.974 ||    0.000000           0.000         0.000       0.000
+    5        0.000 ||    0.000000           0.000         0.000       0.000
+    6     4251.668 ||    0.000000           0.000         0.000       0.002
  ----------------------------------------------------------------------------
 
 
 
  vib:animation  F
 
- Task  times  cpu:        0.3s     wall:        0.8s
+ Task  times  cpu:        0.1s     wall:        0.1s
 
 
                                 NWChem Input Module
                                 -------------------
 
 
-                                 degradation_solv
-                                 ----------------
+                                    prod_2_SOLV
+                                    -----------
 
                                  NWChem DFT Module
                                  -----------------
 
 
-                                 degradation_solv
+                                    prod_2_SOLV
 
 
 
@@ -2492,16 +2393,16 @@ Iterative solution of linear equations
  ------------------------------------------------------------------------------
        Tag                 Description            Shells   Functions and Types
  ---------------- ------------------------------  ------  ---------------------
- H                          6-311g*                  3        3   3s
+ H                         def2-SV(P)                2        2   2s
 
 
       Symmetry analysis of basis
       --------------------------
 
-        a1g         3
+        a1g         2
         a1u         0
         a2g         0
-        a2u         3
+        a2u         2
         b1g         0
         b1u         0
         b2g         0
@@ -2509,37 +2410,27 @@ Iterative solution of linear equations
         eg          0
         eu          0
 
+ in cosmo_initialize ...
 
  solvent parameters
- solvname_short: h2o     
- solvname_long:  water                              
- dielec:       78.3000
- dielecinf:     1.7769
+ solvname_short: unkn    
+ solvname_long:  unknown                            
+ dielec:       78.4000
 
           ---------------
           -cosmo- solvent
           ---------------
  Cosmo: York-Karplus, doi: 10.1021/jp992097l
- dielectric constant -eps-     =  78.30
- screen = (eps-1)/(eps    )    =   0.98723
+ dielectric constant -eps-     =  78.40
+ screen = (eps-1)/(eps    )    =   0.98724
  surface charge correction     = lagrangian
- -lineq- algorithm             =   0
- -bem- low  level              =   3
- -bem- from -icosahedral-
- gaussian surface charge width =   0.98000
- degree of switching           =   1.00000
- switching function tolerance  =   0.00010
- atomic radii = 
- --------------
-    1  1.000  1.300
-    2  1.000  1.300
 
  solvent accessible surface
  --------------------------
 
  ---------- ATOMIC COORDINATES (A.U.) ------------ VDWR(ANG.) --
-     1    0.00000000    0.00000000   -0.70101796     1.300
-     2    0.00000000    0.00000000    0.70101796     1.300
+     1    0.00000000    0.00000000   -0.73010754     1.300
+     2    0.00000000    0.00000000    0.73010754     1.300
  number of segments per atom =        320
  number of   points per atom =        320
  atom (   nspa,  nppa )
@@ -2547,9 +2438,19 @@ Iterative solution of linear equations
     1 (    220,     0 )       0
     2 (    220,     0 )       0
  number of -cosmo- surface points =      440
- molecular surface =     27.176 angstrom**2
- molecular volume  =     11.776 angstrom**3
- G(cav/disp)       =      0.996 kcal/mol
+ molecular surface =     27.422 angstrom**2
+ molecular volume  =     11.883 angstrom**3
+ G(cav/disp)       =      0.997 kcal/mol
+ -lineq- algorithm             =   0
+ -bem- low  level              =   3
+ -bem- from -icosahedral-
+ gaussian surface charge width =   4.50000
+ degree of switching           =   1.00000
+ switching function tolerance  =   0.00010
+ atomic radii = 
+ --------------
+    1  1.000  1.300
+    2  1.000  1.300
  ...... end of -cosmo- initialization ......
 
 
@@ -2566,21 +2467,18 @@ Iterative solution of linear equations
           Charge           :     0
           Spin multiplicity:     1
           Use of symmetry is: on ; symmetry adaption is: on 
-          Maximum number of iterations:  30
-          AO basis - number of functions:     6
-                     number of shells:     6
+          Maximum number of iterations:  50
+          AO basis - number of functions:     4
+                     number of shells:     4
           Convergence on energy requested:  1.00D-07
           Convergence on density requested:  1.00D-05
           Convergence on gradient requested:  5.00D-04
 
               XC Information
               --------------
-                         B3LYP Method XC Potential
-                     Hartree-Fock (Exact) Exchange  0.200          
-                        Slater Exchange Functional  0.800 local    
-                    Becke 1988 Exchange Functional  0.720 non-local
-              Lee-Yang-Parr Correlation Functional  0.810          
-                  VWN I RPA Correlation Functional  0.190 local    
+          PerdewBurkeErnzerhof Exchange Functional  1.000          
+            Perdew 1991 LDA Correlation Functional  1.000 local    
+           PerdewBurkeErnz. Correlation Functional  1.000 non-local
 
              Grid Information
              ----------------
@@ -2606,7 +2504,7 @@ Iterative solution of linear equations
                     Damping( 0%)  Levelshifting(0.5)       DIIS
                   --------------- ------------------- ---------------
           dE  on:    start            ASAP                start   
-          dE off:    2 iters         30 iters            30 iters 
+          dE off:    2 iters         50 iters            50 iters 
 
 
       Screening Tolerance Information
@@ -2620,17 +2518,17 @@ Iterative solution of linear equations
       Dispersion Parameters
       ---------------------
 
-           DFT-D3BJ Model   
+             DFT-D3 Model   
           s6 scale factor  :        1.000000000000
-          s8 scale factor  :        1.988900000000
-          a1 parameter     :        0.398100000000
-          a2 parameter     :        4.421100000000
-              vdW contrib  :       -0.000140658361
+          s8 scale factor  :        0.722000000000
+          sr6 scale factor :        1.217000000000
+          sr8 scale factor :        1.000000000000
+              vdW contrib  :       -0.000000015578
 
 
  Loading old vectors from job with title :
 
-degradation_freq
+prod_2_FREQ
 
 
       Symmetry analysis of molecular orbitals - initial
@@ -2643,68 +2541,69 @@ degradation_freq
 
   Orbital symmetries:
 
-     1 a1g         2 a2u         3 a1g         4 a2u         5 a1g     
-     6 a2u     
+     1 a1g         2 a2u         3 a1g         4 a2u     
 
-   Time after variat. SCF:      2.7
-   Time prior to 1st pass:      2.7
+   Time after variat. SCF:      0.4
+   Time prior to 1st pass:      0.4
+ Local filesystem for scratch_dir
 
- #quartets = 1.560D+02 #integrals = 1.560D+02 #direct =  0.0% #cached =100.0%
+ #quartets = 3.700D+01 #integrals = 3.700D+01 #direct =  0.0% #cached =100.0%
 
 
- Integral file          = ./degradation_start.aoints.00
+ Integral file          = /data/EMPTY.aoints.0
  Record size in doubles =  65536        No. of integs per rec  =  43688
- Max. records in memory =      1        Max. records in file   = 119598
+ Max. records in memory =      3        Max. records in file   =  13633
  No. of bits per label  =      8        No. of bits per value  =     64
 
 
 File balance: exchanges=     0  moved=     0  time=   0.0
 
+ Local filesystem for scratch_dir
 
- Grid_pts file          = ./degradation_start.gridpts.00
+ Grid_pts file          = /data/EMPTY.gridpts.0
  Record size in doubles =  12289        No. of grid_pts per rec  =   3070
- Max. records in memory =      2        Max. recs in file   =    637811
+ Max. records in memory =      8        Max. recs in file   =     72711
 
- Grid integrated density:       2.000000024402
+ Grid integrated density:       2.000000030333
  Requested integration accuracy:   0.10E-13
 
            Memory utilization after 1st SCF pass: 
-           Heap Space remaining (MW):      229.28           229281528
-          Stack Space remaining (MW):      229.38           229375820
+           Heap Space remaining (MW):       16.48            16477952
+          Stack Space remaining (MW):       16.78            16777076
 
    convergence    iter        energy       DeltaE   RMS-Dens  Diis-err    time
  ---------------- ----- ----------------- --------- --------- ---------  ------
      COSMO solvation phase
- d= 0,ls=0.0,diis     1     -1.1769009688 -1.89D+00  1.67D-04  7.31D-07     3.0
- Grid integrated density:       2.000000024423
+ d= 0,ls=0.0,diis     1     -1.1582785796 -1.84D+00  1.76D-04  2.43D-07     0.4
+ Grid integrated density:       2.000000030333
  Requested integration accuracy:   0.10E-13
- d= 0,ls=0.0,diis     2     -1.1769011427 -1.74D-07  8.95D-06  1.58D-08     3.2
- Grid integrated density:       2.000000024420
+ d= 0,ls=0.0,diis     2     -1.1582786443 -6.47D-08  3.69D-05  1.70D-08     0.4
+ Grid integrated density:       2.000000030333
  Requested integration accuracy:   0.10E-13
- d= 0,ls=0.0,diis     3     -1.1769011446 -1.88D-09  2.11D-06  3.96D-10     3.5
+  Singularity in Pulay matrix. Error and Fock matrices removed. 
+ d= 0,ls=0.0,diis     3     -1.1582786492 -4.87D-09  5.79D-11  4.17D-20     0.4
 
 
-         Total DFT energy =       -1.176901144608
-      One electron energy =       -2.495224684654
-           Coulomb energy =        1.304326762793
-    Exchange-Corr. energy =       -0.701429380598
- Nuclear repulsion energy =        0.713248486253
+         Total DFT energy =       -1.158278649184
+      One electron energy =       -2.456144924036
+           Coulomb energy =        1.288123066039
+    Exchange-Corr. energy =       -0.678007028173
+ Nuclear repulsion energy =        0.684830618866
 
-    Dispersion correction =       -0.000140658361
+    Dispersion correction =       -0.000000015578
 
-             COSMO energy =        0.002318329959
+             COSMO energy =        0.002919633698
 
- Numeric. integr. density =        2.000000024420
+ Numeric. integr. density =        2.000000030333
 
-     Total iterative time =      0.8s
+     Total iterative time =      0.0s
 
 
                                    COSMO solvation results
                                    -----------------------
 
-                 gas phase energy =         0.000000000000
-                 sol phase energy =        -1.176901144608
- (electrostatic) solvation energy =         1.176901144608 (  738.52 kcal/mol)
+     skipped: no gas phase energy
+                 sol phase energy =        -1.158278649184
 
                   Occupations of the irreducible representations
                   ----------------------------------------------
@@ -2726,53 +2625,33 @@ File balance: exchanges=     0  moved=     0  time=   0.0
                        DFT Final Molecular Orbital Analysis
                        ------------------------------------
 
- Vector    1  Occ=2.000000D+00  E=-4.380680D-01  Symmetry=a1g
-              MO Center=  0.0D+00,  0.0D+00, -7.3D-17, r^2= 7.4D-01
+ Vector    1  Occ=2.000000D+00  E=-3.755796D-01  Symmetry=a1g
+              MO Center=  0.0D+00,  0.0D+00, -6.0D-17, r^2= 7.3D-01
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     2      0.279747  1 H  s                  5      0.279747  2 H  s          
-     1      0.202657  1 H  s                  4      0.202657  2 H  s          
-     3      0.136102  1 H  s                  6      0.136102  2 H  s          
+     1      0.416466  1 H  s                  3      0.416466  2 H  s          
+     2      0.171290  1 H  s                  4      0.171290  2 H  s          
 
- Vector    2  Occ=0.000000D+00  E= 6.018208D-02  Symmetry=a2u
-              MO Center=  0.0D+00,  0.0D+00,  8.6D-17, r^2= 3.0D+00
+ Vector    2  Occ=0.000000D+00  E= 5.013679D-02  Symmetry=a2u
+              MO Center=  0.0D+00,  0.0D+00,  1.2D-17, r^2= 2.4D+00
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     3      2.003069  1 H  s                  6     -2.003069  2 H  s          
-     2      0.149828  1 H  s                  5     -0.149828  2 H  s          
-     1      0.099683  1 H  s                  4     -0.099683  2 H  s          
+     2      1.689258  1 H  s                  4     -1.689258  2 H  s          
+     1      0.271831  1 H  s                  3     -0.271831  2 H  s          
 
- Vector    3  Occ=0.000000D+00  E= 1.956180D-01  Symmetry=a1g
-              MO Center=  0.0D+00,  0.0D+00, -2.2D-16, r^2= 3.2D+00
+ Vector    3  Occ=0.000000D+00  E= 3.134617D-01  Symmetry=a1g
+              MO Center=  0.0D+00,  0.0D+00, -3.2D-16, r^2= 2.3D+00
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     3      0.834419  1 H  s                  6      0.834419  2 H  s          
-     2     -0.681535  1 H  s                  5     -0.681535  2 H  s          
-     1     -0.079120  1 H  s                  4     -0.079120  2 H  s          
+     2     -0.733361  1 H  s                  4     -0.733361  2 H  s          
+     1      0.718459  1 H  s                  3      0.718459  2 H  s          
 
- Vector    4  Occ=0.000000D+00  E= 4.753804D-01  Symmetry=a2u
-              MO Center=  0.0D+00,  0.0D+00, -2.1D-16, r^2= 2.6D+00
+ Vector    4  Occ=0.000000D+00  E= 7.078804D-01  Symmetry=a2u
+              MO Center=  0.0D+00,  0.0D+00,  4.4D-16, r^2= 1.7D+00
    Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
   ----- ------------  ---------------      ----- ------------  ---------------
-     3      2.395508  1 H  s                  6     -2.395508  2 H  s          
-     2     -1.653256  1 H  s                  5      1.653256  2 H  s          
-     1     -0.124394  1 H  s                  4      0.124394  2 H  s          
-
- Vector    5  Occ=0.000000D+00  E= 2.106267D+00  Symmetry=a1g
-              MO Center=  0.0D+00,  0.0D+00,  2.5D-15, r^2= 1.2D+00
-   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
-  ----- ------------  ---------------      ----- ------------  ---------------
-     2      1.240009  1 H  s                  5      1.240009  2 H  s          
-     1     -1.080882  1 H  s                  4     -1.080882  2 H  s          
-     3     -0.507420  1 H  s                  6     -0.507420  2 H  s          
-
- Vector    6  Occ=0.000000D+00  E= 2.385599D+00  Symmetry=a2u
-              MO Center=  0.0D+00,  0.0D+00, -3.2D-15, r^2= 1.0D+00
-   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
-  ----- ------------  ---------------      ----- ------------  ---------------
-     2      1.862463  1 H  s                  5     -1.862463  2 H  s          
-     3     -1.276735  1 H  s                  6      1.276735  2 H  s          
-     1     -1.123965  1 H  s                  4      1.123965  2 H  s          
+     2      1.732589  1 H  s                  4     -1.732589  2 H  s          
+     1     -1.222101  1 H  s                  3      1.222101  2 H  s          
 
 
  center of mass
@@ -2781,8 +2660,8 @@ File balance: exchanges=     0  moved=     0  time=   0.0
 
  moments of inertia (a.u.)
  ------------------
-           0.990543184936           0.000000000000           0.000000000000
-           0.000000000000           0.990543184936           0.000000000000
+           1.074456388924           0.000000000000           0.000000000000
+           0.000000000000           1.074456388924           0.000000000000
            0.000000000000           0.000000000000           0.000000000000
 
      Multipole analysis of the density
@@ -2796,18 +2675,18 @@ File balance: exchanges=     0  moved=     0  time=   0.0
      1   0 1 0      0.000000      0.000000      0.000000      0.000000
      1   0 0 1      0.000000      0.000000      0.000000      0.000000
 
-     2   2 0 0     -1.534140     -0.767070     -0.767070      0.000000
+     2   2 0 0     -1.505366     -0.752683     -0.752683      0.000000
      2   1 1 0      0.000000      0.000000      0.000000      0.000000
      2   1 0 1      0.000000      0.000000      0.000000      0.000000
-     2   0 2 0     -1.534140     -0.767070     -0.767070      0.000000
+     2   0 2 0     -1.505366     -0.752683     -0.752683      0.000000
      2   0 1 1      0.000000      0.000000      0.000000      0.000000
-     2   0 0 2     -1.224541     -1.103697     -1.103697      0.982852
+     2   0 0 2     -1.162682     -1.114398     -1.114398      1.066114
 
 
- Parallel integral file used      31 records with       0 large values
+ Parallel integral file used       2 records with       0 large values
 
 
- Task  times  cpu:        0.6s     wall:        0.9s
+ Task  times  cpu:        0.1s     wall:        0.1s
 
 
                                 NWChem Input Module
@@ -2819,17 +2698,6 @@ File balance: exchanges=     0  moved=     0  time=   0.0
   No active global arrays
 
 
-
-                         GA Statistics for process    0
-                         ------------------------------
-
-       create   destroy   get      put      acc     scatter   gather  read&inc
-calls: 1039     1039     3556     1394     1314      104        0      199     
-number of processes/call -1.99e+15 -6.36e+13 1.31e+13 0.00e+00 0.00e+00
-bytes total:             5.39e+05 2.29e+05 2.22e+05 8.00e+00 0.00e+00 1.59e+03
-bytes remote:            8.86e+03 4.32e+03 1.15e+03 -3.20e+01 0.00e+00 0.00e+00
-Max memory consumed for GA by this process: 12160 bytes
-
 MA_summarize_allocated_blocks: starting scan ...
 MA_summarize_allocated_blocks: scan completed: 0 heap blocks, 0 stack blocks
 MA usage statistics:
@@ -2838,11 +2706,11 @@ MA usage statistics:
 					      heap	     stack
 					      ----	     -----
 	current number of blocks	         0	         0
-	maximum number of blocks	        26	        57
+	maximum number of blocks	        26	        62
 	current total bytes		         0	         0
-	maximum total bytes		   1251352	  63701896
-	maximum total K-bytes		      1252	     63702
-	maximum total M-bytes		         2	        64
+	maximum total bytes		   2954904	  63541064
+	maximum total K-bytes		      2955	     63542
+	maximum total M-bytes		         3	        64
 
 
                                      CITATION
@@ -2850,16 +2718,16 @@ MA usage statistics:
                 Please cite the following reference when publishing
                            results obtained with NWChem:
 
-          E. Aprà, E. J. Bylaska, W. A. de Jong, N. Govind, K. Kowalski,
+          E. Apra, E. J. Bylaska, W. A. de Jong, N. Govind, K. Kowalski,
        T. P. Straatsma, M. Valiev, H. J. J. van Dam, Y. Alexeev, J. Anchell,
        V. Anisimov, F. W. Aquino, R. Atta-Fynn, J. Autschbach, N. P. Bauman,
      J. C. Becca, D. E. Bernholdt, K. Bhaskaran-Nair, S. Bogatko, P. Borowski,
-        J. Boschen, J. Brabec, A. Bruner, E. Cauët, Y. Chen, G. N. Chuev,
+         J. Boschen, J. Brabec, A. Bruner, E. Cauet, Y. Chen, G. N. Chuev,
       C. J. Cramer, J. Daily, M. J. O. Deegan, T. H. Dunning Jr., M. Dupuis,
-   K. G. Dyall, G. I. Fann, S. A. Fischer, A. Fonari, H. Früchtl, L. Gagliardi,
-      J. Garza, N. Gawande, S. Ghosh, K. Glaesemann, A. W. Götz, J. Hammond,
+   K. G. Dyall, G. I. Fann, S. A. Fischer, A. Fonari, H. Fruchtl, L. Gagliardi,
+      J. Garza, N. Gawande, S. Ghosh, K. Glaesemann, A. W. Gotz, J. Hammond,
        V. Helms, E. D. Hermes, K. Hirao, S. Hirata, M. Jacquelin, L. Jensen,
-   B. G. Johnson, H. Jónsson, R. A. Kendall, M. Klemm, R. Kobayashi, V. Konkov,
+   B. G. Johnson, H. Jonsson, R. A. Kendall, M. Klemm, R. Kobayashi, V. Konkov,
       S. Krishnamoorthy, M. Krishnan, Z. Lin, R. D. Lins, R. J. Littlefield,
       A. J. Logsdail, K. Lopata, W. Ma, A. V. Marenich, J. Martin del Campo,
    D. Mejia-Rodriguez, J. E. Moore, J. M. Mullin, T. Nakajima, D. R. Nascimento,
@@ -2868,8 +2736,8 @@ MA usage statistics:
    R. M. Richard, P. Sadayappan, G. C. Schatz, W. A. Shelton, D. W. Silverstein,
    D. M. A. Smith, T. A. Soares, D. Song, M. Swart, H. L. Taylor, G. S. Thomas,
             V. Tipparaju, D. G. Truhlar, K. Tsemekhman, T. Van Voorhis,
-     Á. Vázquez-Mayagoitia, P. Verma, O. Villa, A. Vishnu, K. D. Vogiatzis,
-        D. Wang, J. H. Weare, M. J. Williamson, T. L. Windus, K. Woliński,
+      A. Vazquez-Mayagoitia, P. Verma, O. Villa, A. Vishnu, K. D. Vogiatzis,
+        D. Wang, J. H. Weare, M. J. Williamson, T. L. Windus, K. Wolinski,
         A. T. Wong, Q. Wu, C. Yang, Q. Yu, M. Zacharias, Z. Zhang, Y. Zhao,
                                 and R. J. Harrison
                         "NWChem: Past, present, and future
@@ -2878,24 +2746,24 @@ MA usage statistics:
 
                                       AUTHORS
                                       -------
-     E. Apra, E. J. Bylaska, N. Govind, K. Kowalski, M. Valiev, W. A. de Jong,
-      T. P. Straatsma, H. J. J. van Dam, D. Wang, T. L. Windus, N. P. Bauman,
-       A. Panyala, J. Hammond, J. Autschbach, K. Bhaskaran-Nair, J. Brabec,
-    K. Lopata, S. A. Fischer, S. Krishnamoorthy, M. Jacquelin, W. Ma, M. Klemm,
-       O. Villa, Y. Chen, V. Anisimov, F. Aquino, S. Hirata, M. T. Hackler,
-           Eric Hermes, L. Jensen, J. E. Moore, J. C. Becca, V. Konjkov,
-            D. Mejia-Rodriguez, T. Risthaus, M. Malagoli, A. Marenich,
-   A. Otero-de-la-Roza, J. Mullin, P. Nichols, R. Peverati, J. Pittner, Y. Zhao,
-        P.-D. Fan, A. Fonari, M. J. Williamson, R. J. Harrison, J. R. Rehr,
-      M. Dupuis, D. Silverstein, D. M. A. Smith, J. Nieplocha, V. Tipparaju,
-      M. Krishnan, B. E. Van Kuiken, A. Vazquez-Mayagoitia, M. Swart, Q. Wu,
-   T. Van Voorhis, A. A. Auer, M. Nooijen, L. D. Crosby, E. Brown, G. Cisneros,
-     G. I. Fann, H. Fruchtl, J. Garza, K. Hirao, R. A. Kendall, J. A. Nichols,
-       K. Tsemekhman, K. Wolinski, J. Anchell, D. E. Bernholdt, P. Borowski,
-       T. Clark, D. Clerc, H. Dachsel, M. J. O. Deegan, K. Dyall, D. Elwood,
-      E. Glendening, M. Gutowski, A. C. Hess, J. Jaffe, B. G. Johnson, J. Ju,
-        R. Kobayashi, R. Kutteh, Z. Lin, R. Littlefield, X. Long, B. Meng,
-      T. Nakajima, S. Niu, L. Pollack, M. Rosing, K. Glaesemann, G. Sandrone,
-      M. Stave, H. Taylor, G. Thomas, J. H. van Lenthe, A. T. Wong, Z. Zhang.
+  E. Apra, E. J. Bylaska, N. Govind, K. Kowalski, M. Valiev, D. Mejia-Rodriguez,
+       A. Kunitsa, N. P. Bauman, A. Panyala, W. A. de Jong, T. P. Straatsma,
+   H. J. J. van Dam, D. Wang, T. L. Windus, J. Hammond, J. Autschbach, A. Woods,
+    K. Bhaskaran-Nair, J. Brabec, K. Lopata, S. A. Fischer, S. Krishnamoorthy,
+     M. Jacquelin, W. Ma, M. Klemm, O. Villa, Y. Chen, V. Anisimov, F. Aquino,
+     S. Hirata, M. T. Hackler, E. Hermes, L. Jensen, J. E. Moore, J. C. Becca,
+      V. Konjkov, T. Risthaus, M. Malagoli, A. Marenich, A. Otero-de-la-Roza,
+        J. Mullin, P. Nichols, R. Peverati, J. Pittner, Y. Zhao, P.-D. Fan,
+        A. Fonari, M. J. Williamson, R. J. Harrison, J. R. Rehr, M. Dupuis,
+     D. Silverstein, D. M. A. Smith, J. Nieplocha, V. Tipparaju, M. Krishnan,
+     B. E. Van Kuiken, A. Vazquez-Mayagoitia, M. Swart, Q. Wu, T. Van Voorhis,
+     A. A. Auer, M. Nooijen, L. D. Crosby, E. Brown, G. Cisneros, G. I. Fann,
+   H. Fruchtl, J. Garza, K. Hirao, R. A. Kendall, J. A. Nichols, K. Tsemekhman,
+    K. Wolinski, J. Anchell, D. E. Bernholdt, P. Borowski, T. Clark, D. Clerc,
+   H. Dachsel, M. J. O. Deegan, K. Dyall, D. Elwood, E. Glendening, M. Gutowski,
+   A. C. Hess, J. Jaffe, B. G. Johnson, J. Ju, R. Kobayashi, R. Kutteh, Z. Lin,
+   R. Littlefield, X. Long, B. Meng, T. Nakajima, S. Niu, L. Pollack, M. Rosing,
+   K. Glaesemann, G. Sandrone, M. Stave, H. Taylor, G. Thomas, J. H. van Lenthe,
+                               A. T. Wong, Z. Zhang.
 
- Total times  cpu:        1.6s     wall:        3.5s
+ Total times  cpu:        0.4s     wall:        0.4s
