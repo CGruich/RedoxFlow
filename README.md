@@ -75,6 +75,7 @@ docker run --rm --shm-size=1g \
 ```
 
 Or, for the equivalent reactant,
+
 Example Script Folder:
 /path/to/RedoxFlow/redox_calculation_test/reactants/react_2
 
@@ -90,6 +91,7 @@ docker run --rm --shm-size=1g \
   ghcr.io/nwchemgit/nwchem-dev.mpi-pr:latest \
   react_2.nw > react_2.out 2>&1
 ```
+
 ---
 ## Proof-of-Concept Restrictions
 
