@@ -72,29 +72,11 @@ docker images | grep nwchem
 How to run a prepared simulation by the agent (32 MPI ranks were used in this case for a 32-core CPU)
 
 Example Script Folder:
-/path/to/RedoxFlow/redox_calculation_test/products/prod_2
-
-```
-# 1) Set your job folder (ABSOLUTE FILEPATH)
-HOSTDIR="/path/to/RedoxFlow/redox_calculation_test/products/prod_5"
-
-# 2) Run a single job (32 MPI ranks; 1 OpenMP thread each)
-docker run --rm --shm-size=1g \
-  -e MYNPROC=32 -e OMP_NUM_THREADS=1 \
-  -v "$HOSTDIR":"$HOSTDIR" \
-  -w "$HOSTDIR" \
-  ghcr.io/nwchemgit/nwchem-dev.mpi-pr:latest \
-  prod_5.nw > prod_5.out 2>&1
-```
-
-Or, for the equivalent reactant,
-
-Example Script Folder:
 /path/to/RedoxFlow/redox_calculation_test/reactants/react_2
 
 ```
 # 1) Set your job folder (note the quotes for the space)
-HOSTDIR="/home/cameron/Documents/Github/RedoxFlow/redox_calculation_test/reactants/react_2"
+HOSTDIR="/path/to/RedoxFlow/redox_calculation_test/reactants/react_2"
 
 # 2) Run a single job (32 MPI ranks; 1 OpenMP thread each)
 docker run --rm --shm-size=1g \
@@ -105,6 +87,23 @@ docker run --rm --shm-size=1g \
   react_2.nw > react_2.out 2>&1
 ```
 
+Or, for the equivalent product,
+
+Example Script Folder:
+/path/to/RedoxFlow/redox_calculation_test/products/prod_2
+
+```
+# 1) Set your job folder (ABSOLUTE FILEPATH)
+HOSTDIR="/path/to/RedoxFlow/redox_calculation_test/products/prod_2"
+
+# 2) Run a single job (32 MPI ranks; 1 OpenMP thread each)
+docker run --rm --shm-size=1g \
+  -e MYNPROC=32 -e OMP_NUM_THREADS=1 \
+  -v "$HOSTDIR":"$HOSTDIR" \
+  -w "$HOSTDIR" \
+  ghcr.io/nwchemgit/nwchem-dev.mpi-pr:latest \
+  prod_2.nw > prod_2.out 2>&1
+```
 ---
 ## Proof-of-Concept Restrictions
 
