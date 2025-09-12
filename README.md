@@ -1,7 +1,4 @@
 # RedoxFlow
-
-**RedoxFlow**
----
 RedoxFlox is an agentic proof-of-concept that prepares redox potential simulations of solvated chemicals en-masse for electrochemical discovery.
 
 **Installation & Demonstration**
