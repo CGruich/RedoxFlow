@@ -25,7 +25,7 @@ CHE computes redox potentials from a thermodynamic cycle. RedoxFlow automates in
 
 ---
 
-## Install & Demo
+## Install
 
 ```
 bash
@@ -51,6 +51,9 @@ docker pull ghcr.io/nwchemgit/nwchem-dev.mpi-pr:latest
 # 3) Confirm it’s on your machine
 docker images | grep nwchem
 ```
+
+## Agent Demonstration
+
 Running NWChem Simulations
 ```
 # How to run a prepared simulation by the agent (32 MPI ranks were used in this case for a 32-core CPU)
