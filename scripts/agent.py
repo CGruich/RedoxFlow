@@ -108,6 +108,20 @@ class RedoxFlow:
 
         return payload
 
+    def validate_params(self, max_heavy_atoms_per_reactant: int, min_unique_elements: int) -> None:
+        """
+        Ensures:
+        - max_heavy_atoms_per_reactant >= 4
+        - min_unique_elements <= 3
+
+        Raises:
+        ValueError with the exact phrasing requested.
+        """
+        if max_heavy_atoms_per_reactant < 4:
+            raise ValueError("max_heavy_atoms_per_reactant must match '>= 4' for proof-of-concept demonstration.")
+        if min_unique_elements > 3:
+            raise ValueError("min_unique_elements must match '<= 3' for proof-of-concept demonstration.")
+
     def prepare_scripts(
         self,
         num_generated_reactants: int = 10,
@@ -123,6 +137,9 @@ class RedoxFlow:
           2) perform conformer generation,
           3) write NWChem input scripts.
         """
+
+        self.validate_params(max_heavy_atoms_per_reactant=max_heavy_atoms_per_reactant, 
+                             min_unique_elements=min_uniq_elements)
 
         # Suppress RDKit logs (mirrors original behavior)
         RDLogger.DisableLog("rdApp.*")
@@ -334,7 +351,6 @@ class RedoxFlow:
                 react_df = pd.read_csv(react_path)
                 prod_df  = pd.read_csv(prod_path)
 
-                # NOTE: per your snippet, the function uses 'nRduction' (missing 'e').
                 value = redox_potential_BornHaber(
                     react_df,
                     prod_df,
