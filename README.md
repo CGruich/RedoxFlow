@@ -64,7 +64,10 @@ docker images | grep nwchem
 
 ## Agent Demonstration
 
-Running NWChem Simulations
+**Generate Reactants and Auto-prepare Scripts**
+`RedoxFlow/scripts/agent_demonstration.ipynb`
+
+**Running NWChem Simulations (to validate script preparation)**
 
 How to run a prepared simulation by the agent (32 MPI ranks were used in this case for a 32-core CPU)
 
