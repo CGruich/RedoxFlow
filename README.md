@@ -64,7 +64,8 @@ docker images | grep nwchem
 
 ## Agent Demonstration
 
-**Generate Reactants and Auto-prepare Scripts**
+**Generate Reactants & Auto-prepare Scripts & Calculate Redox Potential**
+
 `RedoxFlow/scripts/agent_demonstration.ipynb`
 
 **Running NWChem Simulations (to validate script preparation)**
@@ -72,7 +73,7 @@ docker images | grep nwchem
 How to run a prepared simulation by the agent (32 MPI ranks were used in this case for a 32-core CPU)
 
 Example Script Folder:
-/path/to/RedoxFlow/redox_calculation_test/reactants/react_2
+`/path/to/RedoxFlow/redox_calculation_test/reactants/react_2`
 
 ```
 # 1) Set your job folder (note the quotes for the space)
@@ -90,7 +91,7 @@ docker run --rm --shm-size=1g \
 Or, for the equivalent product,
 
 Example Script Folder:
-/path/to/RedoxFlow/redox_calculation_test/products/prod_2
+`/path/to/RedoxFlow/redox_calculation_test/products/prod_2`
 
 ```
 # 1) Set your job folder (ABSOLUTE FILEPATH)
