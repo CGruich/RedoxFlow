@@ -24,7 +24,7 @@ CHE computes redox potentials from a thermodynamic cycle. RedoxFlow automates in
 ---
 
 ## TL;DR
-- **Generates reactants** (_de novo_) with a lightweight foundation model (`ibm-research/GP-MoLFormer-Uniq`)
+- **Generates reactants** (_de novo_) with a lightweight foundation model (`ibm-research/GP-MoLFormer-Uniq` \[2])
     - Unrealistic moieties/ring strained systems auto-filtered out
     - Generated molecules with non-CNOF atoms are altered within their same periodic group (e.g., S → O) to maximize generative success
     - Sanitized molecules to ensure proper basic connectivity/valency
@@ -168,4 +168,4 @@ In no particular order,
 ## References
 
 \[1] Singh, Siddhant, et al. "Sulfonated Benzo [c] cinnolines for Alkaline Redox-Flow Batteries." ACS Applied Energy Materials 8.12 (2025): 7904-7911.
-
+\[2] Ross, Jerret, et al. "Gp-molformer: a foundation model for molecular generation." Digital Discovery (2025).
