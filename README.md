@@ -25,10 +25,12 @@ CHE computes redox potentials from a thermodynamic cycle. RedoxFlow automates in
 
 ---
 
-## Install & Demo
+## Install
 
+Tested on HPC (PSC Bridges-2, Linux-based)
+
+Tested locally (OS: Ubuntu 22.04.5 LTS, GPU: GeForce RTX 3090)
 ```
-bash
 git clone <this-repo> RedoxFlow
 cd RedoxFlow
 mamba env create -p ../redoxflow -f env/redoxflow.yml
@@ -38,6 +40,9 @@ conda activate ../redoxflow
 The agent generates simulation inputs and calculates redox potential from successful simulations but does not launch/manage simulations. We forego doing this due to resource costs but envision it as future steps for the project. 
 
 For our test cases `RedoxFlow/redox_calculation_test`, we run the simulations via an NWChem docker image and provide reproducible steps below.
+
+Installing NWChem Docker Image
+
 ```
 # 1) Make sure Docker Engine is installed (skip if you already have it)
 #    Install guide: https://docs.docker.com/engine/install/
@@ -48,11 +53,17 @@ docker pull ghcr.io/nwchemgit/nwchem-dev.mpi-pr:latest
 # 3) Confirm it’s on your machine
 docker images | grep nwchem
 ```
----
-```
-# How to run a prepared simulation by the agent (32 MPI ranks were used in this case for a 32-core CPU)
-Example Script Folder: /path/to/RedoxFlow/redox_calculation_test/products/prod_2
 
+## Agent Demonstration
+
+Running NWChem Simulations
+
+How to run a prepared simulation by the agent (32 MPI ranks were used in this case for a 32-core CPU)
+
+Example Script Folder:
+/path/to/RedoxFlow/redox_calculation_test/products/prod_2
+
+```
 # 1) Set your job folder (ABSOLUTE FILEPATH)
 HOSTDIR="/path/to/RedoxFlow/redox_calculation_test/products/prod_5"
 
@@ -64,6 +75,26 @@ docker run --rm --shm-size=1g \
   ghcr.io/nwchemgit/nwchem-dev.mpi-pr:latest \
   prod_5.nw > prod_5.out 2>&1
 ```
+
+Or, for the equivalent reactant,
+
+Example Script Folder:
+/path/to/RedoxFlow/redox_calculation_test/reactants/react_2
+
+```
+# 1) Set your job folder (note the quotes for the space)
+HOSTDIR="/home/cameron/Documents/Github/RedoxFlow/redox_calculation_test/reactants/react_2"
+
+# 2) Run a single job (32 MPI ranks; 1 OpenMP thread each)
+docker run --rm --shm-size=1g \
+  -e MYNPROC=32 -e OMP_NUM_THREADS=1 \
+  -v "$HOSTDIR":"$HOSTDIR" \
+  -w "$HOSTDIR" \
+  ghcr.io/nwchemgit/nwchem-dev.mpi-pr:latest \
+  react_2.nw > react_2.out 2>&1
+```
+
+---
 ## Proof-of-Concept Restrictions
 
 To show that the agentic workflow works start-to-finish, we restrict our agent to generate molecules and prepare simulation scripts for:
@@ -71,12 +102,43 @@ To show that the agentic workflow works start-to-finish, we restrict our agent t
 * A model reduction reaction `A + xH^+ + ye^- → B`
     * No degradation products considered
     * By nature of the model reaction, we only consider PCET-reactions.
+* PBE Functional
+* def2-SV(P) basis set
+* Pure water (dielectric constant ~ 78.4)
+* Room temperature
+
 
 For a round-trip demonstration of redox potential calculation with the agent/embedded class interface, we:
-* Generate 10 simulations (5 reactants/5 products) and thus auto-extract variables and auto-calculate 5 redox potentials
-    * PBE Functional
-    * def2-SV(P) basis set
-    * Pure water (dielectric constant ~ 78.4)
-    * Room temperature
+* Generate 3 simulations (3 reactants/3 products) and thus auto-extract variables and auto-calculate 3 redox potentials (in demonstration notebook)
+    * `/path/to/RedoxFlow/redox_calculation_test`
+* An intentionally incomplete simulation to show error tracking to motivate extended automation pipelines with simulation management (in demonstration notebook)
+    * `/path/to/RedoxFlow/redox_calculation_test/react_3`, `/path/to/RedoxFlow/redox_calculation_test/prod_3`
+---
+## Envisioned Improvements on Proof-of-Concept Automation
 
-## Improvement on Proof-of-Concept
+The agent workflow provided is a minimum proof-of-concept for simulation preparation start-to-finish and redox potential calculation start-to-finish. The automation premise is extendable based on what we see as future steps to the work:
+
+* Pair the agent with an en-masse job submission workflow (SLURM, Nextflow, Snakemake, etc.)
+* Expand reaction rules or replace the reaction rule proof-of-concept with a partial charge predictive model to auto-identify likely reduction sites (e.g., Gasteiger partial charge assignment)
+* Expand the script preparation method (RedoxFlow.prepare_scripts()) to include fine-tuned DFT simulation settings (e.g., basis set, functional, temperature)
+    * We currently restrict these settings to tractable, fixed values deliberately for proof-of-concept
+* Pair the script preparation method (RedoxFlow.prepare_scripts()) with a natural language prompt interface
+    * e.g., "Generate me 100 reactant candidates using the PBE functional and 6-311g* basis set at 200 Kelvin."
+* Expand the subset of atoms (e.g., include Cl, P, S)
+    * We restrict the chemistry to CNOF molecules for proof-of-concept demonstration.
+
+---
+## Contributors
+
+In no particular order,
+* Cameron Gruich
+* Ankit Mathanker
+* Vehaan Handa
+* Oluwatosin Ohiro
+* Melody Zhang
+* Maurycy Krzyanowski
+* Roshini Dantuluri
+* Sayed Ahmad Almohri
+* Thomas Sundberg
+* Dean Sweeney
+
