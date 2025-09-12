@@ -112,7 +112,18 @@ For a round-trip demonstration of redox potential calculation with the agent/emb
 * An intentionally incomplete simulation to show error tracking to motivate extended automation pipelines with simulation management (in demonstration notebook)
     * `/path/to/RedoxFlow/redox_calculation_test/react_3`, `/path/to/RedoxFlow/redox_calculation_test/prod_3`
 ---
-## Envisioned Improvements on Proof-of-Concept
+## Envisioned Improvements on Proof-of-Concept Automation
+
+The agent workflow provided is a minimum proof-of-concept for simulation preparation start-to-finish and redox potential calculation start-to-finish. The automation premise is extendable based on what we see as future steps to the work:
+
+* Pair the agent with an en-masse job submission workflow (SLURM, Nextflow, Snakemake, etc.)
+* Expand reaction rules or replace the reaction rule proof-of-concept with a partial charge predictive model to auto-identify likely reduction sites (e.g., Gasteiger partial charge assignment)
+* Expand the script preparation method (RedoxFlow.prepare_scripts()) to include fine-tuned DFT simulation settings (e.g., basis set, functional, temperature)
+    * We currently restrict these settings to tractable, fixed values deliberately for proof-of-concept
+* Pair the script preparation method (RedoxFlow.prepare_scripts()) with a natural language prompt interface
+    * e.g., "Generate me 100 reactant candidates using the PBE functional and 6-311g* basis set at 200 Kelvin."
+* Expand the subset of atoms (e.g., include Cl, P, S)
+    * We restrict the chemistry to CNOF molecules for proof-of-concept demonstration.
 
 ---
 ## Contributors
