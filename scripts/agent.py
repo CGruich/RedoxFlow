@@ -6,6 +6,8 @@ import json
 import os
 from rdkit import RDLogger
 from rdkit import rdBase
+from extract_redox_variables import RedoxPotentialMiner
+from pathlib import Path
 
 class RedoxFlow:
     """
@@ -181,9 +183,67 @@ class RedoxFlow:
             self.print_agent_stdouts(result)
         return result
 
-    def extract_variables(self, *args, **kwargs) -> None:
-        """Placeholder for future extraction of variables from outputs or files."""
-        pass
+    def extract_variables(self, sim_root: str | None = None, sim_ext: str = ".out") -> None:
+        """Extraction of variables from outputs or files.
+
+        Scans each folder inside '{sim_path}/reactants' and '{sim_path}/products'
+        (plus those roots themselves) for files ending with `sim_ext`, and for each
+        match:
+            miner = RedoxPotentialMiner(stdoutFilepath=ABS_PATH)
+            miner.variableDF = {}
+            miner.search()
+
+        Stores miners in:
+            self.miners = {
+                "reactants": [ ... ],
+                "products":  [ ... ],
+            }
+        Records errors (if any) in:
+            self.miner_errors = {
+                "reactants": [(filepath, exc), ...],
+                "products":  [(filepath, exc), ...],
+            }
+        """
+        sim_path = Path(sim_root) if sim_root is not None else Path(self.git_root)
+
+        react_path = sim_path / "reactants"
+        prod_path  = sim_path / "products"
+
+        ext = sim_ext if sim_ext.startswith(".") else f".{sim_ext}"
+        ext = ext.lower()
+
+        # Prepare containers
+        self.miners = {"reactants": [], "products": []}
+        self.miner_errors = {"reactants": [], "products": []}
+
+        def _add_file(path: Path, bucket_key: str) -> None:
+            try:
+                miner = RedoxPotentialMiner(stdoutFilepath=str(path.resolve()))
+                miner.variableDF = {}
+                miner.search() 
+                self.miners[bucket_key].append(miner)
+            except Exception as e:
+                self.miner_errors[bucket_key].append((str(path), e))
+
+        def _scan_bucket(root: Path, bucket_key: str) -> None:
+            if not root.exists():
+                print(f"⚠️ Path not found: {root}")
+                return
+
+            # 1) Files directly in the root
+            for p in root.iterdir():
+                if p.is_file() and p.suffix.lower() == ext:
+                    _add_file(p, bucket_key)
+
+            # 2) For each immediate subfolder, recurse within it
+            for child in root.iterdir():
+                if child.is_dir():
+                    for f in child.rglob(f"*{ext}"):
+                        if f.is_file() and f.suffix.lower() == ext:
+                            _add_file(f, bucket_key)
+
+        _scan_bucket(react_path, "reactants")
+        _scan_bucket(prod_path,  "products")
 
     def calculate_redox(self, *args, **kwargs) -> None:
         """Placeholder for future redox-potential calculations (e.g., CHE workflow aggregation)."""
