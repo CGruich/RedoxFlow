@@ -29,6 +29,7 @@ CHE computes redox potentials from a thermodynamic cycle. RedoxFlow automates in
     - Generated molecules with non-CNOF atoms are altered within their same periodic group (e.g., S → O) to maximize generative success
     - Sanitized molecules to ensure proper basic connectivity/valency
 - **Predicts reduced products** (transparent rules based off functional groups, proof-of-concept)
+    - Live memory during agent used is auto-created at `RedoxFlow/memory` but we share example memory from a previous run at `RedoxFlow/example_memory`
 - **Does conformer search** and picks lowest-energy structures
 - **Writes simulation scripts** for both states and **computes** \(E = -ΔG/(zF)\) for completed simulations
 
