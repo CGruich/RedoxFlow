@@ -157,14 +157,14 @@ The agent workflow provided is a minimum proof-of-concept for simulation prepara
 In no particular order,
 * [Cameron Gruich](https://github.com/CGruich) (Lead, planning, all scripts, agent composite construction, finalization)
 * Vehaan Handa (Reduction candidate search)
-* Maurycy Krzyanowski (Reduction candidate search)
+* [Maurycy Krzyanowski](https://github.com/MKrzyzan2070) (Reduction candidate search)
 * Melody Zhang (Conformer searching)
 * Roshini Dantuluri (Conformer searching)
 * Oluwatosin Ohiro (Redox script generation)
 * [Ankit Mathanker](https://github.com/ankitmathanker) (Downstream redox variable extraction)
-* Sayed Ahmad Almohri (Planning)
+* [Sayed Ahmad Almohri](https://github.com/S-A-Almohri) (Planning)
 * Thomas Sundberg (Planning)
-* Dean Sweeney (Planning)
+* [Dean Sweeney](https://github.com/DeanMSweeney) (Planning)
 ---
 ## References
 
