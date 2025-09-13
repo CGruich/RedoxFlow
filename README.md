@@ -156,7 +156,7 @@ The agent workflow provided is a minimum proof-of-concept for simulation prepara
 
 In no particular order,
 * [Cameron Gruich](https://github.com/CGruich) (Lead, planning, all scripts, agent composite construction, finalization)
-* Vehaan Handa (Reduction candidate search)
+* [Vehaan Handa](https://github.com/gitvhiz) (Reduction candidate search)
 * [Maurycy Krzyanowski](https://github.com/MKrzyzan2070) (Reduction candidate search)
 * Melody Zhang (Conformer searching)
 * Roshini Dantuluri (Conformer searching)
