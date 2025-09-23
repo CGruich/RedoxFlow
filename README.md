@@ -8,7 +8,7 @@ RedoxFlow generates candidate organic molecules, proposes reduced products, and 
   <img src="media/script_generation.gif" alt="Script generation demo" width="720">
 </p>
 
-This project was submitted to the 2025 LLM Hackathon for Applications in Materials Science and Chemistry, organised by Argonne National Laboratory, where it received the 2025 Visionary Award in recognition of its high novelty and innovativeness.
+This project was submitted to the [2025 LLM Hackathon for Applications in Materials Science and Chemistry](https://llmhackathon.github.io/), organised by Argonne National Laboratory, where it received the 2025 Visionary Award in recognition of its high novelty and innovativeness.
 
 ---
 
