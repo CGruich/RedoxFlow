@@ -163,7 +163,7 @@ In no particular order,
 * [Vehaan Handa](https://github.com/gitvhiz) (Reduction candidate search)
 * [Maurycy Krzyanowski](https://github.com/MKrzyzan2070) (Reduction candidate search)
 * Melody Zhang (Conformer searching)
-* Roshini Dantuluri (Conformer searching)
+* [Roshini Dantuluri](https://github.com/RoshiniDantuluri) (Conformer searching)
 * Oluwatosin Ohiro (Redox script generation)
 * [Ankit Mathanker](https://github.com/ankitmathanker) (Downstream redox variable extraction)
 * [Sayed Ahmad Almohri](https://github.com/S-A-Almohri) (Planning)
