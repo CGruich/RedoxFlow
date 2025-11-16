@@ -170,6 +170,11 @@ In no particular order,
 * Thomas Sundberg (Planning)
 * [Dean Sweeney](https://github.com/DeanMSweeney) (Planning)
 ---
+## Citation
+
+[DOI](https://doi.org/10.5281/zenodo.17620783)
+
+---
 ## References
 
 \[1] Singh, Siddhant, et al. "Sulfonated Benzo [c] cinnolines for Alkaline Redox-Flow Batteries." ACS Applied Energy Materials 8.12 (2025): 7904-7911.
