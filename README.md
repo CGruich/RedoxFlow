@@ -172,7 +172,17 @@ In no particular order,
 ---
 ## Citation
 
-[DOI](https://doi.org/10.5281/zenodo.17620783)
+```
+@misc{RedoxFlow_Gruich_2025,
+  title        = {RedoxFlow: Agentic Workflow for Preparing Simulations in High-throughput Redox Potential Screening},
+  author       = {Gruich, Cameron and Mathanker, Ankit and Handa, Vehaan and Krzyzanowski, Maurycy and Dantuluri, Roshini and Almohri, Sayed Ahmad and Ohiro, Oluwatosin and Zhang, Melody},
+  publisher    = {Zenodo},
+  year         = {2025},
+  doi          = {10.5281/zenodo.17620783},
+  url          = {https://doi.org/10.5281/zenodo.17620783},
+  abstract     = {RedoxFlow generates candidate organic molecules, proposes reduced products, and auto-prepares simulation inputs to compute thermodynamic (Nernstian) redox potentials in aqueous phase via the Computational Hydrogen Electrode (CHE) method.}
+}
+```
 
 ---
 ## References
